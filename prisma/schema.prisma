@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BoardGame {
+  id      Int                    @id @default(autoincrement())
+  name    String
+  bggData BoardGameBggData?      @relation("bggData", fields: [id], references: [boardGameId], map: "bgg")
+  dsData  BoardGameInternalData? @relation("dsData", fields: [id], references: [boardGameId], map: "ds")
+}
+
+model BoardGameBggData {
+  id                      Int                   @id @default(autoincrement())
+  boardGameId             Int                   @unique
+  boardGame               BoardGame[]           @relation("bggData")
+  bggId                   Int                   @unique
+  thumb                   String
+  image                   String
+  description             String
+  specs                   BoardGameDataSpecs    @relation(fields: [boardGameDataSpecsId], references: [id])
+  stats                   BoardGameBggDataStats @relation(fields: [boardGameBggDataStatsId], references: [id])
+  boardGameDataSpecsId    Int
+  boardGameBggDataStatsId Int
+  lastUpdate              DateTime              @updatedAt
+}
+
+model BoardGameDataSpecs {
+  id                    Int                     @id @default(autoincrement())
+  externalDataId        Int
+  minplayers            Int                     @default(1)
+  maxplayers            Int                     @default(99)
+  minplaytime_minutes   Int
+  maxplaytime_minutes   Int
+  tags                  String[]
+  BoardGameExternalData BoardGameBggData[]
+  BoardGameInternalData BoardGameInternalData[]
+}
+
+model BoardGameBggDataStats {
+  id               Int                @id @default(autoincrement())
+  bggId            Int                @unique
+  bggRank          Int
+  bggAverageScore  Float
+  BoardGameBggData BoardGameBggData[]
+}
+
+model BoardGameInternalData {
+  id                   Int                @id @default(autoincrement())
+  boardGameId          Int                @unique
+  boardGame            BoardGame[]        @relation("dsData")
+  specs                BoardGameDataSpecs @relation(fields: [boardGameDataSpecsId], references: [id])
+  boardGameDataSpecsId Int
+  lastUpdated          DateTime           @updatedAt
+  ownership            Ownership          @default(Personal)
+  location             Location           @default(Poole)
+  holder               Person             @relation(fields: [personId], references: [id])
+  personId             Int
+  inCurrentRotation    Boolean            @default(false)
+}
+
+model Person {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  BoardGameInternalData BoardGameInternalData[]
+}
+
+enum Ownership {
+  Company
+  Personal
+}
+
+enum Location {
+  Poole
+  Oxford
+}
+
+enum UserRole {
+  Admin
+  Verified
+  Unverified
+}
+
+model User {
+  id       String   @id @default(cuid())
+  name     String
+  email    String   @unique
+  password String
+  role     UserRole @default(Unverified)
+}
