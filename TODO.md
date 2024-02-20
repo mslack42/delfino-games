@@ -1,5 +1,7 @@
 "Search for your new game" - button should have disable/enable
 
+New features - Games should be deletable and updatable
+
 "Search for your new game" - should give an indication of 'loading'
 
 Nav bar - should become hamburger menu on responsive change
