@@ -1,31 +1,46 @@
 "use client";
-import { BggSearchResult } from "@/bgg/types";
+import { BggSummaryData } from "@/bgg/types";
 import { FormEvent, useState } from "react";
 import { SearchResults } from "./searchResults";
 
 export default function AddNewGame() {
-    const [searchResults, setSearchResults] = useState<BggSearchResult[]>([])
+  const [searchResults, setSearchResults] = useState<BggSummaryData[]>([]);
 
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget)
+    const formData = new FormData(event.currentTarget);
 
-    const searchResults = await fetch(`/api/games/searchNew?name=${formData.get('searchTerm')}`, {
-        method: 'GET'
-    })
-    const searchResultItems: BggSearchResult[] = (await searchResults.json()).results
-    setSearchResults(() => searchResultItems )
+    const searchResults = await fetch(
+      `/api/games/searchNew?name=${formData.get("searchTerm")}`,
+      {
+        method: "GET",
+      }
+    );
+    const searchResultItems: BggSummaryData[] = (await searchResults.json())
+      .results;
+    setSearchResults(() => searchResultItems);
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Search for a game</h1>
-      <form onSubmit={search}>
-        <input type="text" name="searchTerm" />
-        <button type="submit">Search</button>
-      </form>
-      <SearchResults results={searchResults}></SearchResults>
-    </main>
+    <>
+      <div className="h-full ">
+        <div className="pt-4 pb-4 text-center flex justify-center">
+          <div className="h-32 w-96  border-double border-teal-800 rounded-lg pt-8 pb-8 bg-cyan-200">
+            <div className="text-center text-teal-800 flex flex-col justify-between gap-4">
+              <h1 className="text-2xl">Search for your new game</h1>
+              <form onSubmit={search} className="flex justify-around gap-0">
+                <input type="text" name="searchTerm" maxLength={100} minLength={0}/>
+                <button type="submit" className="bg-slate-300 w-20">
+                  Go!
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <br></br>
+        <SearchResults results={searchResults}></SearchResults>
+      </div>
+    </>
   );
 }

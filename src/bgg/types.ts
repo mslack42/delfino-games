@@ -1,5 +1,5 @@
 
-export type BggSearchResult = {
+export type BggSummaryData = {
     name: string,
     bggId: number,
     thumb: string | undefined,

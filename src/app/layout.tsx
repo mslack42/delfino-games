@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { NavigationBar } from "@/components/navigation/NavigationBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Delfino Games",
-  description: "BOARDGAMESBOARDGAMESBOARDGAMES",
+  description: "Dorset Software Boardgame Inventory Management"
 };
 
 export default function RootLayout({
@@ -16,7 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <NavigationBar></NavigationBar>
+        <main className="flex min-h-full flex-col items-center justify-between ">
+        {children}
+        </main>
+        </body>
     </html>
   );
 }

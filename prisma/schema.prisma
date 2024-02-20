@@ -53,17 +53,17 @@ model BoardGameBggDataStats {
 }
 
 model BoardGameInternalData {
-  id                   Int                @id @default(autoincrement())
-  boardGameId          Int                @unique
-  boardGame            BoardGame[]        @relation("dsData")
-  specs                BoardGameDataSpecs @relation(fields: [boardGameDataSpecsId], references: [id])
-  boardGameDataSpecsId Int
-  lastUpdated          DateTime           @updatedAt
-  ownership            Ownership          @default(Personal)
-  location             Location           @default(Poole)
-  holder               Person             @relation(fields: [personId], references: [id])
+  id                   Int                 @id @default(autoincrement())
+  boardGameId          Int                 @unique
+  boardGame            BoardGame[]         @relation("dsData")
+  specs                BoardGameDataSpecs? @relation(fields: [boardGameDataSpecsId], references: [id])
+  boardGameDataSpecsId Int?
+  lastUpdated          DateTime            @updatedAt
+  ownership            Ownership           @default(Personal)
+  location             Location            @default(Poole)
+  holder               Person              @relation(fields: [personId], references: [id])
   personId             Int
-  inCurrentRotation    Boolean            @default(false)
+  inCurrentRotation    Boolean             @default(false)
 }
 
 model Person {
