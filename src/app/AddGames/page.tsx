@@ -2,6 +2,7 @@
 import { BggSummaryData } from "@/bgg/types";
 import { FormEvent, useState } from "react";
 import { SearchResults } from "./searchResults";
+import { CustomSubmitButton } from "../../components/input/CustomButton";
 
 export default function AddNewGame() {
   const [searchResults, setSearchResults] = useState<BggSummaryData[]>([]);
@@ -31,9 +32,7 @@ export default function AddNewGame() {
               <h1 className="text-2xl">Search for your new game</h1>
               <form onSubmit={search} className="flex justify-around gap-0">
                 <input type="text" name="searchTerm" maxLength={100} minLength={0}/>
-                <button type="submit" className="bg-slate-300 w-20">
-                  Go!
-                </button>
+                <CustomSubmitButton innerText="Go!"/>
               </form>
             </div>
           </div>
@@ -44,3 +43,4 @@ export default function AddNewGame() {
     </>
   );
 }
+

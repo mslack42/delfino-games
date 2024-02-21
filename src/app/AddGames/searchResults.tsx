@@ -1,7 +1,5 @@
 import { BggSummaryData } from "@/bgg/types";
 import { BggLink } from "@/components/common/BggLink";
-import { bggUrl } from "@/util/text-formatting";
-import { faLink } from "@fortawesome/free-solid-svg-icons/faLink";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";

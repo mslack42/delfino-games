@@ -10,29 +10,26 @@ export const NavigationBar = () => {
           <Link href="/" className="flex bottom-0">
             <FontAwesomeIcon
               icon={faDice}
-              className="h-12 text-white float-left "
+              className="h-12 text-white  "
             />
             <div className="h-12 flex align-text-bottom justify-end flex-col pl-2">
-              <h1 className="text-xl text-white align-text-bottom fle">
+              <h1 className="text-xl text-white align-text-bottom">
                 Delfino Games
               </h1>
             </div>
           </Link>
           <div className="flex justify-end flex-col h-full pb-3">
-            <ul className="flex gap-x-3 text-white">
-              |
-              <li>
+            <ul className="flex text-white divide-solid divide-x-2">
+              <li className="px-2">
                 <Link href="/ListGames">
                   <p>See all games</p>
                 </Link>
               </li>
-              |
-              <li>
+              <li className="px-2">
                 <Link href="/AddGames">
                   <p>Add a new game</p>
                 </Link>
               </li>
-              |
             </ul>
           </div>
         </div>

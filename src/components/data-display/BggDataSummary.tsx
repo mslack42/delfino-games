@@ -1,9 +1,9 @@
 import { BggSummaryData } from "@/bgg/types";
 import Image from "next/image";
-import { KeyValue } from "../common/KeyValue";
 import { playTime, playerCount } from "@/util/text-formatting";
 import React from "react";
 import { BggLink } from "../common/BggLink";
+import { DataSummaryKeyValuePair } from "./DataSummaryKeyValuePair";
 
 type Props = {
   data: BggSummaryData;
@@ -70,6 +70,7 @@ export function BggDataSummary(props: Props) {
               }
             ></ScrollBox>
           }
+          isMultiline
         ></DataSummaryKeyValuePair>
         <DataSummaryKeyValuePair
           dataKey={"Tags"}
@@ -82,24 +83,10 @@ export function BggDataSummary(props: Props) {
               }
             ></ScrollBox>
           }
+          isMultiline
         ></DataSummaryKeyValuePair>
       </div>
     </div>
-  );
-}
-
-type DataSummaryKeyValueProps = {
-  dataKey: string;
-  dataValue: string | React.ReactNode;
-};
-
-function DataSummaryKeyValuePair(props: DataSummaryKeyValueProps) {
-  return (
-    <KeyValue
-      dataKey={props.dataKey}
-      dataValue={props.dataValue}
-      className="flex flex-wrap justify-between w-4/5"
-    ></KeyValue>
   );
 }
 

@@ -1,18 +1,35 @@
-import { KeyValue } from "@/components/common/KeyValue";
+"use client";
+import { DataSummaryKeyValuePair } from "@/components/data-display/DataSummaryKeyValuePair";
 import { InventoryItem } from "@/database/types";
 import { playerCount, playTime } from "@/util/text-formatting";
 import Image from "next/image";
+import { useState } from "react";
+import { GamesListFilterControls } from "./GamesListFilterControls";
 
 type Props = {
   inventoryData: InventoryItem[];
 };
 
 export function GamesList(props: Props) {
+  const [filteredGamesList, setFilteredGamesList] = useState(
+    props.inventoryData
+  );
+
+  const applyFilters = (filteredList: InventoryItem[]) => {
+    setFilteredGamesList(filteredList);
+  };
+
   return (
-    <div>
-      <div>Some sort of filtering controls...</div>
-      <div>
-        {props.inventoryData.map((id) => (
+    <div className="h-full w-full">
+      <div className="w-full flex flex-row justify-center text-center items-center">
+        <div className="w-4/5 w-max-4/5">
+          <GamesListFilterControls
+           gamesList={props.inventoryData} 
+           onFilterChange={applyFilters}/>
+        </div>
+      </div>
+      <div className="flex max=w=full flex-wrap justify-around px-3">
+        {filteredGamesList.map((id) => (
           <InventoryItemPanel key={id.id} data={id}></InventoryItemPanel>
         ))}
       </div>
@@ -42,25 +59,39 @@ function InventoryItemPanel(props: PanelProps) {
   );
 
   return (
-    <div>
-      <h1>{data.name}</h1>
+    <div className="rounded-lg bg-cyan-200 w-60 max-h-96 overflow-hidden p-2 m-1">
+      <h1 className="text-center font-bold line-clamp-1" title={data.name}>
+        {data.name}
+      </h1>
       <div className="flex justify-center">{displayImage}</div>
-      <KeyValue
-        dataKey="Players"
-        dataValue={playerCount(
-          data.bggData.specs.maxPlayerCount,
-          data.bggData.specs.minPlayerCount
-        )}
-      ></KeyValue>
-      <KeyValue
-        dataKey="Duration"
-        dataValue={playTime(
-          data.bggData.specs.maxPlayTime,
-          data.bggData.specs.minPlayTime
-        )}
-      ></KeyValue>
-      <div>{data.dsData.location}</div>
-      <div>{data.dsData.holder}</div>
+      <div className="flex justify-center items-center text-center flex-col ">
+        <DataSummaryKeyValuePair
+          dataKey="Players"
+          dataValue={playerCount(
+            data.bggData.specs.maxPlayerCount,
+            data.bggData.specs.minPlayerCount
+          )}
+        ></DataSummaryKeyValuePair>
+        <DataSummaryKeyValuePair
+          dataKey="Duration"
+          dataValue={
+            <div className="text-right">
+              {playTime(
+                data.bggData.specs.maxPlayTime,
+                data.bggData.specs.minPlayTime
+              )}
+            </div>
+          }
+        ></DataSummaryKeyValuePair>
+        <DataSummaryKeyValuePair
+          dataKey="Office"
+          dataValue={<div className="text-right">{data.dsData.location}</div>}
+        ></DataSummaryKeyValuePair>
+        <DataSummaryKeyValuePair
+          dataKey="Holder"
+          dataValue={<div className="text-right">{data.dsData.holder}</div>}
+        ></DataSummaryKeyValuePair>
+      </div>
     </div>
   );
 }
