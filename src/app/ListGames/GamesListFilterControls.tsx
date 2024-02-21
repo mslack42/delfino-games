@@ -1,9 +1,7 @@
 import { InventoryItem } from "@/database/types";
 import { useState } from "react";
 import { dedupe } from "../../util/dedupe";
-import {
-  FilterBubbleData,
-} from "../../components/input/FilterBubbleBucket";
+import { FilterBubbleData } from "../../components/input/FilterBubbleBucket";
 import { BubbleFilterInput } from "../../components/input/BubbleFilterInput";
 
 type Props = {
@@ -20,6 +18,7 @@ export type FilterState = {
   bubbleTypeFilters: {
     office: BubbleTypeFilter;
     holders: BubbleTypeFilter;
+    tags: BubbleTypeFilter;
     [key: string]: BubbleTypeFilter;
   };
   filterOnDuration: boolean;
@@ -45,6 +44,10 @@ const initialFilterState: FilterState = {
       filterOn: false,
       values: [],
     },
+    tags: {
+      filterOn: false,
+      values: [],
+    },
   },
 };
 
@@ -56,37 +59,58 @@ const applyBubbleTypeFilter = (
   if (!filterState?.bubbleTypeFilters[filterKey].filterOn) {
     return true;
   }
-  return filterState.bubbleTypeFilters[filterKey].values.includes(
-    value
-  );
+  return filterState.bubbleTypeFilters[filterKey].values.includes(value);
 };
 const filterData = (filterState: FilterState) => {
   return (data: InventoryItem[]) =>
     data
-      .filter((g) => applyBubbleTypeFilter(filterState, "office", g.dsData.location))
-      .filter((g) => applyBubbleTypeFilter(filterState, "holders", g.dsData.holder));
+      .filter((g) =>
+        applyBubbleTypeFilter(filterState, "office", g.dsData.location)
+      )
+      .filter((g) =>
+        applyBubbleTypeFilter(filterState, "holders", g.dsData.holder)
+      )
+      .filter((g) =>
+        g.bggData.specs.tags.some((t) =>
+          applyBubbleTypeFilter(filterState, "tags", t)
+        )
+      );
 };
+
+function sortBubbleData(data: FilterBubbleData[]) {
+  let newData = [...data];
+  newData.sort((a, b) => a.name.localeCompare(b.name));
+  return newData;
+}
 
 export function GamesListFilterControls(props: Props) {
   const onFilterChange = props.onFilterChange;
   const gamesList = props.gamesList;
 
-  const offices: FilterBubbleData[] = dedupe(
-    gamesList.map((g) => g.dsData.location)
-  ).map((d) => {
-    return {
-      name: d,
-      data: d,
-    };
-  });
-  const holders: FilterBubbleData[] = dedupe(
-    gamesList.map((g) => g.dsData.holder)
-  ).map((d) => {
-    return {
-      name: d,
-      data: d,
-    };
-  });
+  const offices: FilterBubbleData[] = sortBubbleData(
+    dedupe(gamesList.map((g) => g.dsData.location)).map((d) => {
+      return {
+        name: d,
+        data: d,
+      };
+    })
+  );
+  const holders: FilterBubbleData[] = sortBubbleData(
+    dedupe(gamesList.map((g) => g.dsData.holder)).map((d) => {
+      return {
+        name: d,
+        data: d,
+      };
+    })
+  );
+  const tags: FilterBubbleData[] = sortBubbleData(
+    dedupe(gamesList.map((g) => g.bggData.specs.tags).flat()).map((d) => {
+      return {
+        name: d,
+        data: d,
+      };
+    })
+  );
 
   const [filterState, _setFilterState] = useState<FilterState>({
     ...initialFilterState,
@@ -99,7 +123,11 @@ export function GamesListFilterControls(props: Props) {
       holders: {
         ...initialFilterState.bubbleTypeFilters.holders,
         values: holders.map((o) => o.data as string),
-      }
+      },
+      tags: {
+        ...initialFilterState.bubbleTypeFilters.tags,
+        values: [],
+      },
     },
   });
   const setFilterState = (newState: FilterState) => {
@@ -108,7 +136,7 @@ export function GamesListFilterControls(props: Props) {
 
   return (
     <>
-      <form className="border border-black">
+      <div className="border border-black">
         <BubbleFilterInput
           filterName="Office"
           filterState={filterState}
@@ -123,9 +151,14 @@ export function GamesListFilterControls(props: Props) {
           filterKey="holders"
           allOptions={holders}
         />
-      </form>
+        <BubbleFilterInput
+          filterName="Tags"
+          filterState={filterState}
+          setFilterState={setFilterState}
+          filterKey="tags"
+          allOptions={tags}
+        />
+      </div>
     </>
   );
 }
-
-
