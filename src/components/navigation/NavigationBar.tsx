@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDice } from "@fortawesome/free-solid-svg-icons/faDice";
 import Link from "next/link";
-import { auth, signOut } from "@/auth";
+import { signOut } from "@/auth";
 import { LoggedInOnly } from "../auth/LoggedInOnly";
 import { LoggedOutOnly } from "../auth/LoggedOutOnly";
 import { RoleCheck } from "../auth/RoleCheck";

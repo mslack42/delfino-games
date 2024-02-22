@@ -31,8 +31,13 @@ export default function AddNewGame() {
             <div className="text-center text-teal-800 flex flex-col justify-between gap-4">
               <h1 className="text-2xl">Search for your new game</h1>
               <form onSubmit={search} className="flex justify-around gap-0">
-                <input type="text" name="searchTerm" maxLength={100} minLength={0}/>
-                <CustomSubmitButton innerText="Go!"/>
+                <input
+                  type="text"
+                  name="searchTerm"
+                  maxLength={100}
+                  minLength={0}
+                />
+                <CustomSubmitButton innerText="Go!" />
               </form>
             </div>
           </div>
@@ -43,4 +48,3 @@ export default function AddNewGame() {
     </>
   );
 }
-

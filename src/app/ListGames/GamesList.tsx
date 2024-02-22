@@ -24,8 +24,9 @@ export function GamesList(props: Props) {
       <div className="w-full flex flex-row justify-center text-center items-center">
         <div className="w-4/5 w-max-4/5">
           <GamesListFilterControls
-           gamesList={props.inventoryData} 
-           onFilterChange={applyFilters}/>
+            gamesList={props.inventoryData}
+            onFilterChange={applyFilters}
+          />
         </div>
       </div>
       <div className="flex max=w=full flex-wrap justify-around px-3">

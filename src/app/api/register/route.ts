@@ -17,11 +17,10 @@ export async function POST(req: Request) {
         password: hashed_password,
         accounts: {
           create: {
-            role: "Unverified"
-          }
-        }
+            role: "Unverified",
+          },
+        },
       },
-  
     });
 
     return NextResponse.json({

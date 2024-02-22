@@ -55,7 +55,11 @@ export default async function AddGame(props: Props) {
         ></AddGamePanel>
         <AddGamePanel
           content={
-            <AddGameForm holders={holders} action={submitGame} className="flex flex-col justify-center items-center max-w-4/5"></AddGameForm>
+            <AddGameForm
+              holders={holders}
+              action={submitGame}
+              className="flex flex-col justify-center items-center max-w-4/5"
+            ></AddGameForm>
           }
         ></AddGamePanel>
       </div>

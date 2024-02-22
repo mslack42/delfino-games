@@ -99,10 +99,7 @@ export const RegisterForm = () => {
           </span>
         )}
       </div>
-      <button
-        type="submit"
-        disabled={submitting}
-      >
+      <button type="submit" disabled={submitting}>
         {submitting ? "loading..." : "Sign Up"}
       </button>
     </form>

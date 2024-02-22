@@ -23,8 +23,6 @@ type ResultProps = {
   result: BggSummaryData;
 };
 
-
-
 export function SearchResult(props: ResultProps) {
   const data = props.result;
   const displayImage = data.thumb ? (
@@ -70,9 +68,7 @@ function ActionBar({ bggId }: { bggId: number }) {
       </li>
       <li title="BoardGameGeek link">
         <ActionBarButton
-          content={
-            <BggLink bggId={bggId}></BggLink>
-          }
+          content={<BggLink bggId={bggId}></BggLink>}
         ></ActionBarButton>
       </li>
     </ul>
