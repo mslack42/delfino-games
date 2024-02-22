@@ -4,11 +4,9 @@ import Link from "next/link";
 import { auth, signOut } from "@/auth";
 import { LoggedInOnly } from "../auth/LoggedInOnly";
 import { LoggedOutOnly } from "../auth/LoggedOutOnly";
+import { RoleCheck } from "../auth/RoleCheck";
 
 export const NavigationBar = async () => {
-  const session = await auth();
-  const user = session?.user;
-
   const logoutAction = async () => {
     "use server";
     await signOut();
@@ -33,7 +31,9 @@ export const NavigationBar = async () => {
                   <p>See all games</p>
                 </Link>
               </li>
-              <LoggedInOnly
+              <RoleCheck
+              type="oneOf"
+              roles={["Admin"]}
                 content={
                   <li className="px-2">
                     <Link href="/AddGames">

@@ -15,7 +15,13 @@ export async function POST(req: Request) {
         name,
         email: email.toLowerCase(),
         password: hashed_password,
+        accounts: {
+          create: {
+            role: "Unverified"
+          }
+        }
       },
+  
     });
 
     return NextResponse.json({

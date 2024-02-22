@@ -19,9 +19,6 @@ export default async function Home() {
           You can use this website to help find a game to play, or request a
           game to be available to play on a Monday night.
         </p>
-        {user && (
-          <div>Currently logged in as {user.name} ({user.email})</div>
-        )}
       </div>
     </>
   );
