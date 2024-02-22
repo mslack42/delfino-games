@@ -1,4 +1,9 @@
-export default function Home() {
+import { auth } from "@/auth";
+
+export default async function Home() {
+  const session = await auth()
+  const user = session?.user
+
   return (
     <>
       <div className="h-full flex-col text-center">
@@ -14,6 +19,9 @@ export default function Home() {
           You can use this website to help find a game to play, or request a
           game to be available to play on a Monday night.
         </p>
+        {user && (
+          <div>Currently logged in as {user.name} ({user.email})</div>
+        )}
       </div>
     </>
   );
