@@ -1,9 +1,6 @@
-import { auth } from "@/auth";
+import { RoleCheck } from "@/components/auth/RoleCheck";
 
 export default async function Home() {
-  const session = await auth()
-  const user = session?.user
-
   return (
     <>
       <div className="h-full flex-col text-center">
@@ -19,6 +16,25 @@ export default async function Home() {
           You can use this website to help find a game to play, or request a
           game to be available to play on a Monday night.
         </p>
+        <RoleCheck
+          type="oneOf"
+          roles={["Verified"]}
+          content={
+            <>
+              <div>
+                <p>Your account is not verified.</p>
+                <p>
+                  This means that you only have limited functionality available
+                  to you.
+                </p>
+                <p>
+                  Contact anyone with an Admin account in order to get your
+                  account verified.
+                </p>
+              </div>
+            </>
+          }
+        />
       </div>
     </>
   );
