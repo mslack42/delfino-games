@@ -47,8 +47,8 @@ model BoardGameDataSpecs {
 model BoardGameBggDataStats {
   id               Int                @id @default(autoincrement())
   bggId            Int                @unique
-  bggRank          Int
-  bggAverageScore  Float
+  bggRank          Int?
+  bggAverageScore  Float?
   BoardGameBggData BoardGameBggData[]
 }
 

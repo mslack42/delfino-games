@@ -45,8 +45,8 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
             },
             stats: {
               create: {
-                bggAverageScore: newData.bggData.boardGameDataSpecs.score!,
-                bggRank: newData.bggData.boardGameDataSpecs.rank!,
+                bggAverageScore: newData.bggData.boardGameDataSpecs.score,
+                bggRank: newData.bggData.boardGameDataSpecs.rank,
                 bggId: newData.bggData.bggId,
               },
             },
