@@ -1,9 +1,6 @@
 import { BggSummaryData } from "@/bgg/types";
-import { BggLink } from "@/components/common/BggLink";
-import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import Link from "next/link";
+import { ActionBar } from "./ActionBar";
 
 type ResultsProps = {
   results: BggSummaryData[];
@@ -54,31 +51,4 @@ export function SearchResult(props: ResultProps) {
   );
 }
 
-function ActionBar({ bggId }: { bggId: number }) {
-  return (
-    <ul className="flex flex-row-reverse gap-2 mt-1 mb-1  pt-2 pb-2">
-      <li title="Add game">
-        <ActionBarButton
-          content={
-            <Link href={`/add-game/${bggId}`}>
-              <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-            </Link>
-          }
-        ></ActionBarButton>
-      </li>
-      <li title="BoardGameGeek link">
-        <ActionBarButton
-          content={<BggLink bggId={bggId}></BggLink>}
-        ></ActionBarButton>
-      </li>
-    </ul>
-  );
-}
 
-function ActionBarButton({ content }: { content: React.ReactNode }) {
-  return (
-    <div className="cursor-pointer bg-teal-400 w-8 h-8 rounded-lg text-center flex flex-col justify-center hover:bg-teal-500">
-      {content}
-    </div>
-  );
-}

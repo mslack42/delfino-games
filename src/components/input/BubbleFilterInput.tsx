@@ -1,8 +1,5 @@
+import { FilterState, BubbleTypeFilter } from "../games-list/types";
 import { FilterBubbleData, FilterBubbleBucket } from "./FilterBubbleBucket";
-import {
-  FilterState,
-  BubbleTypeFilter,
-} from "../../app/game/GamesListFilterControls";
 
 export type BubbleFilterInput = {
   filterName: string;

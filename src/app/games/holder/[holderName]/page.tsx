@@ -1,5 +1,5 @@
 import { listInventory } from "@/database/listInventory";
-import { GamesList } from "../../GamesList";
+import { GamesList } from "../../../../components/games-list/GamesList";
 
 type Props = {
     params: {

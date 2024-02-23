@@ -1,3 +1,5 @@
+import { tryParseFloat } from "../util/tryParseFloat";
+import { tryParseInt } from "../util/tryParseInt";
 import { BggSummaryData } from "./types";
 import * as xml2js from 'xml2js'
 
@@ -61,28 +63,3 @@ const parseBggDetailsIntoList = async (bggData: any[]) => {
     return output
 }
 
-const tryParseInt = (s:string): number|undefined => {
-    try {
-        const value = Number.parseInt(s)
-        if (Number.isFinite(value)) {
-            return value
-        }
-        return undefined
-    }
-     catch (e) {
-        return undefined
-     }
-}
-
-const tryParseFloat = (s:string): number|undefined => {
-    try {
-        const value = Number.parseFloat(s)
-        if (Number.isFinite(value)) {
-            return value
-        }
-        return undefined
-    }
-     catch (e) {
-        return undefined
-     }
-}

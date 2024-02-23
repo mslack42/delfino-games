@@ -5,7 +5,7 @@ import { listHolders } from "@/database/listHolders";
 import { Ownership, Location } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { AddGameForm } from "./AddGameForm";
-import { Panel } from "../../../components/common/Panel";
+import { HalfPagePanel } from "../../../components/data-display/HalfPagePanel";
 
 type Props = {
   params: {
@@ -50,10 +50,10 @@ export default async function AddGame(props: Props) {
   return (
     <div className="w-full max-w-4xl">
       <div className="flex flex-wrap justify-between">
-        <AddGamePanel
+        <HalfPagePanel
           content={<BggDataSummary data={data}></BggDataSummary>}
-        ></AddGamePanel>
-        <AddGamePanel
+        ></HalfPagePanel>
+        <HalfPagePanel
           content={
             <AddGameForm
               holders={holders}
@@ -61,22 +61,8 @@ export default async function AddGame(props: Props) {
               className="flex flex-col justify-center items-center max-w-4/5"
             ></AddGameForm>
           }
-        ></AddGamePanel>
+        ></HalfPagePanel>
       </div>
     </div>
-  );
-}
-
-function AddGamePanel({ content }: { content: React.ReactNode }) {
-  return (
-    <Panel
-      className="w-full md:w-1/2 "
-      content={
-        <Panel
-          className="p-4 pt-2 pb-2 m-4 bg-cyan-200 rounded-lg"
-          content={content}
-        ></Panel>
-      }
-    ></Panel>
   );
 }

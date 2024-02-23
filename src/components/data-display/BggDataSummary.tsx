@@ -4,6 +4,8 @@ import { playTime, playerCount } from "@/util/text-formatting";
 import React from "react";
 import { BggLink } from "../common/BggLink";
 import { DataSummaryKeyValuePair } from "./DataSummaryKeyValuePair";
+import { TagBucket } from "../common/TagBucket";
+import { ScrollBox } from "../common/ScrollBox";
 
 type Props = {
   data: BggSummaryData;
@@ -90,35 +92,4 @@ export function BggDataSummary(props: Props) {
   );
 }
 
-type ScrollBoxProps = {
-  content: React.ReactNode;
-};
 
-function ScrollBox(props: ScrollBoxProps) {
-  return (
-    <div className="max-h-36 min-w-full text-left overflow-hidden hover:overflow-y-scroll pl-4 pr-4 bg-teal-300 rounded-lg ">
-      {props.content}
-    </div>
-  );
-}
-
-type TagBucketProps = {
-  tags: string[];
-};
-
-function TagBucket(props: TagBucketProps) {
-  return (
-    <div className="flex flex-wrap text-left justify-items-start justify-start gap-2 text-sm pt-2 pb-2">
-      {props.tags.map((t) => (
-        <Tag tag={t} key={t}></Tag>
-      ))}
-    </div>
-  );
-}
-
-type TagProps = {
-  tag: string;
-};
-function Tag(props: TagProps) {
-  return <div className="bg-indigo-300 p-1 rounded-lg">{props.tag}</div>;
-}
