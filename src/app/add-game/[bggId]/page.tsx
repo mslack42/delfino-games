@@ -43,7 +43,7 @@ export default async function AddGame(props: Props) {
     const submitSuccess = await addGame(newGame);
 
     if (submitSuccess) {
-      redirect("/ListGames");
+      redirect("/games");
     }
   }
 

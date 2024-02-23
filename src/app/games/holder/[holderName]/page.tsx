@@ -10,9 +10,9 @@ type Props = {
 export default async function ListGames(props:Props) {
   const holderName = decodeURI(props.params.holderName)
     const inventoryData = await listInventory(holderName);
-
+    const title = `${holderName}'s Games`
     return (<>
-      <h1 className="text-4xl">{holderName}&aposs Games</h1>
+      <h1 className="text-4xl">{title}</h1>
       <GamesList inventoryData={inventoryData} controlsKeys={["tags"]}></GamesList>
     </>)
 }
