@@ -2,6 +2,7 @@ import { BggDataSummary } from "@/components/data-display/BggDataSummary";
 import { HalfPagePanel } from "@/components/data-display/HalfPagePanel";
 import { getInventoryItem } from "@/database/getGame";
 import { createBggDataSummaryFromInventoryItem } from "@/util/data-conversion";
+import { DsDataSummary } from "./DsDataSummary";
 
 type Props = {
   params: {
@@ -16,16 +17,16 @@ export default async function GamePage(props: Props) {
     <div className="w-full max-w-4xl">
       <div className="flex flex-wrap justify-between">
         <HalfPagePanel
-          content={<BggDataSummary data={createBggDataSummaryFromInventoryItem(data)}></BggDataSummary>}
+          content={
+            <BggDataSummary
+              data={createBggDataSummaryFromInventoryItem(data)}
+            ></BggDataSummary>
+          }
         ></HalfPagePanel>
-        <HalfPagePanel content={
-          <DsDataSummary></DsDataSummary>
-        }></HalfPagePanel>
+        <HalfPagePanel
+          content={<DsDataSummary data={data.dsData}></DsDataSummary>}
+        ></HalfPagePanel>
       </div>
     </div>
   );
 }
-
-export function DsDataSummary() {
-  return <div>Other data</div>
-} 
