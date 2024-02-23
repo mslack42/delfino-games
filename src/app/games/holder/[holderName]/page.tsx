@@ -12,7 +12,7 @@ export default async function ListGames(props:Props) {
     const inventoryData = await listInventory(holderName);
 
     return (<>
-      <h1 className="text-4xl">{holderName}'s Games</h1>
+      <h1 className="text-4xl">{holderName}&aposs Games</h1>
       <GamesList inventoryData={inventoryData} controlsKeys={["tags"]}></GamesList>
     </>)
 }

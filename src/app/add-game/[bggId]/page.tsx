@@ -18,7 +18,7 @@ export default async function AddGame(props: Props) {
   const holders = await listHolders();
 
   if (bggData.length === 0) {
-    return <main>Oops, something went wrong :'(</main>;
+    return <main>Oops, something went wrong :&apos(</main>;
   }
 
   const data = bggData[0];
