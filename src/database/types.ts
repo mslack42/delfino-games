@@ -7,15 +7,15 @@ export type InventoryItem = {
       image?: string | undefined;
       thumb?: string | undefined;
       specs: {
-        maxPlayerCount?: number;
-        minPlayerCount?: number;
-        maxPlayTime?: number;
-        minPlayTime?: number;
+        maxPlayerCount?: number | null;
+        minPlayerCount?: number | null;
+        maxPlayTime?: number | null;
+        minPlayTime?: number | null;
         tags: string[];
       };
       stats: {
-        score?: number;
-        rank?: number;
+        score?: number | null;
+        rank?: number | null;
       };
       lastUpdated: Date | undefined;
     };

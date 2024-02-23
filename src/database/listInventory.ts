@@ -1,7 +1,23 @@
 import prisma from "@/db";
 import { InventoryItem } from "./types";
 
-export async function listInventory(): Promise<InventoryItem[]> {
+export async function listInventory(
+  holderName?: string
+): Promise<InventoryItem[]> {
+  let where = holderName
+    ? {
+        where: {
+          dsData: {
+            holder: {
+              is: {
+                name: holderName,
+              },
+            },
+          },
+        },
+      }
+    : undefined;
+
   const data = await prisma.boardGame.findMany({
     include: {
       bggData: {
@@ -20,6 +36,7 @@ export async function listInventory(): Promise<InventoryItem[]> {
     orderBy: {
       name: "asc",
     },
+    ...where,
   });
 
   return data.map((r) => {

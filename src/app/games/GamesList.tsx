@@ -4,10 +4,11 @@ import { InventoryItem } from "@/database/types";
 import { playerCount, playTime } from "@/util/text-formatting";
 import Image from "next/image";
 import { useState } from "react";
-import { GamesListFilterControls } from "./GamesListFilterControls";
+import { ControlsKey, GamesListFilterControls } from "./GamesListFilterControls";
 
 type Props = {
   inventoryData: InventoryItem[];
+  controlsKeys: ControlsKey[]
 };
 
 export function GamesList(props: Props) {
@@ -26,6 +27,7 @@ export function GamesList(props: Props) {
           <GamesListFilterControls
             gamesList={props.inventoryData}
             onFilterChange={applyFilters}
+            controlsKeys={props.controlsKeys}
           />
         </div>
       </div>
