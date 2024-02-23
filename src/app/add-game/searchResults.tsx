@@ -60,7 +60,7 @@ function ActionBar({ bggId }: { bggId: number }) {
       <li title="Add game">
         <ActionBarButton
           content={
-            <Link href={`/AddGame/${bggId}`}>
+            <Link href={`/add-game/${bggId}`}>
               <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
             </Link>
           }

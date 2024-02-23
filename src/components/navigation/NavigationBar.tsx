@@ -27,7 +27,7 @@ export const NavigationBar = async () => {
           <div className="flex justify-end flex-col h-full pb-3">
             <ul className="flex text-white divide-solid divide-x-2">
               <li className="px-2">
-                <Link href="/ListGames">
+                <Link href="/games">
                   <p>See all games</p>
                 </Link>
               </li>
@@ -36,7 +36,7 @@ export const NavigationBar = async () => {
               roles={["Admin"]}
                 content={
                   <li className="px-2">
-                    <Link href="/AddGames">
+                    <Link href="/add-game">
                       <p>Add a new game</p>
                     </Link>
                   </li>
@@ -54,7 +54,7 @@ export const NavigationBar = async () => {
               <LoggedOutOnly
                 content={
                   <li className="px-2">
-                    <Link href="/LogIn">
+                    <Link href="/login">
                       <p>Login</p>
                     </Link>
                   </li>
