@@ -18,7 +18,14 @@ export default async function GamePage(props: Props) {
         <HalfPagePanel
           content={<BggDataSummary data={createBggDataSummaryFromInventoryItem(data)}></BggDataSummary>}
         ></HalfPagePanel>
+        <HalfPagePanel content={
+          <DsDataSummary></DsDataSummary>
+        }></HalfPagePanel>
       </div>
     </div>
   );
 }
+
+export function DsDataSummary() {
+  return <div>Other data</div>
+} 

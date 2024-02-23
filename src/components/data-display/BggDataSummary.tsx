@@ -1,11 +1,11 @@
 import { BggSummaryData } from "@/bgg/types";
-import Image from "next/image";
 import { playTime, playerCount } from "@/util/text-formatting";
 import React from "react";
 import { BggLink } from "../common/BggLink";
 import { DataSummaryKeyValuePair } from "./DataSummaryKeyValuePair";
 import { TagBucket } from "../common/TagBucket";
 import { ScrollBox } from "../common/ScrollBox";
+import { BoardGameImage } from "./BoardGameImage";
 
 type Props = {
   data: BggSummaryData;
@@ -15,23 +15,11 @@ type Props = {
 export function BggDataSummary(props: Props) {
   const { data, className } = props;
 
-  const displayImage = data.image ? (
-    <Image
-      src={data.image!}
-      alt={data.name}
-      height="200"
-      width="200"
-      className="w-auto h-60"
-    ></Image>
-  ) : (
-    <div className="text-lg h-60 text-center bg-slate-400 text-gray-300 align-middle">
-      <span>No image found</span>
-    </div>
-  );
-
   return (
     <div className={className}>
-      <div className="flex justify-center p-4">{displayImage}</div>
+      <div className="flex justify-center p-4">
+        <BoardGameImage imageUrl={data.image} imageName={data.name} size={200} lineHeight={60} />
+      </div>
       <h1 className="text-2xl font-bold pt-2">{data.name}</h1>
       <div className="flex justify-center items-center text-center flex-col ">
         <DataSummaryKeyValuePair
@@ -79,9 +67,7 @@ export function BggDataSummary(props: Props) {
           dataValue={
             <ScrollBox
               content={
-                <TagBucket
-                  tags={data.boardGameBggDataStats.tags}
-                ></TagBucket>
+                <TagBucket tags={data.boardGameBggDataStats.tags}></TagBucket>
               }
             ></ScrollBox>
           }
