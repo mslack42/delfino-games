@@ -28,15 +28,15 @@ const parseBggDetailsIntoList = async (bggData: any[]) => {
                 bggId: item?.$?.id,
                 thumb: (item?.thumbnail && item?.thumbnail.length) ? item?.thumbnail[0]: undefined,
                 image: (item?.image && item?.image.length) ? item?.image[0]: undefined,
-                name: item?.name?.filter(n => n.$.type === "primary")[0].$.value,
+                name: item?.name?.filter((n: { $: { type: string; }; })=> n.$.type === "primary")[0].$.value,
                 description: (item?.description && item?.description.length) ? item?.description[0]: undefined,
                 minPlayers: item?.minplayers[0].$.value,
                 maxPlayers: item?.maxplayers[0].$.value,
                 minPlaytime: item?.minplaytime[0].$.value,
                 maxPlaytime: item?.maxplaytime[0].$.value,
                 bggScore: item?.statistics[0].ratings[0].average[0].$.value,
-                bggRank:  item?.statistics[0].ratings[0].ranks[0].rank.filter(r => r.$.name === "boardgame")[0].$.value,
-                tags: item?.link.filter(l => ['boardgamecategory','boardgamemechanic'].includes(l.$.type)).map(l => l.$.value)
+                bggRank:  item?.statistics[0].ratings[0].ranks[0].rank.filter((r: { $: { name: string; }; }) => r.$.name === "boardgame")[0].$.value,
+                tags: item?.link.filter((l: { $: { type: string; }; }) => ['boardgamecategory','boardgamemechanic'].includes(l.$.type)).map((l: { $: { value: any; }; }) => l.$.value)
             }
 
             const data: BggSummaryData = {

@@ -1,8 +1,9 @@
 "use client";
 import { InventoryItem } from "@/database/types";
 import { useState } from "react";
-import { ControlsKey, GamesListFilterControls } from "./GamesListFilterControls";
+import { GamesListFilterControls } from "./GamesListFilterControls";
 import { InventoryItemPanel } from "../data-display/InventoryItemPanel";
+import { ControlsKey } from "./types";
 
 type Props = {
   inventoryData: InventoryItem[];
