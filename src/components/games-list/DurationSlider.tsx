@@ -6,9 +6,9 @@ export type SliderProps = {
   setFilterState: (newState: FilterState) => void;
   range: [number, number];
 };
-export function PlayerCountSlider(props: SliderProps) {
-  const filterName = "Player Count";
-  const filterKey = "playercount";
+export function DurationSlider(props: SliderProps) {
+  const filterName = "Duration";
+  const filterKey = "duration";
 
   const { filterState, setFilterState, range } = props;
 
@@ -16,7 +16,7 @@ export function PlayerCountSlider(props: SliderProps) {
     const lower = Math.min(...range);
     const upper = Math.max(...range);
 
-    const upperString = upper == 12 ? "12+" : `${upper}`;
+    const upperString = upper == 120 ? "120+ mins" : `${upper} mins`;
 
     if (lower < upper) {
       return `${lower} - ${upperString}`;
@@ -53,6 +53,7 @@ export function PlayerCountSlider(props: SliderProps) {
             filterState.sliderTypeFilters[filterKey].lower,
             filterState.sliderTypeFilters[filterKey].upper,
           ]}
+          step={5}
           summariser={summariser}
           onChange={(range: number[]) => {
             setFilterState({

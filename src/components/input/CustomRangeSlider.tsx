@@ -5,7 +5,8 @@ type Props = {
   fullRange: [number, number];
   defaultRange: [number, number];
   summariser: (range: [number, number]) => string;
-  onChange?: (range: number[]) => void
+  onChange?: (range: number[]) => void;
+  step?: number
 };
 export function CustomRangeSlider(props: Props) {
   const [lower, setLower] = useState(Math.min(...props.defaultRange));
@@ -22,10 +23,11 @@ export function CustomRangeSlider(props: Props) {
 
   return (
     <>
-      <div className="flex px-4 space-x-2">
+      <div className="flex px-4 space-x-2 w-60">
         <Slider
           min={Math.min(...props.fullRange)}
           max={Math.max(...props.fullRange)}
+          step={props.step ?? 1}
           defaultValue={props.defaultRange}
           onChange={onSliderChange}
           className="w-52 py-2"

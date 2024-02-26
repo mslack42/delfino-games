@@ -7,6 +7,7 @@ import { FilterState, ControlsKey } from "./types";
 import { filterData } from "./utils/filterData";
 import { sortBubbleData } from "./utils/sortBubbleData";
 import { PlayerCountSlider } from "./PlayerCountSlider";
+import { DurationSlider } from "./DurationSlider";
 
 const initialFilterState: FilterState = {
   bubbleTypeFilters: {
@@ -70,12 +71,28 @@ export function GamesListFilterControls(props: Props) {
       };
     })
   );
-  const playerCountRange: number[] = gamesList.map((g) => {
-    return [g.bggData.specs.minPlayerCount, g.bggData.specs.maxPlayerCount];
-  }).reduce((a,b) => {
-    const vals = a.concat(b).filter(v => v) as number[]
-    return [Math.min(...vals), Math.min(Math.max(...vals),12)]
-  }, [null,null]) as number[];
+  const playerCountRange: number[] = gamesList
+    .map((g) => {
+      return [g.bggData.specs.minPlayerCount, g.bggData.specs.maxPlayerCount];
+    })
+    .reduce(
+      (a, b) => {
+        const vals = a.concat(b).filter((v) => v) as number[];
+        return [Math.min(...vals), Math.min(Math.max(...vals), 12)];
+      },
+      [null, null]
+    ) as number[];
+  const durationRange: number[] = gamesList
+    .map((g) => {
+      return [g.bggData.specs.minPlayTime, g.bggData.specs.maxPlayTime];
+    })
+    .reduce(
+      (a, b) => {
+        const vals = a.concat(b).filter((v) => v) as number[];
+        return [Math.min(...vals), Math.min(Math.max(...vals), 120)];
+      },
+      [null, null]
+    ) as number[];
 
   const [filterState, _setFilterState] = useState<FilterState>({
     ...initialFilterState,
@@ -93,7 +110,7 @@ export function GamesListFilterControls(props: Props) {
         ...initialFilterState.bubbleTypeFilters.tags,
         values: [],
       },
-    }
+    },
   });
   const setFilterState = (newState: FilterState) => {
     _setFilterState(newState),
@@ -132,11 +149,16 @@ export function GamesListFilterControls(props: Props) {
         )}
         {props.controlsKeys.includes("playercount") && (
           <PlayerCountSlider
-            filterName="Player Count"
             filterState={filterState}
             setFilterState={setFilterState}
-            filterKey="playercount"
-            range={playerCountRange as [number,number]}
+            range={playerCountRange as [number, number]}
+          />
+        )}
+        {props.controlsKeys.includes("duration") && (
+          <DurationSlider
+            filterState={filterState}
+            setFilterState={setFilterState}
+            range={durationRange as [number, number]}
           />
         )}
       </div>

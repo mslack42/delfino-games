@@ -35,5 +35,16 @@ export const filterData = (
               g.bggData.specs.minPlayerCount <=
                 filterState.sliderTypeFilters["playercount"].upper)
           : g
+      )
+      .filter((g) =>
+        controlsKeys.includes("duration") &&
+        filterState.sliderTypeFilters["duration"].filterOn
+          ? (!g.bggData.specs.maxPlayTime ||
+              g.bggData.specs.maxPlayTime >=
+                filterState.sliderTypeFilters["duration"].lower) &&
+            (!g.bggData.specs.minPlayTime ||
+              g.bggData.specs.minPlayTime <=
+                filterState.sliderTypeFilters["duration"].upper)
+          : g
       );
 };
