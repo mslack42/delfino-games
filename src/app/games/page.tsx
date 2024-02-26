@@ -7,7 +7,7 @@ export default async function ListGames() {
   return (
     <>
       <h1 className="text-4xl">All Games</h1>
-      <GamesList inventoryData={inventoryData} controlsKeys={["holders","office","tags"]}></GamesList>
+      <GamesList inventoryData={inventoryData} controlsKeys={["holders","office","tags","playercount","duration"]}></GamesList>
     </>
   );
 }

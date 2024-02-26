@@ -6,15 +6,9 @@ import { BubbleFilterInput } from "../input/BubbleFilterInput";
 import { FilterState, ControlsKey } from "./types";
 import { filterData } from "./utils/filterData";
 import { sortBubbleData } from "./utils/sortBubbleData";
-
+import { PlayerCountSlider } from "./PlayerCountSlider";
 
 const initialFilterState: FilterState = {
-  filterOnDuration: false,
-  minDuration: 0,
-  maxDuration: 999,
-  filterOnPlayerCount: false,
-  minPlayerCount: 0,
-  maxPlayerCount: 99,
   bubbleTypeFilters: {
     office: {
       filterOn: false,
@@ -27,6 +21,18 @@ const initialFilterState: FilterState = {
     tags: {
       filterOn: false,
       values: [],
+    },
+  },
+  sliderTypeFilters: {
+    playercount: {
+      filterOn: false,
+      lower: 1,
+      upper: 12,
+    },
+    duration: {
+      filterOn: false,
+      lower: 5,
+      upper: 120,
     },
   },
 };
@@ -64,6 +70,12 @@ export function GamesListFilterControls(props: Props) {
       };
     })
   );
+  const playerCountRange: number[] = gamesList.map((g) => {
+    return [g.bggData.specs.minPlayerCount, g.bggData.specs.maxPlayerCount];
+  }).reduce((a,b) => {
+    const vals = a.concat(b).filter(v => v) as number[]
+    return [Math.min(...vals), Math.min(Math.max(...vals),12)]
+  }, [null,null]) as number[];
 
   const [filterState, _setFilterState] = useState<FilterState>({
     ...initialFilterState,
@@ -81,7 +93,7 @@ export function GamesListFilterControls(props: Props) {
         ...initialFilterState.bubbleTypeFilters.tags,
         values: [],
       },
-    },
+    }
   });
   const setFilterState = (newState: FilterState) => {
     _setFilterState(newState),
@@ -116,6 +128,15 @@ export function GamesListFilterControls(props: Props) {
             setFilterState={setFilterState}
             filterKey="tags"
             allOptions={tags}
+          />
+        )}
+        {props.controlsKeys.includes("playercount") && (
+          <PlayerCountSlider
+            filterName="Player Count"
+            filterState={filterState}
+            setFilterState={setFilterState}
+            filterKey="playercount"
+            range={playerCountRange as [number,number]}
           />
         )}
       </div>
