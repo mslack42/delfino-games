@@ -46,5 +46,11 @@ export const filterData = (
               g.bggData.specs.minPlayTime <=
                 filterState.sliderTypeFilters["duration"].upper)
           : g
+      )
+      .filter((g) =>
+        controlsKeys.includes("name") &&
+        filterState.textTypeFilters["name"].filterOn
+          ? g.name.toLowerCase().includes(filterState.textTypeFilters["name"].text.toLowerCase())
+          : g
       );
 };

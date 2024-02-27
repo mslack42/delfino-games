@@ -8,6 +8,7 @@ import { filterData } from "./utils/filterData";
 import { sortBubbleData } from "./utils/sortBubbleData";
 import { PlayerCountSlider } from "./PlayerCountSlider";
 import { DurationSlider } from "./DurationSlider";
+import { GameTextFilter } from "./GameTextFilter";
 
 const initialFilterState: FilterState = {
   bubbleTypeFilters: {
@@ -34,6 +35,12 @@ const initialFilterState: FilterState = {
       filterOn: false,
       lower: 5,
       upper: 120,
+    },
+  },
+  textTypeFilters: {
+    name: {
+      filterOn: false,
+      text: "",
     },
   },
 };
@@ -159,6 +166,12 @@ export function GamesListFilterControls(props: Props) {
             filterState={filterState}
             setFilterState={setFilterState}
             range={durationRange as [number, number]}
+          />
+        )}
+        {props.controlsKeys.includes("name") && (
+          <GameTextFilter
+            filterState={filterState}
+            setFilterState={setFilterState}
           />
         )}
       </div>

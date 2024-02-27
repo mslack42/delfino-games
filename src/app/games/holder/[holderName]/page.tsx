@@ -13,6 +13,6 @@ export default async function ListGames(props:Props) {
     const title = `${holderName}'s Games`
     return (<>
       <h1 className="text-4xl">{title}</h1>
-      <GamesList inventoryData={inventoryData} controlsKeys={["tags","playercount","duration"]}></GamesList>
+      <GamesList inventoryData={inventoryData} controlsKeys={["tags","playercount","duration","name"]}></GamesList>
     </>)
 }
