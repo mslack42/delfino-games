@@ -6,7 +6,7 @@ type Props = {
   defaultRange: [number, number];
   summariser: (range: [number, number]) => string;
   onChange?: (range: number[]) => void;
-  step?: number
+  step?: number;
 };
 export function CustomRangeSlider(props: Props) {
   const [lower, setLower] = useState(Math.min(...props.defaultRange));
@@ -14,12 +14,12 @@ export function CustomRangeSlider(props: Props) {
 
   const summary = props.summariser([lower, upper]);
 
-  const onSliderChange = (_:Event, value: number | number[], __: number) => {
-    const range = value as number[]
-    setLower(Math.min(...range))
-    setUpper(Math.max(...range))
-    props.onChange ? props.onChange(range) : null
-  }
+  const onSliderChange = (_: Event, value: number | number[], __: number) => {
+    const range = value as number[];
+    setLower(Math.min(...range));
+    setUpper(Math.max(...range));
+    props.onChange ? props.onChange(range) : null;
+  };
 
   return (
     <>

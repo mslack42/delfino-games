@@ -50,7 +50,9 @@ export const filterData = (
       .filter((g) =>
         controlsKeys.includes("name") &&
         filterState.textTypeFilters["name"].filterOn
-          ? g.name.toLowerCase().includes(filterState.textTypeFilters["name"].text.toLowerCase())
+          ? g.name
+              .toLowerCase()
+              .includes(filterState.textTypeFilters["name"].text.toLowerCase())
           : g
       );
 };

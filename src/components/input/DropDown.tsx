@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { twJoin } from "tailwind-merge";
 
 type DropDownProps = {
   head: React.ReactNode;
@@ -20,13 +21,15 @@ export function DropDown(props: DropDownProps) {
         <div>{props.head}</div>
         <div className="top-0 right-0 w-full flex justify-end overflow-x-visible">
           <ul
-            className={
-              listStyle +
+            className={twJoin(
+              listStyle,
               " bg-teal-100 overflow-visible absolute text-slate-900 w-auto "
-            }
+            )}
           >
             {props.items.map((item, i) => (
-              <li key={i} className="px-1 w-full">{item}</li>
+              <li key={i} className="px-1 w-full">
+                {item}
+              </li>
             ))}
           </ul>
         </div>

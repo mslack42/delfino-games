@@ -11,7 +11,7 @@ type Props = {
   newValueString: string;
   selectParamName: string;
   textParamName: string;
-  placeHolder?:string;
+  placeHolder?: string;
   className?: string;
 };
 
@@ -38,7 +38,14 @@ export function SelectOrNew(props: Props) {
         <option value={-1}>{newValueString}</option>
       </select>
       {selectedValue !== "-1" ? undefined : (
-        <input type="text" placeholder={props.placeHolder} name={textParamName} className="w-auto min-w-0" minLength={1} maxLength={100}></input>
+        <input
+          type="text"
+          placeholder={props.placeHolder}
+          name={textParamName}
+          className="w-auto min-w-0"
+          minLength={1}
+          maxLength={100}
+        ></input>
       )}
     </div>
   );

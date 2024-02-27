@@ -1,3 +1,5 @@
+import { twJoin } from "tailwind-merge";
+
 export type FilterBubbleData = {
   name: string;
   data: number | string;
@@ -42,11 +44,10 @@ function FilterBubble(props: FilterBubbleProps) {
       : "bg-slate-400 hover:bg-slate-300";
   return (
     <div
-      className={
-        "rounded-lg flex flex-row w-fit px-2 cursor-pointer" +
-        " " +
+      className={twJoin(
+        "rounded-lg flex flex-row w-fit px-2 cursor-pointer",
         enableDisableStyling
-      }
+      )}
       onClick={props.inputEnabled ? props.onToggle : undefined}
     >
       <div>{props.name}</div>

@@ -14,7 +14,9 @@ export const NavigationBar = async () => {
     await signOut();
   };
 
-  const holders = (await listHolders()).sort((a,b) => a.name.localeCompare(b.name));
+  const holders = (await listHolders()).sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
 
   return (
     <div className="w-full h-16 bg-teal-400 sticky top-0">
@@ -40,9 +42,19 @@ export const NavigationBar = async () => {
                         </div>
                       }
                       items={[
-                        <Link key={-1} href={"/games"} className="hover:bg-teal-500 w-full"><b>All Games</b></Link>
-                        ,...holders.map((h) => (
-                          <Link key={h.id} href={"/games/holder/" + h.name} className="hover:bg-teal-500 w-full">
+                        <Link
+                          key={-1}
+                          href={"/games"}
+                          className="hover:bg-teal-500 w-full"
+                        >
+                          <b>All Games</b>
+                        </Link>,
+                        ...holders.map((h) => (
+                          <Link
+                            key={h.id}
+                            href={"/games/holder/" + h.name}
+                            className="hover:bg-teal-500 w-full"
+                          >
                             {h.name}
                           </Link>
                         )),
