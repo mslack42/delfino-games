@@ -4,19 +4,26 @@ export async function UnverifiedUserMessage() {
   return (
     <RoleCheck
       type="oneOf"
-      roles={["Verified"]}
+      roles={["Unverified"]}
       content={
         <>
-          <div>
-            <p>Your account is not verified.</p>
-            <p>
-              This means that you only have limited functionality available to
-              you.
-            </p>
-            <p>
-              Contact anyone with an Admin account in order to get your account
-              verified.
-            </p>
+          <div className="bg-red-300 w-full p-10 mt-5 rounded-xl flex">
+            <div className="flex-1 flex flex-col justify-center h-max">
+              <div className="rounded-full bg-red-800 h-28 w-28 text-8xl text-white">
+                !
+              </div>
+            </div>
+            <div className="text-2xl flex-grow text-left pl-4">
+              <p>Your account is not verified.</p>
+              <p>
+                This means that you only have limited functionality available to
+                you.
+              </p>
+              <p>
+                Contact anyone with an Admin account in order to get your
+                account verified.
+              </p>
+            </div>
           </div>
         </>
       }

@@ -43,12 +43,14 @@ export function InventoryItemPanel(props: PanelProps) {
         ></DataSummaryKeyValuePair>
         <DataSummaryKeyValuePair
           dataKey="Duration"
-          dataValue={<div className="text-right">
-            {playTime(
-              data.bggData.specs.maxPlayTime,
-              data.bggData.specs.minPlayTime
-            )}
-          </div>}
+          dataValue={
+            <div className="text-right">
+              {playTime(
+                data.bggData.specs.maxPlayTime,
+                data.bggData.specs.minPlayTime
+              )}
+            </div>
+          }
         ></DataSummaryKeyValuePair>
         <DataSummaryKeyValuePair
           dataKey="Office"

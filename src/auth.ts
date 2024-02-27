@@ -28,12 +28,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
         const user = await prisma.user.findUnique({
           where: {
-            email: String(credentials.email),
+            email: String(credentials.email).toLowerCase(),
           },
           include: {
             accounts: true
           }
         });
+        console.log("authing")
+        console.log(user)
 
         if (
           !user ||
@@ -54,7 +56,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const paths = ["/AddGame"];
+      const paths = ["/add-game","/people"];
       const isProtected = paths.some((path) =>
         nextUrl.pathname.startsWith(path)
       );
