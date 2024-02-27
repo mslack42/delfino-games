@@ -1,4 +1,4 @@
-import { Slider } from "@mui/base/Slider";
+import {Slider} from "@mui/base/Slider";
 import { useState } from "react";
 
 type Props = {

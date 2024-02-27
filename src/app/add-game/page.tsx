@@ -2,7 +2,7 @@
 import { BggSummaryData } from "@/bgg/types";
 import { FormEvent, useState } from "react";
 import { SearchResults } from "./searchResults";
-import { CustomSubmitButton } from "../../components/input/CustomButton";
+import { CustomButton } from "../../components/input/CustomButton";
 
 export default function AddNewGame() {
   const [searchResults, setSearchResults] = useState<BggSummaryData[]>([]);
@@ -37,7 +37,7 @@ export default function AddNewGame() {
                   maxLength={100}
                   minLength={0}
                 />
-                <CustomSubmitButton innerText="Go!" />
+                <CustomButton type="button" innerText="Go!" actionType="confirm" className="w-min py-1 px-3 rounded"/>
               </form>
             </div>
           </div>

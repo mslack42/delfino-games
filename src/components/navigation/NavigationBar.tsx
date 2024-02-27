@@ -93,9 +93,9 @@ async function AdminControls() {
               <Link href="/people" key={2} className="hover:bg-teal-500 w-full">
                 Manage holders
               </Link>,
-              <div key={3} className="hover:bg-teal-500 w-full">
-                Manage users
-              </div>,
+              <Link href="/users" key={3} className="hover:bg-teal-500 w-full">
+              Manage users
+            </Link>,
             ]}
           ></DropDown>
         }

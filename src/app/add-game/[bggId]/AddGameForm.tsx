@@ -1,5 +1,5 @@
 "use client";
-import { CustomSubmitButton } from "@/components/input/CustomButton";
+import { CustomButton } from "@/components/input/CustomButton";
 import { SelectOrNew } from "@/components/input/SelectOrNew";
 import { DataSummaryKeyValuePair } from "@/components/data-display/DataSummaryKeyValuePair";
 import { Ownership, Location } from "@prisma/client";
@@ -57,7 +57,7 @@ export function AddGameForm(props: AddGameFormProps) {
           }
         ></DataSummaryKeyValuePair>
 
-        <CustomSubmitButton innerText="Save" />
+        <CustomButton type="submit" innerText="Save" className="w-20" />
       </form>
     </>
   );
