@@ -25,6 +25,11 @@ export function DurationSlider(props: SliderProps) {
     }
   };
 
+  const defaultRange = [
+    filterState.sliderTypeFilters[filterKey].lower,
+    filterState.sliderTypeFilters[filterKey].upper,
+  ]
+
   return (
     <div className="flex justify-center space-x-2">
       <label>

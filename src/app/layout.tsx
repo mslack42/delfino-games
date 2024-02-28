@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NavigationBar></NavigationBar>
-        <main className="flex min-h-full flex-col items-center justify-between ">
+        <main className="flex min-h-full flex-col items-center justify-between z-0">
         {children}
         </main>
         </body>

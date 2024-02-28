@@ -1,5 +1,5 @@
-import {Slider} from "@mui/base/Slider";
-import { useState } from "react";
+import { Slider } from "@mui/base/Slider";
+import { useMemo, useState } from "react";
 
 type Props = {
   fullRange: [number, number];
@@ -9,11 +9,6 @@ type Props = {
   step?: number;
 };
 export function CustomRangeSlider(props: Props) {
-  const [lower, setLower] = useState(Math.min(...props.defaultRange));
-  const [upper, setUpper] = useState(Math.max(...props.defaultRange));
-
-  const summary = props.summariser([lower, upper]);
-
   const onSliderChange = (_: Event, value: number | number[], __: number) => {
     const range = value as number[];
     setLower(Math.min(...range));
@@ -21,12 +16,18 @@ export function CustomRangeSlider(props: Props) {
     props.onChange ? props.onChange(range) : null;
   };
 
+  const min = useMemo(() => Math.min(...props.fullRange), [props.fullRange]);
+  const max = useMemo(() => Math.max(...props.fullRange), [props.fullRange]);
+  const [lower, setLower] = useState(min);
+  const [upper, setUpper] = useState(max);
+  const summary = props.summariser([lower, upper]);
+
   return (
     <>
       <div className="flex px-4 space-x-2 w-60">
         <Slider
-          min={Math.min(...props.fullRange)}
-          max={Math.max(...props.fullRange)}
+          min={min}
+          max={max}
           step={props.step ?? 1}
           defaultValue={props.defaultRange}
           onChange={onSliderChange}
