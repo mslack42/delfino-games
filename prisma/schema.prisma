@@ -62,7 +62,6 @@ model BoardGameInternalData {
   boardGameDataSpecsId Int?
   lastUpdated          DateTime            @updatedAt
   ownership            Ownership           @default(Personal)
-  location             Location            @default(Poole)
   holder               Person              @relation(name: "holderRel", fields: [holderId], references: [id], onDelete: Cascade)
   owner                Person?             @relation(name: "ownerRel", fields: [ownerId], references: [id], onDelete: Cascade)
   holderId             Int

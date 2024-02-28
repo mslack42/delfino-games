@@ -9,6 +9,7 @@ type CustomSubmitButtonProps = {
   actionType?: "confirm" | "cancel";
   className?: string;
   disabled?: boolean;
+  form?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 export function CustomButton(props: CustomSubmitButtonProps) {
@@ -22,8 +23,9 @@ export function CustomButton(props: CustomSubmitButtonProps) {
         actionType === "cancel" && !props.disabled? "bg-red-300 hover:bg-red-200" : "",
         props.disabled ? "bg-slate-200": ""
       )}
+      form={props.form ?? undefined}
       disabled={props.disabled}
-      onClick={props.onClick}
+      onClick={props.onClick ?? undefined}
     >
       {props.innerText}
     </button>

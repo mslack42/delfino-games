@@ -23,7 +23,7 @@ export function createInventoryItemFromPrisma(r: any) {
     dsData: {
       holder: (r.dsData?.holder.name)!,
       inRotation: (r.dsData?.inCurrentRotation)!,
-      location: (r.dsData?.location)!,
+      location: (r.dsData?.holder.location)!,
       ownership: (r.dsData?.ownership)!,
     },
   };
