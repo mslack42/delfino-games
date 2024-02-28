@@ -37,8 +37,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             accounts: true
           }
         });
-        console.log("authing")
-        console.log(user)
 
         if (
           !user ||
