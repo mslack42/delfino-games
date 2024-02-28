@@ -58,9 +58,9 @@ async function ProfileControls() {
             <DropDown
               head={<div>{user?.name}</div>}
               items={[
-                <div key={-2} className="hover:bg-teal-500 w-full">
+                <Link href="/profile" key={-2} className="hover:bg-teal-500 w-full">
                   Profile
-                </div>,
+                </Link>,
                 <div key={-1} className="hover:bg-teal-500 w-full">
                   <form action={logoutAction}>
                     <button>Log Out</button>
