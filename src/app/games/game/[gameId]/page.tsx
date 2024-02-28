@@ -1,6 +1,6 @@
 import { BggDataSummary } from "@/components/data-display/BggDataSummary";
 import { HalfPagePanel } from "@/components/data-display/HalfPagePanel";
-import { getInventoryItem } from "@/database/getGame";
+import { getInventoryItem } from "@/database/games/getGame";
 import { createBggDataSummaryFromInventoryItem } from "@/util/data-conversion";
 import { DsDataSummary } from "./DsDataSummary";
 

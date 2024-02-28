@@ -1,4 +1,4 @@
-import { listUsers } from "@/database/listUsers";
+import { listUsers } from "@/database/users/listUsers";
 import { UserTable } from "./UserTable";
 
 export default async function Users() {

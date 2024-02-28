@@ -6,6 +6,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type HolderType = {
@@ -17,6 +18,15 @@ type Props = {
 };
 export function PeopleTable({ holders }: Props) {
   const [deleteHolder, setDeleteHolder] = useState<HolderType | null>(null);
+  const router = useRouter()
+
+  const deleteHandler = async (holderId: number | undefined | null) => {
+    if (holderId) {
+      await fetch(`/api/people?id=${holderId}`,{method:"DELETE"})
+      setDeleteHolder(null)
+      router.refresh()
+    }
+  }
 
   return (<>
     <div className="rounded-lg">
@@ -67,7 +77,7 @@ export function PeopleTable({ holders }: Props) {
                 type="button"
                 innerText={"Yes"}
                 className="rounded p-2"
-                onClick={() => setDeleteHolder(null)}
+                onClick={() => deleteHandler(deleteHolder?.id)}
               />
               <CustomButton
                 type="button"

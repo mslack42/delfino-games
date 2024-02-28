@@ -6,7 +6,7 @@ import { LoggedInOnly } from "../auth/LoggedInOnly";
 import { LoggedOutOnly } from "../auth/LoggedOutOnly";
 import { RoleCheck } from "../auth/RoleCheck";
 import { DropDown } from "../input/DropDown";
-import { listHolders } from "@/database/listHolders";
+import { listHolders } from "@/database/holders/listHolders";
 
 export const NavigationBar = async () => {
   return (
@@ -75,11 +75,11 @@ async function ProfileControls() {
 
 async function AdminControls() {
   return (
-    <li className="px-2">
-      <RoleCheck
-        type="oneOf"
-        roles={["Admin"]}
-        content={
+    <RoleCheck
+      type="oneOf"
+      roles={["Admin"]}
+      content={
+        <li className="px-2">
           <DropDown
             head={<div>Administration</div>}
             items={[
@@ -94,13 +94,14 @@ async function AdminControls() {
                 Manage holders
               </Link>,
               <Link href="/users" key={3} className="hover:bg-teal-500 w-full">
-              Manage users
-            </Link>,
+                Manage users
+              </Link>,
             ]}
-          ></DropDown>
-        }
-      />
-    </li>
+          >
+          </DropDown>
+        </li>
+      }
+    />
   );
 }
 

@@ -1,8 +1,11 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { passesPermissionsCheck } from "./security/passesPermissionsCheck";
+
+type CustomUser = User & {id: string, role:string}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
@@ -54,19 +57,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request: {nextUrl} }) {
       const isLoggedIn = !!auth?.user;
-      const paths = ["/add-game","/people"];
-      const isProtected = paths.some((path) =>
-        nextUrl.pathname.startsWith(path)
-      );
+      const passesCheck = passesPermissionsCheck(nextUrl.pathname, (auth?.user as CustomUser)?.role)
 
-      if (isProtected && !isLoggedIn) {
+      if (!passesCheck && !isLoggedIn) {
         const redirectUrl = new URL("/api/auth/signin", nextUrl.origin);
         redirectUrl.searchParams.append("callbackUrl", nextUrl.href);
         return Response.redirect(redirectUrl);
       }
-      return true;
+      return passesCheck;
     },
     session: async ({ session, token }) => {
       return {

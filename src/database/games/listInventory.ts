@@ -1,6 +1,6 @@
 import prisma from "@/db";
-import { InventoryItem } from "./types";
-import { createInventoryItemFromPrisma } from "./util/createInventoryItemFromPrisma";
+import { InventoryItem } from "../types";
+import { createInventoryItemFromPrisma } from "../util/createInventoryItemFromPrisma";
 
 export async function listInventory(
   holderName?: string

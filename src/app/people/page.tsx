@@ -1,4 +1,4 @@
-import { listHolders } from "@/database/listHolders";
+import { listHolders } from "@/database/holders/listHolders";
 import { PeopleTable } from "./PeopleTable";
 
 export default async function People() {

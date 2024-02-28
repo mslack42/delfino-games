@@ -14,7 +14,7 @@ model BoardGame {
   id      Int                    @id @default(autoincrement())
   name    String
   bggData BoardGameBggData?      @relation("bggData", fields: [id], references: [boardGameId], map: "bgg")
-  dsData  BoardGameInternalData? @relation("dsData", fields: [id], references: [boardGameId], map: "ds")
+  dsData  BoardGameInternalData? @relation("dsData", fields: [id], references: [boardGameId], map: "ds", onDelete: Cascade)
 }
 
 model BoardGameBggData {
@@ -61,7 +61,7 @@ model BoardGameInternalData {
   lastUpdated          DateTime            @updatedAt
   ownership            Ownership           @default(Personal)
   location             Location            @default(Poole)
-  holder               Person              @relation(fields: [personId], references: [id])
+  holder               Person              @relation(fields: [personId], references: [id], onDelete: Cascade)
   personId             Int
   inCurrentRotation    Boolean             @default(false)
 }

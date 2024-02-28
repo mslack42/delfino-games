@@ -1,4 +1,4 @@
-import { listInventory } from "@/database/listInventory";
+import { listInventory } from "@/database/games/listInventory";
 import { GamesList } from "../../../../components/games-list/GamesList";
 
 type Props = {
