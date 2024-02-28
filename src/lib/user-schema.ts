@@ -15,6 +15,9 @@ export const createUserSchema = object({
   passwordConfirm: string({
     required_error: "Please confirm your password",
   }).min(1, "Please confirm your password"),
+  invitationCode: string({
+    required_error: "Invitation Code is required",
+  }).min(1, "Invitation Code is required"),
 }).refine((data) => data.password === data.passwordConfirm, {
   path: ["passwordConfirm"],
   message: "Passwords do not match",

@@ -17,6 +17,7 @@ export const RegisterForm = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setError
   } = methods;
 
   const onSubmitHandler: SubmitHandler<CreateUserInput> = async (values) => {
@@ -37,6 +38,9 @@ export const RegisterForm = () => {
           //   errorData.errors.forEach((error: any) => {
           //     toast.error(error.message);
           //   });
+          if (errorData.errors[0].invitationCode) {
+            setError("invitationCode",errorData.errors[0].invitationCode)
+          }
 
           return;
         }
@@ -96,6 +100,18 @@ export const RegisterForm = () => {
         {errors["passwordConfirm"] && (
           <span className="text-red-500 text-xs pt-1 block">
             {errors["passwordConfirm"]?.message as string}
+          </span>
+        )}
+      </div>
+      <div className="mb-6">
+        <input
+          type="text"
+          {...register("invitationCode")}
+          placeholder="Invitation Code"
+        />
+        {errors["invitationCode"] && (
+          <span className="text-red-500 text-xs pt-1 block">
+            {errors["invitationCode"]?.message as string}
           </span>
         )}
       </div>

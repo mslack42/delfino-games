@@ -101,6 +101,7 @@ enum Ownership {
 enum Location {
   Poole
   Oxford
+  Manchester
 }
 
 enum UserRole {
