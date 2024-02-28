@@ -66,6 +66,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         redirectUrl.searchParams.append("callbackUrl", nextUrl.href);
         return Response.redirect(redirectUrl);
       }
+      if (!passesCheck && isLoggedIn) {
+        const redirectUrl = new URL("/", nextUrl.origin);
+        return Response.redirect(redirectUrl);
+      }
       return passesCheck;
     },
     session: async ({ session, token }) => {

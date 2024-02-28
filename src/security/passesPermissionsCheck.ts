@@ -2,10 +2,7 @@ export function passesPermissionsCheck(
   path: string,
   role: string | null | undefined
 ): boolean {
-  const paths = ["/add-game", "/people"];
-
   const routeChecksHit = routeChecks.filter(rc => path.startsWith(rc.pathMatch))
-
   if (routeChecksHit.length === 0) {
     return true
   }
@@ -23,9 +20,9 @@ type RouteCheck = {
 };
 
 const routeChecks: RouteCheck[] = [
-  { pathMatch: "add-game", requiredRoles: ["Admin"] },
-  { pathMatch: "people", requiredRoles: ["Admin"] },
-  { pathMatch: "users", requiredRoles: ["Admin"] },
-  { pathMatch: "api/people", requiredRoles: ["Admin"] },
-  { pathMatch: "profile", requiredRoles: ["Admin","Verified","Unverified"] },
+  { pathMatch: "/add-game", requiredRoles: ["Admin"] },
+  { pathMatch: "/people", requiredRoles: ["Admin"] },
+  { pathMatch: "/users", requiredRoles: ["Admin"] },
+  { pathMatch: "/api/people", requiredRoles: ["Admin"] },
+  { pathMatch: "/profile", requiredRoles: ["Admin","Verified","Unverified"] },
 ];

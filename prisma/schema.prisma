@@ -11,10 +11,11 @@ datasource db {
 }
 
 model BoardGame {
-  id      Int                    @id @default(autoincrement())
-  name    String
-  bggData BoardGameBggData?      @relation("bggData", fields: [id], references: [boardGameId], map: "bgg")
-  dsData  BoardGameInternalData? @relation("dsData", fields: [id], references: [boardGameId], map: "ds", onDelete: Cascade)
+  id          Int                    @id @default(autoincrement())
+  name        String
+  bggData     BoardGameBggData?      @relation("bggData", fields: [id], references: [boardGameId], map: "bgg")
+  dsData      BoardGameInternalData? @relation("dsData", fields: [id], references: [boardGameId], map: "ds", onDelete: Cascade)
+  GameRequest GameRequest[]
 }
 
 model BoardGameBggData {
@@ -57,19 +58,39 @@ model BoardGameInternalData {
   boardGameId          Int                 @unique
   boardGame            BoardGame[]         @relation("dsData")
   specs                BoardGameDataSpecs? @relation(fields: [boardGameDataSpecsId], references: [id])
+  tags                 CustomTag[]
   boardGameDataSpecsId Int?
   lastUpdated          DateTime            @updatedAt
   ownership            Ownership           @default(Personal)
   location             Location            @default(Poole)
-  holder               Person              @relation(fields: [personId], references: [id], onDelete: Cascade)
-  personId             Int
+  holder               Person              @relation(name: "holderRel", fields: [holderId], references: [id], onDelete: Cascade)
+  owner                Person?             @relation(name: "ownerRel", fields: [ownerId], references: [id], onDelete: Cascade)
+  holderId             Int
+  ownerId              Int?
   inCurrentRotation    Boolean             @default(false)
 }
 
 model Person {
-  id                    Int                     @id @default(autoincrement())
-  name                  String
-  BoardGameInternalData BoardGameInternalData[]
+  id         Int                     @id @default(autoincrement())
+  name       String
+  location   Location                @default(Poole)
+  heldGames  BoardGameInternalData[] @relation("holderRel")
+  ownedGames BoardGameInternalData[] @relation("ownerRel")
+}
+
+model CustomTag {
+  id                      Int                    @id @default(autoincrement())
+  tag                     String
+  BoardGameInternalData   BoardGameInternalData? @relation(fields: [boardGameInternalDataId], references: [id])
+  boardGameInternalDataId Int?
+}
+
+model GameRequest {
+  id          Int       @id @default(autoincrement())
+  boardGame   BoardGame @relation(fields: [boardGameId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+  boardGameId Int
+  userId      String
 }
 
 enum Ownership {
@@ -84,6 +105,7 @@ enum Location {
 
 enum UserRole {
   Admin
+  Holder
   Verified
   Unverified
 }
@@ -91,16 +113,17 @@ enum UserRole {
 // Authentication stuff
 
 model User {
-  id            String    @id @default(uuid())
+  id            String        @id @default(uuid())
   name          String
-  email         String?   @unique
+  email         String?       @unique
   password      String?
-  emailVerified DateTime? @map("email_verified")
+  emailVerified DateTime?     @map("email_verified")
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   accounts      Account[]
   sessions      Session[]
+  GameRequest   GameRequest[]
 
   @@map("users")
 }

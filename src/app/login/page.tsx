@@ -12,7 +12,7 @@ export default async function LoginPage() {
               <LoginForm />
             </Suspense>
           </div>
-          <Link href="/register">Don&apost have an account?</Link>
+          <Link href="/register">{"Don't have an account?"}</Link>
         </div>
       </section>
     </>

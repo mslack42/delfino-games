@@ -21,6 +21,7 @@ type UserType = {
 
 export function UserTable({ users }: Props) {
   const [deleteUser, setDeleteUser] = useState<UserType | null>(null);
+  const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);
   const [resetPasswordUser, setResetPasswordUser] = useState<UserType | null>(
     null
   );
@@ -76,28 +77,42 @@ export function UserTable({ users }: Props) {
       <CustomModal
         isOpen={!!deleteUser}
         content={
-          <div >
+          <div>
             <b>Are you sure you want to delete {deleteUser?.name}?</b>
             <p>This action is permanent.</p>
-            <div className="flex flex-row justify-end w-full space-x-2">
-              <CustomButton
-                type="button"
-                innerText={"Yes"}
-                className="rounded p-2"
-                onClick={() => setDeleteUser(null)}
-              />
-              <CustomButton
-                type="button"
-                innerText={"No"}
-                className="rounded p-2"
-                actionType="cancel"
-                onClick={() => setDeleteUser(null)}
-              />
+            <div className="flex flex-row justify-evenly space-x-2">
+              <input
+                type="text"
+                placeholder="type 'confirm delete'"
+                onChange={(evt) => {
+                  setDeleteConfirmed(
+                    evt.currentTarget.value === "confirm delete"
+                  );
+                }}
+                className="px-2"
+              ></input>
+              <div className="flex flex-row justify-end w-full space-x-2">
+                <CustomButton
+                  type="button"
+                  innerText={"Yes"}
+                  className="rounded p-2"
+                  onClick={() => setDeleteUser(null)}
+                  disabled={!deleteConfirmed}
+                />
+                <CustomButton
+                  type="button"
+                  innerText={"No"}
+                  className="rounded p-2"
+                  actionType="cancel"
+                  onClick={() => setDeleteUser(null)}
+                />
+              </div>
             </div>
           </div>
         }
         onClose={() => {
           setDeleteUser(null);
+          setDeleteConfirmed(false);
         }}
       ></CustomModal>
       <CustomModal
