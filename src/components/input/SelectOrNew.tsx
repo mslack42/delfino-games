@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type SelectListPair = {
   value: string;
@@ -18,17 +18,26 @@ type Props = {
 export function SelectOrNew(props: Props) {
   const { selectListValues, newValueString, selectParamName, textParamName } =
     props;
-  const defaultValue = selectListValues.length
-    ? selectListValues[0].value
-    : "-1";
+  const defaultValue = useMemo(
+    () => (selectListValues.length ? selectListValues[0].value : "-1"),
+    [selectListValues]
+  );
   const [selectedValue, setSelectedValue] = useState(defaultValue);
+
+  useEffect(() => {
+    if (props.selectListValues.every((v) => v.value !== selectedValue)) {
+      setSelectedValue(() => "-1");
+    }
+  }, [props.selectListValues, selectedValue]);
 
   return (
     <div className={props.className}>
       <select
         value={selectedValue}
         name={selectParamName}
-        onChange={(e) => setSelectedValue(e.target.value)}
+        onChange={(e) => {
+          setSelectedValue(e.target.value);
+        }}
       >
         {selectListValues.map((kvp) => (
           <option value={kvp.value} key={kvp.value}>

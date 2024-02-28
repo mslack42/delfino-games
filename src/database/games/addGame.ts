@@ -17,6 +17,7 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
     const newHolder = await prisma.person.create({
       data: {
         name: newData.newHolder!,
+        location: newData.location
       },
     });
     holderId = newHolder.id;

@@ -6,14 +6,23 @@ import { ZodError } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password, invitationCode } = createUserSchema.parse(await req.json());
+    const { name, email, password, invitationCode } = createUserSchema.parse(
+      await req.json()
+    );
 
-    if (invitationCode !== process.env.INVITATION_CODE!){
+    if (invitationCode !== process.env.INVITATION_CODE!) {
       return NextResponse.json(
         {
           status: "error",
           message: "Invalid invitation code",
-          errors: [{invitationCode:{code:"invalid_type", message:"Invalid invitation code"}}]
+          errors: [
+            {
+              invitationCode: {
+                code: "invalid_type",
+                message: "Invalid invitation code",
+              },
+            },
+          ],
         },
         { status: 400 }
       );

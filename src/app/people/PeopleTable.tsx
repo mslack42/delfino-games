@@ -5,6 +5,7 @@ import { faDice } from "@fortawesome/free-solid-svg-icons/faDice";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Location } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -12,6 +13,7 @@ import { useState } from "react";
 type HolderType = {
   id: number;
   name: string | null;
+  location: Location
 };
 type Props = {
   holders: HolderType[];
@@ -42,7 +44,7 @@ export function PeopleTable({ holders }: Props) {
             {holders.map((holder) => (
               <tr key={holder.id} className="bg-cyan-100 even:bg-cyan-200">
                 <td className="p-2">{holder.name}</td>
-                <td className="p-2">(TBD, but probably Poole)</td>
+                <td className="p-2">{holder.location as string}</td>
                 <td className="p-2">
                   <ul className="flex space-x-2">
                     <li>
