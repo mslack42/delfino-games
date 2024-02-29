@@ -2,6 +2,7 @@ import { editUserSchema } from "@/lib/user-schema";
 import { UserRole } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
+import prisma from "@/db";
 
 export async function DELETE(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("id");
@@ -51,7 +52,6 @@ export async function POST(req: NextRequest) {
       status: "success",
     });
   } catch (error: any) {
-    console.log(error);
     if (error instanceof ZodError) {
       return NextResponse.json(
         {
