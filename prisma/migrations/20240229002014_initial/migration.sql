@@ -2,10 +2,10 @@
 CREATE TYPE "Ownership" AS ENUM ('Company', 'Personal');
 
 -- CreateEnum
-CREATE TYPE "Location" AS ENUM ('Poole', 'Oxford');
+CREATE TYPE "Location" AS ENUM ('Poole', 'Oxford', 'Manchester');
 
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('Admin', 'Verified', 'Unverified');
+CREATE TYPE "UserRole" AS ENUM ('Admin', 'Holder', 'Verified', 'Unverified');
 
 -- CreateTable
 CREATE TABLE "BoardGame" (
@@ -60,7 +60,6 @@ CREATE TABLE "BoardGameInternalData" (
     "boardGameDataSpecsId" INTEGER,
     "lastUpdated" TIMESTAMP(3) NOT NULL,
     "ownership" "Ownership" NOT NULL DEFAULT 'Personal',
-    "location" "Location" NOT NULL DEFAULT 'Poole',
     "holderId" INTEGER NOT NULL,
     "ownerId" INTEGER,
     "inCurrentRotation" BOOLEAN NOT NULL DEFAULT false,
@@ -75,6 +74,24 @@ CREATE TABLE "Person" (
     "location" "Location" NOT NULL DEFAULT 'Poole',
 
     CONSTRAINT "Person_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CustomTag" (
+    "id" SERIAL NOT NULL,
+    "tag" TEXT NOT NULL,
+    "boardGameInternalDataId" INTEGER,
+
+    CONSTRAINT "CustomTag_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "GameRequest" (
+    "id" SERIAL NOT NULL,
+    "boardGameId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "GameRequest_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -169,6 +186,15 @@ ALTER TABLE "BoardGameInternalData" ADD CONSTRAINT "BoardGameInternalData_holder
 
 -- AddForeignKey
 ALTER TABLE "BoardGameInternalData" ADD CONSTRAINT "BoardGameInternalData_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "Person"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CustomTag" ADD CONSTRAINT "CustomTag_boardGameInternalDataId_fkey" FOREIGN KEY ("boardGameInternalDataId") REFERENCES "BoardGameInternalData"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "GameRequest" ADD CONSTRAINT "GameRequest_boardGameId_fkey" FOREIGN KEY ("boardGameId") REFERENCES "BoardGame"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "GameRequest" ADD CONSTRAINT "GameRequest_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

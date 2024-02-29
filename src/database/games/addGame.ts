@@ -1,6 +1,6 @@
 "use server";
 import { BggSummaryData } from "@/bgg/types";
-import { Location, Ownership } from "@prisma/client";
+import { Location, Ownership,  } from "@prisma/client";
 import prisma from "@/db";
 
 export type NewGameData = {
@@ -63,7 +63,6 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
                 id: holderId,
               },
             },
-            location: newData.location,
             ownership: newData.ownership,
           },
         },
