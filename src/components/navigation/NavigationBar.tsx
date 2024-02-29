@@ -10,7 +10,7 @@ import { listHolders } from "@/database/holders/listHolders";
 
 export const NavigationBar = async () => {
   return (
-    <div className="w-full h-16 bg-teal-400 sticky top-0  z-[9000]">
+    <div className="w-full h-16 bg-teal-400 sticky top-0  z-[500]">
       <div className="bg-teal-400">
         <div className="container mx-auto px-4 h-full">
           <div className="flex justify-between items-center h-full align-middle">
@@ -22,7 +22,7 @@ export const NavigationBar = async () => {
                 </h1>
               </div>
             </Link>
-            <div className="flex justify-end flex-col h-full pb-3">
+            <div className="flex justify-end flex-col h-full pb-3 z-[501]">
               <ul className="flex text-white divide-solid divide-x-2">
                 <GamesCollection />
                 <AdminControls />
@@ -58,21 +58,13 @@ async function ProfileControls() {
             <DropDown
               head={<div>{user?.name}</div>}
               items={[
-                <Link
-                  href="/profile"
-                  key={-2}
-                  className="hover:bg-teal-500 w-full"
-                >
+                <Link href="/profile" key={-2}>
                   Profile
                 </Link>,
-                <Link
-                  href="/profile/changePassword"
-                  key={-3}
-                  className="hover:bg-teal-500 w-full"
-                >
+                <Link href="/profile/changePassword" key={-3}>
                   Change Password
                 </Link>,
-                <div key={-1} className="hover:bg-teal-500 w-full">
+                <div key={-1}>
                   <form action={logoutAction}>
                     <button>Log Out</button>
                   </form>
@@ -96,17 +88,13 @@ async function AdminControls() {
           <DropDown
             head={<div>Administration</div>}
             items={[
-              <Link
-                key={1}
-                href="/add-game"
-                className="hover:bg-teal-500 w-full"
-              >
-                <p className="hover:bg-teal-500 w-full">Add a new game</p>
+              <Link key={1} href="/add-game">
+                <p>Add a new game</p>
               </Link>,
-              <Link href="/people" key={2} className="hover:bg-teal-500 w-full">
+              <Link href="/people" key={2}>
                 Manage holders
               </Link>,
-              <Link href="/users" key={3} className="hover:bg-teal-500 w-full">
+              <Link href="/users" key={3}>
                 Manage users
               </Link>,
             ]}
@@ -128,19 +116,11 @@ async function GamesCollection() {
           <DropDown
             head={<div>Games Collection</div>}
             items={[
-              <Link
-                key={-1}
-                href={"/games"}
-                className="hover:bg-teal-500 w-full"
-              >
+              <Link key={-1} href={"/games"}>
                 <b>All Games</b>
               </Link>,
               ...holders.map((h) => (
-                <Link
-                  key={h.id}
-                  href={"/games/holder/" + h.name}
-                  className="hover:bg-teal-500 w-full"
-                >
+                <Link key={h.id} href={"/games/holder/" + h.name}>
                   {h.name}
                 </Link>
               )),
