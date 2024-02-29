@@ -1,3 +1,4 @@
+import { UserRole } from "@prisma/client";
 import { TypeOf, object, string } from "zod";
 
 export const createUserSchema = object({
@@ -33,5 +34,22 @@ export const loginUserSchema = object({
   ),
 });
 
+const roleValues: string[] = Object.values(UserRole).map((v) => v);
+export const editUserSchema = object({
+  name: string({ required_error: "Name is required" }).min(
+    1,
+    "Name is required"
+  ),
+  email: string({ required_error: "Email is required" })
+    .min(1, "Email is required")
+    .email("Invalid email"),
+  id: string(),
+  role: string({ invalid_type_error: "Invalid role" }),
+}).refine((data) => roleValues.includes(data.role), {
+  path: ["role"],
+  message: "Invalid role",
+});
+
 export type LoginUserInput = TypeOf<typeof loginUserSchema>;
 export type CreateUserInput = TypeOf<typeof createUserSchema>;
+export type EditUserInput = TypeOf<typeof editUserSchema>;

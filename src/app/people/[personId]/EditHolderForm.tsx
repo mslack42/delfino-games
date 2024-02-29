@@ -33,8 +33,6 @@ export function EditHolderForm({ holder }: Props) {
 
   const onSubmitHandler: SubmitHandler<EditHolderInput> = async (values) => {
     try {
-        console.log(values)
-
       setSubmitting(true);
       await fetch("/api/people", {
         method: "POST",

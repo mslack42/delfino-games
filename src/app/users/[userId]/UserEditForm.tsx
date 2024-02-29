@@ -1,10 +1,9 @@
 "use client";
 import { KeyValue } from "@/components/common/KeyValue";
 import { CustomButton } from "@/components/input/CustomButton";
-import { EditProfileInput, editProfileSchema } from "@/lib/profile-schema";
+import { EditUserInput, editUserSchema } from "@/lib/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Account, User } from "@prisma/client";
-import { useSession } from "next-auth/react";
+import { Account, User, UserRole } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -12,18 +11,18 @@ import { SubmitHandler, useForm } from "react-hook-form";
 type EditProps = {
   user: User & { accounts: Account[] };
 };
-export function ProfileEdit({ user }: EditProps) {
+
+export function UserEditForm({ user }: EditProps) {
   const [submitting, setSubmitting] = useState(false);
 
   const router = useRouter();
-  const { update: updateSession, data: sessionData } = useSession();
-
-  const methods = useForm<EditProfileInput>({
-    resolver: zodResolver(editProfileSchema),
+  const methods = useForm<EditUserInput>({
+    resolver: zodResolver(editUserSchema),
     defaultValues: {
       name: user.name,
       id: user.id,
       email: user.email ?? undefined,
+      role: user.accounts[0].role ?? undefined,
     },
   });
 
@@ -33,10 +32,10 @@ export function ProfileEdit({ user }: EditProps) {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler: SubmitHandler<EditProfileInput> = async (values) => {
+  const onSubmitHandler: SubmitHandler<EditUserInput> = async (values) => {
     try {
       setSubmitting(true);
-      const res = await fetch("/api/profile", {
+      const res = await fetch("/api/user", {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -49,11 +48,7 @@ export function ProfileEdit({ user }: EditProps) {
         return
       }
 
-      await updateSession({
-        ...sessionData,
-        user: { ...sessionData?.user, name: values.name, email: values.email },
-      });
-      router.push("/profile");
+      router.push("/users");
       router.refresh();
     } catch (error: any) {
       //   toast.error(error.message);
@@ -64,8 +59,8 @@ export function ProfileEdit({ user }: EditProps) {
 
   return (
     <div className="p-4">
-      <h1 className="text-4xl">Edit Profile</h1>
-      <form onSubmit={handleSubmit(onSubmitHandler)} id="editProfile">
+      <h1 className="text-4xl">Edit User</h1>
+      <form onSubmit={handleSubmit(onSubmitHandler)} id="editUser">
         <div className="p-2 flex flex-col">
           <KeyValue
             dataKey={"Name"}
@@ -95,6 +90,28 @@ export function ProfileEdit({ user }: EditProps) {
             }
             className="flex flex-row space-x-2 justify-between"
           />
+          <KeyValue
+            dataKey={"Role"}
+            dataValue={
+              <>
+                <select {...register("role")}>
+                  {Object.values(UserRole).map((r) => {
+                    return (
+                      <option value={r} key={r}>
+                        {r}
+                      </option>
+                    );
+                  })}
+                </select>
+                {errors["role"] && (
+                  <span className="text-red-500 text-xs pt-1 block">
+                    {errors["email"]?.message as string}
+                  </span>
+                )}
+              </>
+            }
+            className="flex flex-row space-x-2 justify-between"
+          />
         </div>
         <input {...register("id")} type="hidden"></input>
       </form>
@@ -105,7 +122,7 @@ export function ProfileEdit({ user }: EditProps) {
           actionType="confirm"
           className="p-2 rounded-lg"
           disabled={submitting}
-          form="editProfile"
+          form="editUser"
         />
       </div>
     </div>

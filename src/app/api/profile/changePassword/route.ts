@@ -82,8 +82,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log(error);
-
     return NextResponse.json(
       {
         status: "error",

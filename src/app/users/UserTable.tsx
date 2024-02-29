@@ -1,35 +1,40 @@
 "use client";
-import { CustomModal } from "@/components/common/CustomModal";
-import { CustomButton } from "@/components/input/CustomButton";
 import { faUnlock } from "@fortawesome/free-solid-svg-icons";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
+import { VerifyUserModal } from "./VerifyUserModal";
+import { PasswordResetModal } from "./PasswordResetModal";
+import { DeleteUserModal } from "./DeleteUserModal";
 
 type Props = {
   users: UserType[];
 };
-type UserType = {
+export type UserType = {
   id: string;
   name: string | null;
   email: string | null;
   accounts: { role: string }[];
 };
+export type UserModalProps = {
+  user: UserType | null;
+  setUser: (v: SetStateAction<UserType | null>) => void;
+};
 
 export function UserTable({ users }: Props) {
   const [deleteUser, setDeleteUser] = useState<UserType | null>(null);
-  const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);
   const [resetPasswordUser, setResetPasswordUser] = useState<UserType | null>(
     null
   );
+  const [verifyUser, setVerifyUser] = useState<UserType | null>(null);
 
   return (
     <>
       <div className="rounded-lg">
-        <table className="table-auto">
+        <table className="table-auto rounded-sm">
           <tbody className="rounded-lg">
             <tr className="bg-teal-300 p-1">
               <th className="p-1">Name</th>
@@ -45,7 +50,7 @@ export function UserTable({ users }: Props) {
                 <td className="p-2">
                   <ul className="flex space-x-2 justify-end">
                     {user.accounts[0].role === "Unverified" ? (
-                      <li>
+                      <li onClick={() => setVerifyUser(user)}>
                         <FontAwesomeIcon icon={faCheck} className="h-5" />
                       </li>
                     ) : (
@@ -74,76 +79,12 @@ export function UserTable({ users }: Props) {
           </tbody>
         </table>
       </div>
-      <CustomModal
-        isOpen={!!deleteUser}
-        content={
-          <div>
-            <b>Are you sure you want to delete {deleteUser?.name}?</b>
-            <p>This action is permanent.</p>
-            <div className="flex flex-row justify-evenly space-x-2">
-              <input
-                type="text"
-                placeholder="type 'confirm delete'"
-                onChange={(evt) => {
-                  setDeleteConfirmed(
-                    evt.currentTarget.value === "confirm delete"
-                  );
-                }}
-                className="px-2"
-              ></input>
-              <div className="flex flex-row justify-end w-full space-x-2">
-                <CustomButton
-                  type="button"
-                  innerText={"Yes"}
-                  className="rounded p-2"
-                  onClick={() => setDeleteUser(null)}
-                  disabled={!deleteConfirmed}
-                />
-                <CustomButton
-                  type="button"
-                  innerText={"No"}
-                  className="rounded p-2"
-                  actionType="cancel"
-                  onClick={() => setDeleteUser(null)}
-                />
-              </div>
-            </div>
-          </div>
-        }
-        onClose={() => {
-          setDeleteUser(null);
-          setDeleteConfirmed(false);
-        }}
-      ></CustomModal>
-      <CustomModal
-        isOpen={!!resetPasswordUser}
-        content={
-          <div>
-            <b>
-              Are you sure you want to reset the password for{" "}
-              {resetPasswordUser?.name}?
-            </b>
-            <div className="flex flex-row justify-end w-full space-x-2">
-              <CustomButton
-                type="button"
-                innerText={"Yes"}
-                className="rounded p-2"
-                onClick={() => setResetPasswordUser(null)}
-              />
-              <CustomButton
-                type="button"
-                innerText={"No"}
-                className="rounded p-2"
-                actionType="cancel"
-                onClick={() => setResetPasswordUser(null)}
-              />
-            </div>
-          </div>
-        }
-        onClose={() => {
-          setResetPasswordUser(null);
-        }}
-      ></CustomModal>
+      <DeleteUserModal user={deleteUser} setUser={setDeleteUser} />
+      <PasswordResetModal
+        user={resetPasswordUser}
+        setUser={setResetPasswordUser}
+      />
+      <VerifyUserModal user={verifyUser} setUser={setVerifyUser} />
     </>
   );
 }
