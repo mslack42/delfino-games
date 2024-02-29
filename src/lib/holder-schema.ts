@@ -1,5 +1,5 @@
 import { Location } from "@prisma/client";
-import { TypeOf, object, string , enum as enum_, number as number_} from "zod";
+import { TypeOf, object, string , number as number_} from "zod";
 
 const locationValues: string[] = Object.values(Location).map(v => v)
 

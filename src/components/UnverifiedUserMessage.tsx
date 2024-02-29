@@ -13,16 +13,18 @@ export async function UnverifiedUserMessage() {
                 !
               </div>
             </div>
-            <div className="text-2xl flex-grow text-left pl-4">
-              <p>Your account is not verified.</p>
+            <div className="text-lg flex-grow text-left pl-4">
               <p>
-                This means that you only have limited functionality available to
-                you.
+                Your account is not verified. This means that you only have
+                limited functionality available to you.
               </p>
+              <br/>
               <p>
                 Contact anyone with an Admin account in order to get your
                 account verified.
               </p>
+              <br />
+              <p>{"Or, y'know, you could just wait."}</p>
             </div>
           </div>
         </>

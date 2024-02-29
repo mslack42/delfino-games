@@ -1,3 +1,4 @@
+"use client";
 import { KeyValue } from "@/components/common/KeyValue";
 import { Account, User } from "@prisma/client";
 
@@ -5,7 +6,6 @@ type ViewProps = {
   user: User & { accounts: Account[] };
 };
 export function ProfileView({ user }: ViewProps) {
-  "use client";
   return (
     <div className="p-4">
       <h1 className="text-4xl">Profile</h1>

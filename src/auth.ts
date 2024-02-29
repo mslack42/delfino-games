@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { passesPermissionsCheck } from "./security/passesPermissionsCheck";
 
-type CustomUser = User & {id: string, role:string}
+export type CustomUser = User & {id: string, role:string}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
@@ -80,7 +80,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         },
       };
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, session,  trigger,}) => {
+      if (trigger === "update") {
+        token.email = session.user.email
+        token.name = session.user.name
+      }
       if (user) {
         const u = user as any;
         return {

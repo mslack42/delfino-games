@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { getUser } from "@/database/users/getUser";
 import { redirect } from "next/navigation";
 import { ProfileView } from "./ProfileView";
+import { ProfileActions } from "./ProfileActions";
 
 export default async function Profile() {
   const session = await auth();
@@ -19,7 +20,10 @@ export default async function Profile() {
 
   return (
     <>
-      <ProfileView user={user} />
+      <div>
+        <ProfileView user={user} />
+        <ProfileActions />
+      </div>
     </>
   );
 }
