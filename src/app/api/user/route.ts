@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
       status: "success",
     });
   } catch (error: any) {
+    console.log(error);
     if (error instanceof ZodError) {
       return NextResponse.json(
         {
