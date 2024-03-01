@@ -18,6 +18,7 @@ export function DropDown(props: DropDownProps) {
         <div
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
+          onClick={() => setOpen(false)}
         >
           <MenuButton>{props.head}</MenuButton>
           <Menu
