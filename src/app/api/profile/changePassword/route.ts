@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 import { auth } from "@/auth";
 import { hash } from "bcryptjs";
 import bcrypt from "bcryptjs";
+import prisma from "@/db"
 
 export async function POST(req: NextRequest) {
   try {

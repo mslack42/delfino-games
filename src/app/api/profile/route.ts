@@ -2,6 +2,7 @@ import { editProfileSchema } from "@/lib/profile-schema";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { auth } from "@/auth";
+import prisma from "@/db"
 
 export async function POST(req: NextRequest) {
     try {
