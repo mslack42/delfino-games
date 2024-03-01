@@ -3,12 +3,13 @@ import { CustomModal } from "@/components/common/CustomModal";
 import { CustomButton } from "@/components/input/CustomButton";
 import { UserModalProps, UserType } from "./UserTable";
 import { useRouter } from "next/navigation";
+import { ApiRoutes } from "@/constants/routes";
 
 export function PasswordResetModal({ user, setUser }: UserModalProps) {
   const router = useRouter();
   const passwordResetHandler = async (user:UserType) => {
     if(user) {
-      await fetch(`/api/user/passwordReset?id=${user.id}`, {method:"POST"})
+      await fetch(ApiRoutes.ResetUserPassword(user.id), {method:"POST"})
       setUser(null)
       router.refresh()
     }

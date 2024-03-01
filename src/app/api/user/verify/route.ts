@@ -1,4 +1,4 @@
-import prisma from "@/db"
+import { verifyUser } from "@/database/users/verifyUser";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req:NextRequest) {
@@ -8,31 +8,7 @@ export async function POST(req:NextRequest) {
         return NextResponse.json({message:"no user specified"}, {status:400})
     }
 
-    const update = await prisma.user.update({
-        data: {
-            accounts: {
-                updateMany: {
-                    where: {
-                        role: "Unverified"
-                    },
-                    data: {
-                        role: "Verified"
-                    }
-                }
-            }
-        },
-        where: {
-            id: userId,
-            accounts: {
-                every: {
-                    role: "Unverified"
-                }
-            }
-        },
-        include: {
-            _count: true
-        }
-    })
+    const update = await verifyUser(userId)
 
     if (update._count.accounts === 0) {
         return NextResponse.json({message:"Unverified user not found"}, {status:404})

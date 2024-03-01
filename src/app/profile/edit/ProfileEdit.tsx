@@ -1,6 +1,7 @@
 "use client";
 import { KeyValue } from "@/components/common/KeyValue";
 import { CustomButton } from "@/components/input/CustomButton";
+import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import { EditProfileInput, editProfileSchema } from "@/lib/profile-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Account, User } from "@prisma/client";
@@ -36,7 +37,7 @@ export function ProfileEdit({ user }: EditProps) {
   const onSubmitHandler: SubmitHandler<EditProfileInput> = async (values) => {
     try {
       setSubmitting(true);
-      const res = await fetch("/api/profile", {
+      const res = await fetch(ApiRoutes.EditProfile, {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -53,7 +54,7 @@ export function ProfileEdit({ user }: EditProps) {
         ...sessionData,
         user: { ...sessionData?.user, name: values.name, email: values.email },
       });
-      router.push("/profile");
+      router.push(ApplicationRoutes.Profile);
       router.refresh();
     } catch (error: any) {
       //   toast.error(error.message);

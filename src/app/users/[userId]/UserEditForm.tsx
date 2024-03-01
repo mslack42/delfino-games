@@ -1,6 +1,7 @@
 "use client";
 import { KeyValue } from "@/components/common/KeyValue";
 import { CustomButton } from "@/components/input/CustomButton";
+import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import { EditUserInput, editUserSchema } from "@/lib/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Account, User, UserRole } from "@prisma/client";
@@ -35,7 +36,7 @@ export function UserEditForm({ user }: EditProps) {
   const onSubmitHandler: SubmitHandler<EditUserInput> = async (values) => {
     try {
       setSubmitting(true);
-      const res = await fetch("/api/user", {
+      const res = await fetch(ApiRoutes.EditUser, {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -48,7 +49,7 @@ export function UserEditForm({ user }: EditProps) {
         return
       }
 
-      router.push("/users");
+      router.push(ApplicationRoutes.Users);
       router.refresh();
     } catch (error: any) {
       //   toast.error(error.message);

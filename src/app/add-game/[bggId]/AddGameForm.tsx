@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddGameInput, addGameSchema } from "@/lib/game-schema";
 import { BggSummaryData } from "@/bgg/types";
+import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 
 type AddGameFormProps = {
   holders: { id: number; name: string; location: Location }[];
@@ -44,7 +45,7 @@ export function AddGameForm(props: AddGameFormProps) {
     console.log("halls");
     try {
       setSubmitting(true);
-      const res = await fetch("/api/add-game", {
+      const res = await fetch(ApiRoutes.AddGame, {
         method: "POST",
         body: JSON.stringify({ formData: values, bggData: props.bggData }),
         headers: {
@@ -57,7 +58,7 @@ export function AddGameForm(props: AddGameFormProps) {
         return;
       }
 
-      router.push("/games");
+      router.push(ApplicationRoutes.Games);
       router.refresh();
     } catch (error: any) {
       //   toast.error(error.message);

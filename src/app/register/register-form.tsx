@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { CreateUserInput, createUserSchema } from "@/lib/user-schema";
+import { ApiRoutes } from "@/constants/routes";
 
 export const RegisterForm = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -23,7 +24,7 @@ export const RegisterForm = () => {
   const onSubmitHandler: SubmitHandler<CreateUserInput> = async (values) => {
     try {
       setSubmitting(true);
-      const res = await fetch("/api/register", {
+      const res = await fetch(ApiRoutes.Register, {
         method: "POST",
         body: JSON.stringify(values),
         headers: {

@@ -4,7 +4,8 @@ import { ZodError } from "zod";
 import { auth } from "@/auth";
 import { hash } from "bcryptjs";
 import bcrypt from "bcryptjs";
-import prisma from "@/db"
+import { getUser } from "@/database/users/getUser";
+import { updateUserPassword } from "@/database/users/updateUserPassword";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,11 +24,7 @@ export async function POST(req: NextRequest) {
     const { currentPassword, password, passwordConfirm } =
       changePasswordSchema.parse(await req.json());
 
-    const dbUser = await prisma?.user.findFirst({
-      where: {
-        id: sessionId,
-      },
-    });
+    const dbUser = await getUser(sessionId)
 
     if (!dbUser) {
       return NextResponse.json(
@@ -59,14 +56,7 @@ export async function POST(req: NextRequest) {
 
     const newPasswordHash = await hash(password,12)
 
-    await prisma?.user.update({
-      where: {
-        id: sessionId,
-      },
-      data: {
-        password: newPasswordHash,
-      },
-    });
+    await updateUserPassword(sessionId,newPasswordHash)
 
     return NextResponse.json({
       status: "success",

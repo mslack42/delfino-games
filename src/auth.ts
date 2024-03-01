@@ -4,6 +4,7 @@ import prisma from "@/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { passesPermissionsCheck } from "./security/passesPermissionsCheck";
+import { ApiRoutes, ApplicationRoutes } from "./constants/routes";
 
 export type CustomUser = User & {id: string, role:string}
 
@@ -11,7 +12,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   adapter: PrismaAdapter(prisma),
   pages: {
-    signIn: "/login",
+    signIn: ApplicationRoutes.LogIn,
   },
   providers: [
     CredentialsProvider({
@@ -60,7 +61,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const passesCheck = passesPermissionsCheck(nextUrl.pathname, (auth?.user as CustomUser)?.role)
 
       if (!passesCheck && !isLoggedIn) {
-        const redirectUrl = new URL("/api/auth/signin", nextUrl.origin);
+        const redirectUrl = new URL(ApiRoutes.SignIn, nextUrl.origin);
         redirectUrl.searchParams.append("callbackUrl", nextUrl.href);
         return Response.redirect(redirectUrl);
       }

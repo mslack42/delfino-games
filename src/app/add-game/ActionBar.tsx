@@ -3,13 +3,14 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { ActionBarButton } from "./ActionBarButton";
+import { ApplicationRoutes } from "@/constants/routes";
 
 export function ActionBar({ bggId }: { bggId: number; }) {
   return (
     <ul className="flex flex-row-reverse gap-2 mt-1 mb-1  pt-2 pb-2">
       <li title="Add game">
         <ActionBarButton
-          content={<Link href={`/add-game/${bggId}`}>
+          content={<Link href={ApplicationRoutes.AddGame(bggId)}>
             <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
           </Link>}
         ></ActionBarButton>

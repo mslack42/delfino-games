@@ -1,5 +1,6 @@
 "use client";
 import { CustomButton } from "@/components/input/CustomButton";
+import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import { EditHolderInput, editHolderSchema } from "@/lib/holder-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Location, Person } from "@prisma/client";
@@ -34,7 +35,7 @@ export function EditHolderForm({ holder }: Props) {
   const onSubmitHandler: SubmitHandler<EditHolderInput> = async (values) => {
     try {
       setSubmitting(true);
-      await fetch("/api/people", {
+      await fetch(ApiRoutes.EditPerson, {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -42,7 +43,7 @@ export function EditHolderForm({ holder }: Props) {
         },
       });
 
-      router.push("/people");
+      router.push(ApplicationRoutes.People);
     } catch (error: any) {
       //   toast.error(error.message);
     } finally {

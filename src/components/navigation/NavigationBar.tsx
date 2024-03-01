@@ -7,6 +7,7 @@ import { LoggedOutOnly } from "../auth/LoggedOutOnly";
 import { RoleCheck } from "../auth/RoleCheck";
 import { DropDown } from "../input/DropDown";
 import { listHolders } from "@/database/holders/listHolders";
+import { ApplicationRoutes } from "@/constants/routes";
 
 export const NavigationBar = async () => {
   return (
@@ -14,7 +15,7 @@ export const NavigationBar = async () => {
       <div className="bg-teal-400">
         <div className="container mx-auto px-4 h-full">
           <div className="flex justify-between items-center h-full align-middle">
-            <Link href="/" className="flex bottom-0">
+            <Link href={ApplicationRoutes.Home} className="flex bottom-0">
               <FontAwesomeIcon icon={faDice} className="h-12 text-white  " />
               <div className="h-12 flex align-text-bottom justify-end flex-col pl-2">
                 <h1 className="text-xl text-white align-text-bottom">
@@ -48,7 +49,7 @@ async function ProfileControls() {
       <li className="px-2">
         <LoggedOutOnly
           content={
-            <Link href="/login">
+            <Link href={ApplicationRoutes.LogIn}>
               <p>Login</p>
             </Link>
           }
@@ -58,10 +59,10 @@ async function ProfileControls() {
             <DropDown
               head={<div>{user?.name}</div>}
               items={[
-                <Link href="/profile" key={-2}>
+                <Link href={ApplicationRoutes.Profile} key={-2}>
                   Profile
                 </Link>,
-                <Link href="/profile/changePassword" key={-3}>
+                <Link href={ApplicationRoutes.ChangePassword} key={-3}>
                   Change Password
                 </Link>,
                 <div key={-1}>
@@ -88,13 +89,13 @@ async function AdminControls() {
           <DropDown
             head={<div>Administration</div>}
             items={[
-              <Link key={1} href="/add-game">
+              <Link key={1} href={ApplicationRoutes.FindAndAddGame}>
                 <p>Add a new game</p>
               </Link>,
-              <Link href="/people" key={2}>
+              <Link href={ApplicationRoutes.People} key={2}>
                 Manage holders
               </Link>,
-              <Link href="/users" key={3}>
+              <Link href={ApplicationRoutes.Users} key={3}>
                 Manage users
               </Link>,
             ]}
@@ -116,11 +117,11 @@ async function GamesCollection() {
           <DropDown
             head={<div>Games Collection</div>}
             items={[
-              <Link key={-1} href={"/games"}>
+              <Link key={-1} href={ApplicationRoutes.Games}>
                 <b>All Games</b>
               </Link>,
               ...holders.map((h) => (
-                <Link key={h.id} href={"/games/holder/" + h.name}>
+                <Link key={h.id} href={ApplicationRoutes.PersonsGames(h.name)}>
                   {h.name}
                 </Link>
               )),
@@ -130,7 +131,7 @@ async function GamesCollection() {
       ></LoggedInOnly>
       <LoggedOutOnly
         content={
-          <Link href="/games">
+          <Link href={ApplicationRoutes.Games}>
             <p>Games</p>
           </Link>
         }

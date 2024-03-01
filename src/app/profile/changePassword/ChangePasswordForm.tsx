@@ -1,6 +1,7 @@
 "use client";
 import { KeyValue } from "@/components/common/KeyValue";
 import { CustomButton } from "@/components/input/CustomButton";
+import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import {
   ChangePasswordInput,
   changePasswordSchema,
@@ -31,7 +32,7 @@ export function ChangePasswordForm() {
   ) => {
     try {
       setSubmitting(true);
-      const res = await fetch("/api/profile/changePassword", {
+      const res = await fetch(ApiRoutes.ChangePassword, {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -57,7 +58,7 @@ export function ChangePasswordForm() {
         return;
       }
 
-      router.push("/")
+      router.push(ApplicationRoutes.Home)
     } catch (error: any) {
       //   toast.error(error.message);
     } finally {

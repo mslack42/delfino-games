@@ -3,6 +3,7 @@ import { BggSummaryData } from "@/bgg/types";
 import { FormEvent, useState } from "react";
 import { SearchResults } from "./searchResults";
 import { CustomButton } from "../../components/input/CustomButton";
+import { ApiRoutes } from "@/constants/routes";
 
 export default function AddNewGame() {
   const [searchResults, setSearchResults] = useState<BggSummaryData[]>([]);
@@ -13,7 +14,7 @@ export default function AddNewGame() {
     const formData = new FormData(event.currentTarget);
 
     const searchResults = await fetch(
-      `/api/games/searchNew?name=${formData.get("searchTerm")}`,
+      ApiRoutes.SearchNewGame(formData.get("searchTerm") as string),
       {
         method: "GET",
       }

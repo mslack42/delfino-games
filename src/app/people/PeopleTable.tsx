@@ -1,6 +1,7 @@
 "use client";
 import { CustomModal } from "@/components/common/CustomModal";
 import { CustomButton } from "@/components/input/CustomButton";
+import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import { faDice } from "@fortawesome/free-solid-svg-icons/faDice";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
@@ -13,7 +14,7 @@ import { useState } from "react";
 type HolderType = {
   id: number;
   name: string | null;
-  location: Location
+  location: Location;
 };
 type Props = {
   holders: HolderType[];
@@ -25,7 +26,7 @@ export function PeopleTable({ holders }: Props) {
 
   const deleteHandler = async (holderId: number | undefined | null) => {
     if (holderId) {
-      await fetch(`/api/people?id=${holderId}`, { method: "DELETE" });
+      await fetch(ApiRoutes.DeletePerson(holderId!), { method: "DELETE" });
       setDeleteHolder(null);
       router.refresh();
     }
@@ -49,14 +50,14 @@ export function PeopleTable({ holders }: Props) {
                   <ul className="flex space-x-2">
                     <li>
                       <Link
-                        href={`/games/holder/${holder.name}`}
+                        href={ApplicationRoutes.PersonsGames(holder.name!)}
                         className="text-center"
                       >
                         <FontAwesomeIcon icon={faDice} className="h-5" />
                       </Link>
                     </li>
                     <li>
-                      <Link href={`/people/${holder.id}`}>
+                      <Link href={ApplicationRoutes.EditPerson(holder.id)}>
                         <FontAwesomeIcon icon={faPenToSquare} className="h-5" />
                       </Link>
                     </li>
@@ -108,7 +109,7 @@ export function PeopleTable({ holders }: Props) {
         }
         onClose={() => {
           setDeleteHolder(null);
-          setDeleteConfirmed(false)
+          setDeleteConfirmed(false);
         }}
       ></CustomModal>
     </>

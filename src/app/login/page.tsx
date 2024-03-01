@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LoginForm } from "./login-form";
 import { Suspense } from "react";
+import { ApplicationRoutes } from "@/constants/routes";
 
 export default async function LoginPage() {
   return (
@@ -12,7 +13,7 @@ export default async function LoginPage() {
               <LoginForm />
             </Suspense>
           </div>
-          <Link href="/register">{"Don't have an account?"}</Link>
+          <Link href={ApplicationRoutes.Register}>{"Don't have an account?"}</Link>
         </div>
       </section>
     </>

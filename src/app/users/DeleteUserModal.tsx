@@ -4,6 +4,7 @@ import { CustomButton } from "@/components/input/CustomButton";
 import { useState } from "react";
 import { UserModalProps, UserType } from "./UserTable";
 import { useRouter } from "next/navigation";
+import { ApiRoutes } from "@/constants/routes";
 
 export function DeleteUserModal({ user, setUser }: UserModalProps) {
   const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);
@@ -11,7 +12,7 @@ export function DeleteUserModal({ user, setUser }: UserModalProps) {
 
   const deleteHandler = async (user: UserType) => {
     if(user && deleteConfirmed) {
-      await fetch(`/api/user?id=${user.id}`, {method:"DELETE"})
+      await fetch(ApiRoutes.DeleteUser(user.id), {method:"DELETE"})
       setUser(null)
       setDeleteConfirmed(false)
       router.refresh()

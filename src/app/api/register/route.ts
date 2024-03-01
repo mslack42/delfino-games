@@ -1,8 +1,8 @@
 import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
-import prisma from "@/db";
 import { createUserSchema } from "@/lib/user-schema";
 import { ZodError } from "zod";
+import { createUser } from "@/database/users/createUser";
 
 export async function POST(req: Request) {
   try {
@@ -30,18 +30,7 @@ export async function POST(req: Request) {
 
     const hashed_password = await hash(password, 12);
 
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email: email.toLowerCase(),
-        password: hashed_password,
-        accounts: {
-          create: {
-            role: "Unverified",
-          },
-        },
-      },
-    });
+    const user = await createUser(name,email,hashed_password)
 
     return NextResponse.json({
       user: {

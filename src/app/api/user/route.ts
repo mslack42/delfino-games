@@ -2,7 +2,8 @@ import { editUserSchema } from "@/lib/user-schema";
 import { UserRole } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
-import prisma from "@/db";
+import { deleteUser } from "@/database/users/deleteUser";
+import { updateUser } from "@/database/users/updateUser";
 
 export async function DELETE(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("id");
@@ -11,42 +12,18 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ message: "no user specified" }, { status: 400 });
   }
 
-  await prisma?.user.delete({
-    where: {
-      id: userId,
-    },
-  });
+  await deleteUser(userId);
 
   return NextResponse.json({ message: "success" });
 }
+
+
 
 export async function POST(req: NextRequest) {
   try {
     const { name, email, id, role } = editUserSchema.parse(await req.json());
 
-    await prisma?.user.update({
-      where: {
-        id: id,
-      },
-      data: {
-        name: {
-          set: name,
-        },
-        email: {
-          set: email,
-        },
-        accounts: {
-          updateMany: {
-            where: {
-              userId: id,
-            },
-            data: {
-              role: role as UserRole,
-            },
-          },
-        },
-      },
-    });
+    await updateUser(id,name,email,role as UserRole)
 
     return NextResponse.json({
       status: "success",

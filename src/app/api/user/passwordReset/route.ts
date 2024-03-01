@@ -1,4 +1,4 @@
-import prisma from "@/db"
+import { updateUserPassword } from "@/database/users/updateUserPassword";
 import { hash } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,17 +11,7 @@ export async function POST(req:NextRequest) {
 
     const newPassword = await hash("password",12)
 
-    const update = await prisma.user.update({
-        data: {
-            password: newPassword
-        },
-        where: {
-            id: userId
-        },
-        include: {
-            _count: true
-        }
-    })
+    const update = await updateUserPassword(userId,newPassword)
 
     if (update._count.accounts === 0) {
         return NextResponse.json({message:"User not found"}, {status:404})

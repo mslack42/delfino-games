@@ -1,5 +1,6 @@
 "use client";
 import { DataSummaryKeyValuePair } from "@/components/data-display/DataSummaryKeyValuePair";
+import { ApplicationRoutes } from "@/constants/routes";
 import { InventoryItem } from "@/database/types";
 import { playerCount, playTime } from "@/util/text-formatting";
 import Image from "next/image";
@@ -27,7 +28,7 @@ export function InventoryItemPanel(props: PanelProps) {
 
   return (
     <div className="rounded-lg bg-cyan-200 w-60 max-h-96 overflow-hidden p-2 m-1">
-      <Link href={`/games/game/${data.id}`}>
+      <Link href={ApplicationRoutes.Game(data.id)}>
         <h1 className="text-center font-bold line-clamp-1" title={data.name}>
           {data.name}
         </h1>
