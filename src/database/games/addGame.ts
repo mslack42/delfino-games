@@ -7,13 +7,29 @@ export type NewGameData = {
   bggData: BggSummaryData;
   ownership: Ownership;
   location: Location;
+  ownerId?: number;
+  newOwner?: string;
   holderId?: number;
   newHolder?: string;
 };
 
 export async function addGame(newData: NewGameData): Promise<boolean> {
+  let ownerId = newData.ownerId;
+  if (newData.ownerId === -1) {
+    const newOwner = await prisma.person.create({
+      data: {
+        name: newData.newOwner!,
+        location: newData.location
+      },
+    });
+    ownerId = newOwner.id;
+  }
+
   let holderId = newData.holderId;
-  if (!newData.holderId || newData.holderId === -1) {
+  if (newData.holderId === -2) {
+    holderId = ownerId
+  }
+  if ( newData.holderId === -1) {
     const newHolder = await prisma.person.create({
       data: {
         name: newData.newHolder!,
@@ -62,6 +78,11 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
               connect: {
                 id: holderId,
               },
+            },
+            owner: {
+              connect: {
+                id: ownerId
+              }
             },
             ownership: newData.ownership,
           },

@@ -9,32 +9,43 @@ type SelectListPair = {
 type Props = {
   selectListValues: SelectListPair[];
   newValueString: string;
-  selectParamName: string;
-  textParamName: string;
-  placeHolder?: string;
+  selectProps: any & { name: string };
+  textProps: any & { name: string; placeholder: string };
   className?: string;
 };
 
 export function SelectOrNew(props: Props) {
-  const { selectListValues, newValueString, selectParamName, textParamName } =
-    props;
+  const {
+    selectListValues,
+    selectProps,
+    textProps,
+    className,
+    newValueString,
+  } = props;
   const defaultValue = useMemo(
-    () => (selectListValues.length ? selectListValues[0].value : "-1"),
+    () => (selectListValues.length ? selectListValues[0].value : "-2"),
     [selectListValues]
   );
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
   useEffect(() => {
-    if (props.selectListValues.every((v) => v.value !== selectedValue)) {
-      setSelectedValue(() => "-1");
+    if (!["-1","-2"].includes(selectedValue) && props.selectListValues.every((v) => v.value !== selectedValue)) {
+      setSelectedValue(() => "-2");
     }
   }, [props.selectListValues, selectedValue]);
 
+  const defaultTextProps = {
+    type: "text",
+    className: "w-auto min-w-0",
+    minLength: 1,
+    maxLength: 100,
+  };
+
   return (
-    <div className={props.className}>
+    <div className={className}>
       <select
+        {...selectProps}
         value={selectedValue}
-        name={selectParamName}
         onChange={(e) => {
           setSelectedValue(e.target.value);
         }}
@@ -44,17 +55,10 @@ export function SelectOrNew(props: Props) {
             {kvp.display}
           </option>
         ))}
-        <option value={-1}>{newValueString}</option>
+        <option value={'-1'}>{newValueString}</option>
       </select>
       {selectedValue !== "-1" ? undefined : (
-        <input
-          type="text"
-          placeholder={props.placeHolder}
-          name={textParamName}
-          className="w-auto min-w-0"
-          minLength={1}
-          maxLength={100}
-        ></input>
+        <input {...defaultTextProps} {...textProps}></input>
       )}
     </div>
   );
