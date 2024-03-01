@@ -1,3 +1,5 @@
+import { UserRole } from "@prisma/client";
+
 export function passesPermissionsCheck(
   path: string,
   role: string | null | undefined
@@ -10,19 +12,40 @@ export function passesPermissionsCheck(
     return false
   }
 
-  return routeChecksHit.every(rc => rc.requiredRoles.includes(role as Role));
+  return routeChecksHit.every(rc => rc.requiredRoles.includes(role as UserRole));
 }
-type Role = "Admin" | "Verified" | "Unverified"
 
 type RouteCheck = {
   pathMatch: string;
-  requiredRoles: Role[];
+  requiredRoles: UserRole[];
 };
 
+function atLeast(role:UserRole): UserRole[] {
+  switch(role) {
+    case "Admin": {
+      return ["Admin"]
+    }
+    case "Holder": {
+      return ["Holder", ...atLeast("Admin")]
+    }
+    case "Verified": {
+      return ["Verified", ...atLeast("Holder")]
+    }
+    case "Unverified": {
+      return ["Unverified", ...atLeast("Verified")]
+    }
+  }
+}
+
 const routeChecks: RouteCheck[] = [
-  { pathMatch: "/add-game", requiredRoles: ["Admin"] },
-  { pathMatch: "/people", requiredRoles: ["Admin"] },
-  { pathMatch: "/users", requiredRoles: ["Admin"] },
-  { pathMatch: "/api/people", requiredRoles: ["Admin"] },
-  { pathMatch: "/profile", requiredRoles: ["Admin","Verified","Unverified"] },
+  { pathMatch: "/people", requiredRoles: atLeast("Admin") },
+  { pathMatch: "/api/people", requiredRoles: atLeast("Admin") },
+  { pathMatch: "/users", requiredRoles: atLeast("Admin") },
+  { pathMatch: "/api/user", requiredRoles: atLeast("Admin")},
+  { pathMatch: "/add-game", requiredRoles: atLeast("Holder") },
+  { pathMatch: "/api/games", requiredRoles: atLeast("Holder")},
+  { pathMatch: "/api/add-game", requiredRoles: atLeast("Holder")},
+  { pathMatch: "/games/holder", requiredRoles: atLeast("Unverified")},
+  { pathMatch: "/profile", requiredRoles: atLeast("Unverified") },
+  { pathMatch: "/api/profile", requiredRoles: atLeast("Unverified")},
 ];
