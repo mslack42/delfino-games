@@ -11,11 +11,12 @@ export type NewGameData = {
   newOwner?: string;
   holderId?: number;
   newHolder?: string;
+  isInRotation: boolean
 };
 
 export async function addGame(newData: NewGameData): Promise<boolean> {
-  let ownerId = newData.ownerId;
-  if (newData.ownerId === -1) {
+  let ownerId = newData.ownership === "Personal" ? newData.ownerId : undefined;
+  if (ownerId === -1) {
     const newOwner = await prisma.person.create({
       data: {
         name: newData.newOwner!,
@@ -26,7 +27,7 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
   }
 
   let holderId = newData.holderId;
-  if (newData.holderId === -2) {
+  if (newData.holderId === -2 && newData.ownership === "Personal") {
     holderId = ownerId
   }
   if ( newData.holderId === -1) {
@@ -79,12 +80,13 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
                 id: holderId,
               },
             },
-            owner: {
+            owner: ownerId ? {
               connect: {
                 id: ownerId
               }
-            },
+            } : undefined,
             ownership: newData.ownership,
+            inCurrentRotation: newData.isInRotation
           },
         },
       },

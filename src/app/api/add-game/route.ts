@@ -14,8 +14,15 @@ type PayloadDataType = {
 export async function POST(req: NextRequest) {
   try {
     const json: PayloadDataType = await req.json();
-    const { ownership, location, ownerId, newOwner, holderId, newHolder } =
-      addGameSchema.parse(json.formData);
+    const {
+      ownership,
+      location,
+      ownerId,
+      newOwner,
+      holderId,
+      newHolder,
+      isInRotation,
+    } = addGameSchema.parse(json.formData);
 
     const ownerIdInt = tryParseInt(ownerId);
     const holderIdInt = tryParseInt(holderId);
@@ -34,6 +41,7 @@ export async function POST(req: NextRequest) {
         holderIdInt !== null && holderIdInt !== undefined && holderIdInt > -1
           ? undefined
           : newHolder!,
+      isInRotation: isInRotation,
     };
 
     const submitSuccess = await addGame(newGame);

@@ -17,6 +17,7 @@ type AddGameFormProps = {
 };
 export function AddGameForm(props: AddGameFormProps) {
   const [currLocation, setCurrLocation] = useState<Location>("Poole");
+  const [currOwnership, setCurrOwnership] = useState<Ownership>("Personal");
   const locationHolders = useMemo(
     () => props.holders.filter((h) => h.location === currLocation),
     [props.holders, currLocation]
@@ -77,7 +78,13 @@ export function AddGameForm(props: AddGameFormProps) {
           dataKey="Ownership"
           dataValue={
             <>
-              <select defaultValue={"Personal"} {...register("ownership")}>
+              <select
+                {...register("ownership")}
+                value={currOwnership}
+                onChange={(evt) =>
+                  setCurrOwnership(evt.currentTarget.value as Ownership)
+                }
+              >
                 {Object.values(Ownership).map((own) => (
                   <option value={own} key={own}>
                     {own}
@@ -117,50 +124,54 @@ export function AddGameForm(props: AddGameFormProps) {
             </>
           }
         ></DataSummaryKeyValuePair>
-        <DataSummaryKeyValuePair
-          dataKey="Owner"
-          dataValue={
-            <>
-              <SelectOrNew
-                selectListValues={[
-                  { value: "-2", display: "Select..." },
-                  ...locationHolders.map((h) => {
-                    return {
-                      value: `${h.id}`,
-                      display: h.name,
-                    };
-                  }),
-                ]}
-                newValueString={"Add New..."}
-                selectProps={{
-                  ...register("ownerId"),
-                }}
-                textProps={{
-                  ...register("newOwner"),
-                  placeholder: "New Games Owner...",
-                }}
-                className="text-right grow flex-nowrap"
-              ></SelectOrNew>
-              {errors["ownerId"] && (
-                <span className="text-red-500 text-xs pt-1 block">
-                  {errors["ownerId"]?.message as string}
-                </span>
-              )}
-              {errors["newOwner"] && (
-                <span className="text-red-500 text-xs pt-1 block">
-                  {errors["newOwner"]?.message as string}
-                </span>
-              )}
-            </>
-          }
-        ></DataSummaryKeyValuePair>
+        {currOwnership === "Personal" && (
+          <DataSummaryKeyValuePair
+            dataKey="Owner"
+            dataValue={
+              <>
+                <SelectOrNew
+                  selectListValues={[
+                    { value: "-2", display: "Select..." },
+                    ...locationHolders.map((h) => {
+                      return {
+                        value: `${h.id}`,
+                        display: h.name,
+                      };
+                    }),
+                  ]}
+                  newValueString={"Add New..."}
+                  selectProps={{
+                    ...register("ownerId"),
+                  }}
+                  textProps={{
+                    ...register("newOwner"),
+                    placeholder: "New Games Owner...",
+                  }}
+                  className="text-right grow flex-nowrap"
+                ></SelectOrNew>
+                {errors["ownerId"] && (
+                  <span className="text-red-500 text-xs pt-1 block">
+                    {errors["ownerId"]?.message as string}
+                  </span>
+                )}
+                {errors["newOwner"] && (
+                  <span className="text-red-500 text-xs pt-1 block">
+                    {errors["newOwner"]?.message as string}
+                  </span>
+                )}
+              </>
+            }
+          ></DataSummaryKeyValuePair>
+        )}
         <DataSummaryKeyValuePair
           dataKey="Holder"
           dataValue={
             <>
               <SelectOrNew
                 selectListValues={[
-                  { value: "-2", display: "(Same as owner)" },
+                  currOwnership === "Personal"
+                    ? { value: "-2", display: "(Same as owner)" }
+                    : undefined,
                   ...locationHolders.map((h) => {
                     return {
                       value: `${h.id}`,
@@ -191,6 +202,14 @@ export function AddGameForm(props: AddGameFormProps) {
             </>
           }
         ></DataSummaryKeyValuePair>
+        <DataSummaryKeyValuePair
+          dataKey={"Adding to rotation?"}
+          dataValue={
+            <>
+              <input type="checkbox" {...register("isInRotation")} />
+            </>
+          }
+        />
         <CustomButton
           type="submit"
           innerText={submitting ? "loading..." : "Save"}

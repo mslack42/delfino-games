@@ -7,7 +7,7 @@ type SelectListPair = {
 };
 
 type Props = {
-  selectListValues: SelectListPair[];
+  selectListValues: (SelectListPair | undefined)[];
   newValueString: string;
   selectProps: any & { name: string };
   textProps: any & { name: string; placeholder: string };
@@ -22,17 +22,20 @@ export function SelectOrNew(props: Props) {
     className,
     newValueString,
   } = props;
+  const realSelectValues: SelectListPair[] = useMemo(
+    () => selectListValues.filter(v => v !== undefined).map(v => v!),[selectListValues]
+  )
   const defaultValue = useMemo(
-    () => (selectListValues.length ? selectListValues[0].value : "-2"),
-    [selectListValues]
+    () => (realSelectValues.length ? realSelectValues[0].value : "-2"),
+    [realSelectValues]
   );
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
   useEffect(() => {
-    if (!["-1","-2"].includes(selectedValue) && props.selectListValues.every((v) => v.value !== selectedValue)) {
+    if (!["-1","-2"].includes(selectedValue) && realSelectValues.every((v) => v.value !== selectedValue)) {
       setSelectedValue(() => "-2");
     }
-  }, [props.selectListValues, selectedValue]);
+  }, [realSelectValues, selectedValue]);
 
   const defaultTextProps = {
     type: "text",
@@ -50,7 +53,7 @@ export function SelectOrNew(props: Props) {
           setSelectedValue(e.target.value);
         }}
       >
-        {selectListValues.map((kvp) => (
+        {realSelectValues.map((kvp) => (
           <option value={kvp.value} key={kvp.value}>
             {kvp.display}
           </option>
