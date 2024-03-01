@@ -6,7 +6,7 @@ export default async function ListGames() {
 
   return (
     <>
-      <h1 className="text-4xl">All Games</h1>
+      <h1 className="text-4xl py-2">All Games</h1>
       <GamesList
         inventoryData={inventoryData}
         controlsKeys={[
