@@ -33,7 +33,7 @@ export function UserTable({ users }: Props) {
 
   return (
     <>
-      <div className="rounded-lg">
+      <div className="rounded-lg flex flex-row justify-center">
         <table className="table-auto rounded-sm">
           <tbody className="rounded-lg">
             <tr className="bg-teal-300 p-1">
