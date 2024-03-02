@@ -10,6 +10,7 @@ import { listHolders } from "@/database/holders/listHolders";
 import { ApplicationRoutes } from "@/constants/routes";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { NavigationSubMenu } from "./NavigationSubMenu";
+import { twJoin } from "tailwind-merge";
 
 export const NavigationBar = async () => {
   return (
@@ -35,7 +36,9 @@ export const NavigationBar = async () => {
             <div className="flex md:hidden justify-end flex-col h-full pb-3 z-[501]">
               <DropDown
                 head={
-                  <FontAwesomeIcon icon={faBars} className="text-white h-8" />
+                  <div className="h-full flex-col justify-center">
+                    <FontAwesomeIcon icon={faBars} className="text-white h-8" />
+                  </div>
                 }
                 items={[
                   <span key={1}>
@@ -48,7 +51,6 @@ export const NavigationBar = async () => {
                     <ProfileControls depth={"Nested"} />
                   </span>,
                 ]}
-                className="py-3"
               />
             </div>
           </div>
@@ -89,7 +91,7 @@ async function ProfileControls(props: ControlsProps) {
   ];
   return (
     <>
-      <li className="px-2">
+      <li className={twJoin("", props.depth === "Unnested" ? "px-2" : "")}>
         <LoggedOutOnly
           content={
             <Link href={ApplicationRoutes.LogIn}>
@@ -126,7 +128,7 @@ async function AdminControls(props: ControlsProps) {
       type="oneOf"
       roles={["Admin"]}
       content={
-        <li className="px-2">
+        <li className={twJoin("", props.depth === "Unnested" ? "px-2" : "")}>
           <NavigationSubMenu depth={props.depth} head={head} items={items} />
         </li>
       }
@@ -152,7 +154,7 @@ async function GamesCollection(props: ControlsProps) {
   ];
 
   return (
-    <li className="px-2">
+    <li className={twJoin("", props.depth === "Unnested" ? "px-2" : "")}>
       <LoggedInOnly
         content={
           <NavigationSubMenu depth={props.depth} head={head} items={items} />
@@ -160,7 +162,7 @@ async function GamesCollection(props: ControlsProps) {
       ></LoggedInOnly>
       <LoggedOutOnly
         content={
-          <Link href={ApplicationRoutes.Games}>
+          <Link href={ApplicationRoutes.Games} className="hover:bg-teal-400">
             <p>Games</p>
           </Link>
         }

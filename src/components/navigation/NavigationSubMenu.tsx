@@ -17,7 +17,7 @@ export function NavigationSubMenu(props: NavigationSubMenuProps) {
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="bg-teal-400 py-1 rounded-lg"
+            className="bg-teal-400 py-1 px-2 rounded-lg"
           >
             {head}
           </div>
