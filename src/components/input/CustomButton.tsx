@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEventHandler } from "react";
+import { PointerEventHandler } from "react";
 import { twJoin } from "tailwind-merge";
 
 type CustomSubmitButtonProps = {
@@ -10,7 +10,7 @@ type CustomSubmitButtonProps = {
   className?: string;
   disabled?: boolean;
   form?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: PointerEventHandler<HTMLButtonElement>;
 };
 export function CustomButton(props: CustomSubmitButtonProps) {
   const actionType = props.actionType ?? "confirm";
