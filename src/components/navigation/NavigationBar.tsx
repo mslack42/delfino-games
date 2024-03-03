@@ -5,7 +5,7 @@ import { auth, signOut } from "@/auth";
 import { LoggedInOnly } from "../auth/LoggedInOnly";
 import { LoggedOutOnly } from "../auth/LoggedOutOnly";
 import { RoleCheck } from "../auth/RoleCheck";
-import { DropDown } from "../input/DropDown";
+import { DropDown, DropDownGroup, DropDownGroupCollection } from "../input/DropDown";
 import { listHolders } from "@/database/holders/listHolders";
 import { ApplicationRoutes } from "@/constants/routes";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +13,12 @@ import { NavigationSubMenu } from "./NavigationSubMenu";
 import { twJoin } from "tailwind-merge";
 
 export const NavigationBar = async () => {
+
+  const menu: DropDownGroupCollection = {
+    "game": await gamesCollection(),
+    "admin": await adminControls(),
+    "profile": await profileControls()
+  }
   return (
     <div className="w-full h-16 bg-teal-400 sticky top-0  z-[500]">
       <div className="bg-teal-400 h-full">
@@ -28,28 +34,27 @@ export const NavigationBar = async () => {
             </Link>
             <div className="hidden md:flex justify-end flex-col h-full pb-3 z-[501]">
               <ul className="flex text-white divide-solid divide-x-2">
-                <GamesCollection depth={"Unnested"} />
-                <AdminControls depth={"Unnested"} />
-                <ProfileControls depth={"Unnested"} />
+                <li className="px-2">
+                  <DropDown type="Single" {...menu["game"]}/>
+                </li>
+                <RoleCheck type="oneOf" roles={["Admin"]} content={<li className="px-2"><DropDown type="Single" {...menu["admin"]} /></li>}></RoleCheck>
+                <li className="px-2">
+                  <DropDown type="Single" {...menu["profile"]} />
+                </li>
               </ul>
             </div>
             <div className="flex md:hidden justify-end flex-col h-full pb-3 z-[501]">
               <DropDown
+                type="Multi"
                 head={
                   <div className="h-full flex-col justify-center">
                     <FontAwesomeIcon icon={faBars} className="text-white h-8" />
                   </div>
                 }
                 items={[
-                  <span key={1}>
-                    <GamesCollection depth={"Nested"} />
-                  </span>,
-                  <span key={2}>
-                    <AdminControls depth={"Nested"} />
-                  </span>,
-                  <span key={3} className="">
-                    <ProfileControls depth={"Nested"} />
-                  </span>,
+                  menu["game"],
+                  menu["admin"],
+                  menu["profile"]
                 ]}
               />
             </div>
@@ -60,11 +65,8 @@ export const NavigationBar = async () => {
   );
 };
 
-type ControlsProps = {
-  depth: "Nested" | "Unnested";
-};
 
-async function ProfileControls(props: ControlsProps) {
+async function profileControls(): Promise<DropDownGroup> {
   const logoutAction = async () => {
     "use server";
     await signOut();
@@ -73,7 +75,19 @@ async function ProfileControls(props: ControlsProps) {
   const user = session?.user;
 
   const head = (
-    <div>{user?.name && user?.name.length < 15 ? user?.name : "User"}</div>
+    <>
+      <LoggedOutOnly
+        content={
+          <Link href={ApplicationRoutes.LogIn}>
+            <p>Login</p>
+          </Link>
+        }
+      />
+      <LoggedInOnly content={
+        <div>{user?.name && user?.name.length < 15 ? user?.name : "User"}</div>
+      } />
+    </>
+
   );
 
   const items = [
@@ -89,27 +103,14 @@ async function ProfileControls(props: ControlsProps) {
       </form>
     </div>,
   ];
-  return (
-    <>
-      <li className={twJoin("", props.depth === "Unnested" ? "px-2" : "")}>
-        <LoggedOutOnly
-          content={
-            <Link href={ApplicationRoutes.LogIn}>
-              <p>Login</p>
-            </Link>
-          }
-        />
-        <LoggedInOnly
-          content={
-            <NavigationSubMenu depth={props.depth} head={head} items={items} />
-          }
-        />
-      </li>
-    </>
-  );
+
+  return {
+    head,
+    items
+  }
 }
 
-async function AdminControls(props: ControlsProps) {
+async function adminControls(): Promise<DropDownGroup> {
   const items = [
     <Link key={1} href={ApplicationRoutes.FindAndAddGame}>
       <p>Add a new game</p>
@@ -123,20 +124,13 @@ async function AdminControls(props: ControlsProps) {
   ];
   const head = <div>Administration</div>;
 
-  return (
-    <RoleCheck
-      type="oneOf"
-      roles={["Admin"]}
-      content={
-        <li className={twJoin("", props.depth === "Unnested" ? "px-2" : "")}>
-          <NavigationSubMenu depth={props.depth} head={head} items={items} />
-        </li>
-      }
-    />
-  );
+  return {
+    head,
+    items
+  }
 }
 
-async function GamesCollection(props: ControlsProps) {
+async function gamesCollection(): Promise<DropDownGroup> {
   const holders = (await listHolders()).sort((a, b) =>
     a.name.localeCompare(b.name)
   );
@@ -153,20 +147,8 @@ async function GamesCollection(props: ControlsProps) {
     )),
   ];
 
-  return (
-    <li className={twJoin("", props.depth === "Unnested" ? "px-2" : "")}>
-      <LoggedInOnly
-        content={
-          <NavigationSubMenu depth={props.depth} head={head} items={items} />
-        }
-      ></LoggedInOnly>
-      <LoggedOutOnly
-        content={
-          <Link href={ApplicationRoutes.Games} className="hover:bg-teal-400">
-            <p>Games</p>
-          </Link>
-        }
-      ></LoggedOutOnly>
-    </li>
-  );
+  return {
+    head,
+    items
+  }
 }

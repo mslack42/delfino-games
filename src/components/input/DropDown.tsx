@@ -1,53 +1,73 @@
 "use client";
 import React, { useState } from "react";
-import { Dropdown } from "@mui/base/Dropdown";
-import { Menu } from "@mui/base/Menu";
-import { MenuButton } from "@mui/base/MenuButton";
-import { MenuItem } from "@mui/base/MenuItem";
 import { twJoin } from "tailwind-merge";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ShadcnDropDown";
+
+export type DropDownGroup = {
+  head: React.ReactNode,
+  items: React.ReactNode[]
+}
+export type DropDownGroupCollection = {
+  [key: string]:DropDownGroup
+}
 
 type DropDownProps = {
   head: React.ReactNode;
-  items: React.ReactNode[];
-  highlightHover?: boolean,
-  className? : string
-};
+  className?: string
+} & ({
+  type: "Single",
+  items: React.ReactNode[]
+} | {
+  type: "Multi",
+  items: DropDownGroup[]
+});
 export function DropDown(props: DropDownProps) {
   const [open, setOpen] = useState(false);
 
+  const content = props.type === "Single" ? <>
+    {props.items.map((it, i) => (
+      <DropdownMenuItem
+        key={i}
+        className={twJoin([
+          "z-[1002] cursor-pointer rounded-lg last:border-b-0 px-2 focus:outline-none",
+          "focus:bg-teal-500 focus:text-white"
+        ])}
+      >
+        {it}
+      </DropdownMenuItem>
+    ))}
+  </> : <>
+    {props.items.map((it, i) => (
+      <span key={i}>
+        <DropdownMenuLabel className="bg-teal-500 rounded-lg">
+          {it.head}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator/>
+        {it.items.map((sub, j) => {
+          return <DropdownMenuItem
+            key={j}
+            className={twJoin([
+              "z-[1002] cursor-pointer rounded-lg last:border-b-0 px-2 focus:outline-none",
+              "focus:bg-teal-400 focus:text-white"
+            ])}
+          >
+            {sub}
+          </DropdownMenuItem>
+        })}
+        <DropdownMenuSeparator/>
+        </span>
+      
+    ))}
+  </>
+
   return (
     <>
-      <Dropdown open={open} >
-        <div
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
-          onClick={() => setOpen(!open)}
-          className={props.className}
-        >
-          <MenuButton>{props.head}</MenuButton>
-          <Menu
-            className="z-[502]"
-            slotProps={{
-              listbox: {
-                className:
-                  "z-[502] bg-teal-100 rounded-lg overflow-auto min-w-20 p-2",
-              },
-            }}
-          >
-            {props.items.map((it, i) => (
-              <MenuItem
-                key={i}
-                className={twJoin([
-                  "z-[1002] cursor-pointer rounded-lg last:border-b-0 px-2 focus:outline-none",
-                  props.highlightHover ? "focus:bg-teal-500 focus:text-white" : ""
-                ])}
-              >
-                {it}
-              </MenuItem>
-            ))}
-          </Menu>
-        </div>
-      </Dropdown>
+      <DropdownMenu>
+        <DropdownMenuTrigger >{props.head}</DropdownMenuTrigger>
+        <DropdownMenuContent className="z-[1001] bg-teal-200" >
+          {content}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </>
   );
 }
