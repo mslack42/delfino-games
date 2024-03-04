@@ -172,7 +172,7 @@ export function AddGameForm(props: AddGameFormProps) {
                 selectListValues={[
                   currOwnership === "Personal"
                     ? { value: "-2", display: "(Same as owner)" }
-                    : undefined,
+                    : { value: "-2", display: "Select..." },
                   ...locationHolders.map((h) => {
                     return {
                       value: `${h.id}`,

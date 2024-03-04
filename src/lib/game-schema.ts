@@ -51,6 +51,16 @@ export const addGameSchema = object({
       path: ["newHolder"],
       message: "Holder must be specified",
     }
+  ).refine(
+    (data) => {
+      const holderIdInt = tryParseInt(data.holderId);
+      const ownerIdInt = tryParseInt(data.ownerId);
+      return !(holderIdInt === -2 && ownerIdInt === -2)
+    },
+    {
+      path: ["holderId"],
+      message:"Holder must be specified"
+    }
   );
 
 export type AddGameInput = TypeOf<typeof addGameSchema>;
