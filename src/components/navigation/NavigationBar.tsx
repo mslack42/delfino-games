@@ -9,8 +9,6 @@ import { DropDown, DropDownGroup, DropDownGroupCollection } from "../input/DropD
 import { listHolders } from "@/database/holders/listHolders";
 import { ApplicationRoutes } from "@/constants/routes";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { NavigationSubMenu } from "./NavigationSubMenu";
-import { twJoin } from "tailwind-merge";
 
 export const NavigationBar = async () => {
 

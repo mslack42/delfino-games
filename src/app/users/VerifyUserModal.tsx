@@ -19,9 +19,9 @@ export function VerifyUserModal({ user, setUser }: UserModalProps) {
     <>
       <CustomModal
         isOpen={!!user}
+        title={<b>{`Verify ${user?.name}'s account?`}</b>}
         content={
-          <div>
-            <b>{`Verify ${user?.name}'s account?`}</b>
+          <div>            
             <div className="flex flex-row justify-end w-full space-x-2">
               <CustomButton
                 type="button"

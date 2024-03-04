@@ -1,6 +1,6 @@
 
 import { useMemo, useState } from "react";
-import { Slider } from "./ShadcnSlider";
+import { Slider } from "../shadcn/ShadcnSlider";
 
 type Props = {
   fullRange: [number, number];
@@ -26,7 +26,7 @@ export function CustomRangeSlider(props: Props) {
   const calculatedDefaultRange = useMemo(() => [
     Math.max(min,props.defaultRange[0]),
     Math.min(max,props.defaultRange[1])
-  ],[props.defaultRange])
+  ],[props.defaultRange, max, min])
   return (
     <>
       <div className="flex px-4 space-x-2 w-60">

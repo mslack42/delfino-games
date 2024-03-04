@@ -73,10 +73,10 @@ export function PeopleTable({ holders }: Props) {
       </div>
       <CustomModal
         isOpen={!!deleteHolder}
+        title={<b>Are you sure you want to delete {deleteHolder?.name}?</b>}
+        subtitle={<p>This action is permanent.</p>}
         content={
-          <div>
-            <b>Are you sure you want to delete {deleteHolder?.name}?</b>
-            <p>This action is permanent.</p>
+          <div>            
             <div className="flex flex-row justify-evenly space-x-2">
               <input
                 type="text"

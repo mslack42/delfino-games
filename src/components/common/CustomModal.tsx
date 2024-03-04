@@ -1,29 +1,31 @@
-import { Modal } from "@mui/base/Modal";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../shadcn/ShadcnDialog";
+import React from "react";
 
 type CustomModalProps = {
-  isOpen: boolean;
+  head?: React.ReactNode
+  title?: React.ReactNode
+  subtitle?: React.ReactNode
   content: React.ReactNode;
-  onClose: (evt: any) => void;
+  footer?: React.ReactNode;
+  isOpen?: boolean;
+  onClose: () => void;
 };
 export function CustomModal(props: CustomModalProps) {
   return (
-    <Modal
-      open={props.isOpen}
-      onClose={props.onClose}
-      className="fixed z-[1300] inset-0 flex align-middle justify-center"
-      slotProps={{
-        backdrop: {
-        className:"z-[-1] fixed inset-0 bg-slate-400 opacity-50"
-        },
-      }}
-      slots={{
-        backdrop: 'div',
-      }}
-      hideBackdrop={false}
-    >
-      <div className="relative flex flex-col justify-center outline-none">
-        <div className="rounded bg-white h-min p-5 z-[502]">{props.content}</div>        
-      </div>
-    </Modal>
+    <>
+      <Dialog 
+      open={props.isOpen} 
+      onOpenChange={(isOpen) => { !isOpen ? props.onClose() : null }}>
+        {props.head ? <DialogTrigger>{props.head}</DialogTrigger> : undefined}
+        <DialogContent className="bg-white z-[2000]">
+          <DialogHeader>
+            {props.title ? <DialogTitle>{props.title}</DialogTitle> : undefined}
+            {props.subtitle ? <DialogDescription>{props.subtitle}</DialogDescription> : undefined}
+          </DialogHeader>
+          {props.content}
+          {props.footer ? (<DialogFooter>{props.footer}</DialogFooter>) : undefined}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

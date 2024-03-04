@@ -18,8 +18,8 @@ export function PasswordResetModal({ user, setUser }: UserModalProps) {
     <>
       <CustomModal
         isOpen={!!user}
+        title={<b>Are you sure you want to reset the password for {user?.name}?</b>}
         content={<div>
-          <b>Are you sure you want to reset the password for {user?.name}?</b>
           <div className="flex flex-row justify-end w-full space-x-2">
             <CustomButton
               type="button"

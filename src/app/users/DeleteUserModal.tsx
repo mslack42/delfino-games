@@ -23,9 +23,9 @@ export function DeleteUserModal({ user, setUser }: UserModalProps) {
     <>
       <CustomModal
         isOpen={!!user}
+        title={<b>Are you sure you want to delete {user?.name}?</b>}
+        subtitle={<p>This action is permanent.</p>}
         content={<div>
-          <b>Are you sure you want to delete {user?.name}?</b>
-          <p>This action is permanent.</p>
           <div className="flex flex-row justify-evenly space-x-2">
             <input
               type="text"

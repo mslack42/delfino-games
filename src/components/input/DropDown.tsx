@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { twJoin } from "tailwind-merge";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ShadcnDropDown";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../shadcn/ShadcnDropDown";
 
 export type DropDownGroup = {
   head: React.ReactNode,
