@@ -19,14 +19,10 @@ export function CustomRangeSlider(props: Props) {
 
   const min = useMemo(() => Math.min(...props.fullRange), [props.fullRange]);
   const max = useMemo(() => Math.max(...props.fullRange), [props.fullRange]);
-  const [lower, setLower] = useState(min);
-  const [upper, setUpper] = useState(max);
-  const summary = props.summariser([lower, upper]);
+  const [lower, setLower] = useState(props.defaultRange[0]);
+  const [upper, setUpper] = useState(props.defaultRange[1]);
 
-  const calculatedDefaultRange = useMemo(() => [
-    Math.max(min,props.defaultRange[0]),
-    Math.min(max,props.defaultRange[1])
-  ],[props.defaultRange, max, min])
+  const summary = props.summariser([lower, upper]);
   return (
     <>
       <div className="flex px-4 space-x-2 w-60">
@@ -35,7 +31,7 @@ export function CustomRangeSlider(props: Props) {
           max={max}
           step={props.step ?? 1}
           minStepsBetweenThumbs={0}
-          defaultValue={calculatedDefaultRange}
+          defaultValue={[lower,upper]}
           onValueChange={onSliderChange}
           className="w-52 py-2"
         ></Slider>

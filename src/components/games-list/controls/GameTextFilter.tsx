@@ -1,4 +1,4 @@
-import { FilterState } from "./types";
+import { FilterState } from "../types";
 
 export type GameTextFilterProps = {
   filterState: FilterState;
@@ -37,6 +37,7 @@ export function GameTextFilter(props: GameTextFilterProps) {
           type="text"
           maxLength={50}
           placeholder="search term"
+          defaultValue={filterState.textTypeFilters[filterKey].text}
           onChange={(evt) => {
             setFilterState({
               ...filterState,

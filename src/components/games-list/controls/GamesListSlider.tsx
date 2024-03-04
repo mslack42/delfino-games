@@ -1,5 +1,5 @@
-import { CustomRangeSlider } from "../input/CustomRangeSlider";
-import { FilterState } from "./types";
+import { CustomRangeSlider } from "../../input/CustomRangeSlider";
+import { FilterState } from "../types";
 
 export type SliderProps = {
   filterState: FilterState;

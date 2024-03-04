@@ -1,10 +1,11 @@
 "use client";
 import { InventoryItem } from "@/database/types";
 import { useState } from "react";
-import { GamesListFilterControls } from "./GamesListFilterControls";
+import { GamesListFilterControls } from "./filter/GamesListFilterControls";
 import { InventoryItemPanel } from "../data-display/InventoryItemPanel";
 import { ControlsKey } from "./types";
-import { GamesListSortControls } from "./GamesListSortControls";
+import { GamesListSortControls } from "./sort/GamesListSortControls";
+import { LeftSheet } from "../common/LeftSheet";
 
 type Props = {
   inventoryData: InventoryItem[];
@@ -44,15 +45,15 @@ export function GamesList(props: Props) {
 
   return (
     <div className="h-full w-full">
-      <div className="w-full flex flex-row justify-center text-center items-center flex-wrap">
-        <div className="w-4/5 w-max-4/5">
+      <div className="w-full flex flex-row justify-center text-center items-center flex-wrap space-x-10">
+        <div>
           <GamesListFilterControls
             gamesList={props.inventoryData}
             onFilterChange={applyFilters}
             controlsKeys={props.controlsKeys}
           />
         </div>
-        <div className="w-4/5 w-max-4/5">
+        <div>
           <GamesListSortControls
             gamesList={filteredGamesList}
             onSortChange={applySorting}
