@@ -1,5 +1,6 @@
-import { Slider } from "@mui/base/Slider";
+
 import { useMemo, useState } from "react";
+import { Slider } from "./ShadcnSlider";
 
 type Props = {
   fullRange: [number, number];
@@ -9,7 +10,7 @@ type Props = {
   step?: number;
 };
 export function CustomRangeSlider(props: Props) {
-  const onSliderChange = (_: Event, value: number | number[], __: number) => {
+  const onSliderChange = (value: number | number[]) => {
     const range = value as number[];
     setLower(Math.min(...range));
     setUpper(Math.max(...range));
@@ -22,6 +23,10 @@ export function CustomRangeSlider(props: Props) {
   const [upper, setUpper] = useState(max);
   const summary = props.summariser([lower, upper]);
 
+  const calculatedDefaultRange = useMemo(() => [
+    Math.max(min,props.defaultRange[0]),
+    Math.min(max,props.defaultRange[1])
+  ],[props.defaultRange])
   return (
     <>
       <div className="flex px-4 space-x-2 w-60">
@@ -29,26 +34,10 @@ export function CustomRangeSlider(props: Props) {
           min={min}
           max={max}
           step={props.step ?? 1}
-          defaultValue={props.defaultRange}
-          onChange={onSliderChange}
+          minStepsBetweenThumbs={0}
+          defaultValue={calculatedDefaultRange}
+          onValueChange={onSliderChange}
           className="w-52 py-2"
-          slotProps={{
-            thumb: {
-              className:
-                "ring-cyan-500 dark:ring-cyan-400 ring-2 w-4 h-4 -mt-1 -ml-2 flex items-center justify-center bg-white rounded-full shadow absolute",
-            },
-            root: {
-              className: "w-full relative inline-block h-2 cursor-pointer",
-            },
-            rail: {
-              className:
-                "bg-slate-100 dark:bg-slate-700 h-2 w-full rounded-full block absolute",
-            },
-            track: {
-              className:
-                "bg-cyan-500 dark:bg-cyan-400 h-2 absolute rounded-full",
-            },
-          }}
         ></Slider>
         <div className="w-16">{summary}</div>
       </div>

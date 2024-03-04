@@ -8,7 +8,7 @@ export function PlayerCountSlider(props: SliderProps) {
     const lower = Math.min(...range);
     const upper = Math.max(...range);
 
-    const upperString = upper == 12 ? "12+" : `${upper}`;
+    const upperString = upper === 12 ? "12+" : `${upper}`;
 
     if (lower < upper) {
       return `${lower} - ${upperString}`;

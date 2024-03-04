@@ -8,7 +8,7 @@ export function DurationSlider(props: SliderProps) {
     const lower = Math.min(...range);
     const upper = Math.max(...range);
 
-    const upperString = upper == 120 ? "120+ mins" : `${upper} mins`;
+    const upperString = upper === 120 ? "120+ mins" : `${upper} mins`;
 
     if (lower < upper) {
       return `${lower} - ${upperString}`;
