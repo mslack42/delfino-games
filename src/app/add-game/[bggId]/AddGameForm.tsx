@@ -42,7 +42,6 @@ export function AddGameForm(props: AddGameFormProps) {
   } = methods;
 
   const onSubmitHandler: SubmitHandler<AddGameInput> = async (values) => {
-    console.log("halls");
     try {
       setSubmitting(true);
       const res = await fetch(ApiRoutes.AddGame, {
