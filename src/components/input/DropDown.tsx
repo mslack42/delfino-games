@@ -8,7 +8,7 @@ export type DropDownGroup = {
   items: React.ReactNode[]
 }
 export type DropDownGroupCollection = {
-  [key: string]:DropDownGroup
+  [key: string]: DropDownGroup
 }
 
 type DropDownProps = {
@@ -32,6 +32,7 @@ export function DropDown(props: DropDownProps) {
           "z-[1002] cursor-pointer rounded-lg last:border-b-0 px-2 focus:outline-none",
           "focus:bg-teal-500 focus:text-white"
         ])}
+        onPointerDown={() => setOpen(false)}
       >
         {it}
       </DropdownMenuItem>
@@ -39,10 +40,12 @@ export function DropDown(props: DropDownProps) {
   </> : <>
     {props.items.map((it, i) => (
       <span key={i}>
-        <DropdownMenuLabel className="bg-teal-500 rounded-lg">
+        <DropdownMenuLabel 
+        className="bg-teal-500 rounded-lg"
+        onPointerDown={(evt) => evt.stopPropagation()}>
           {it.head}
         </DropdownMenuLabel>
-        <DropdownMenuSeparator/>
+        <DropdownMenuSeparator onPointerDown={(evt) => evt.stopPropagation()}/>
         {it.items.map((sub, j) => {
           return <DropdownMenuItem
             key={j}
@@ -50,21 +53,28 @@ export function DropDown(props: DropDownProps) {
               "z-[1002] cursor-pointer rounded-lg last:border-b-0 px-2 focus:outline-none",
               "focus:bg-teal-400 focus:text-white"
             ])}
+            onPointerDown={() => setOpen(false)}
           >
             {sub}
           </DropdownMenuItem>
         })}
-        <DropdownMenuSeparator/>
-        </span>
-      
+        <DropdownMenuSeparator onPointerDown={(evt) => evt.stopPropagation()}/>
+      </span>
+
     ))}
   </>
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger >{props.head}</DropdownMenuTrigger>
-        <DropdownMenuContent className="z-[1001] bg-teal-200" >
+      <DropdownMenu open={open}>
+        <DropdownMenuTrigger onPointerDown={() => setOpen(true)}>{props.head}</DropdownMenuTrigger>
+        <DropdownMenuContent
+          className="z-[1001] bg-teal-200"
+          onPointerDownOutside={() => setOpen(false)}
+          onFocusOutside={() => setOpen(false)}
+          onInteractOutside={() => setOpen(false)}
+          align="end"
+          avoidCollisions={true}>
           {content}
         </DropdownMenuContent>
       </DropdownMenu>

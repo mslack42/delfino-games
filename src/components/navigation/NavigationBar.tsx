@@ -76,26 +76,26 @@ async function profileControls(): Promise<DropDownGroup> {
     <>
       <LoggedOutOnly
         content={
-          <Link href={ApplicationRoutes.LogIn}>
+          <Link href={ApplicationRoutes.LogIn} className="h-full w-full">
             <p>Login</p>
           </Link>
         }
       />
       <LoggedInOnly content={
-        <div>{user?.name && user?.name.length < 15 ? user?.name : "User"}</div>
+        <div className="h-full w-full">{user?.name && user?.name.length < 15 ? user?.name : "User"}</div>
       } />
     </>
 
   );
 
   const items = [
-    <Link href={ApplicationRoutes.Profile} key={-2}>
+    <Link href={ApplicationRoutes.Profile} key={-2} className="h-full w-full">
       Profile
     </Link>,
-    <Link href={ApplicationRoutes.ChangePassword} key={-3}>
+    <Link href={ApplicationRoutes.ChangePassword} key={-3} className="h-full w-full">
       Change Password
     </Link>,
-    <div key={-1}>
+    <div key={-1} className="h-full w-full">
       <form action={logoutAction}>
         <button>Log Out</button>
       </form>
@@ -110,13 +110,13 @@ async function profileControls(): Promise<DropDownGroup> {
 
 async function adminControls(): Promise<DropDownGroup> {
   const items = [
-    <Link key={1} href={ApplicationRoutes.FindAndAddGame}>
+    <Link key={1} href={ApplicationRoutes.FindAndAddGame} className="h-full w-full">
       <p>Add a new game</p>
     </Link>,
-    <Link href={ApplicationRoutes.People} key={2}>
+    <Link href={ApplicationRoutes.People} key={2} className="h-full w-full">
       Manage holders
     </Link>,
-    <Link href={ApplicationRoutes.Users} key={3}>
+    <Link href={ApplicationRoutes.Users} key={3} className="h-full w-full">
       Manage users
     </Link>,
   ];
@@ -135,11 +135,11 @@ async function gamesCollection(): Promise<DropDownGroup> {
 
   const head = <div>Games Collection</div>;
   const items = [
-    <Link key={-1} href={ApplicationRoutes.Games}>
+    <Link key={-1} href={ApplicationRoutes.Games} className="h-full w-full">
       <b>All Games</b>
     </Link>,
     ...holders.map((h) => (
-      <Link key={h.id} href={ApplicationRoutes.PersonsGames(h.name)}>
+      <Link key={h.id} href={ApplicationRoutes.PersonsGames(h.name)} className="h-full w-full">
         {h.name}
       </Link>
     )),
