@@ -2,13 +2,17 @@
 import { InventoryItem } from "@/database/types";
 import { useState } from "react";
 import { GamesListFilterControls } from "./filter/GamesListFilterControls";
-import { InventoryItemPanel } from "../data-display/InventoryItemPanel";
+import {
+  GameDataFields,
+  InventoryItemPanel,
+} from "../data-display/InventoryItemPanel";
 import { ControlsKey } from "./types";
 import { GamesListSortControls } from "./sort/GamesListSortControls";
 
 type Props = {
   inventoryData: InventoryItem[];
   controlsKeys: ControlsKey[];
+  details: GameDataFields[];
 };
 
 const defaultSort = (gamelist: InventoryItem[]) => {
@@ -63,7 +67,13 @@ export function GamesList(props: Props) {
       <div className="flex max-w-full flex-wrap justify-around px-3">
         {sorted.length ? (
           sorted.map((id) => (
-            <InventoryItemPanel key={id.id} data={id}></InventoryItemPanel>
+            <span key={id.id}>
+              <InventoryItemPanel
+                key={id.id}
+                data={id}
+                displaying={props.details}
+              ></InventoryItemPanel>
+            </span>
           ))
         ) : (
           <div className="text-lg h-60 flex  flex-col justify-center align-middle">

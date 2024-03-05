@@ -1,4 +1,3 @@
-"use client";
 import { DataSummaryKeyValuePair } from "@/components/data-display/DataSummaryKeyValuePair";
 import { ApplicationRoutes } from "@/constants/routes";
 import { InventoryItem } from "@/database/types";
@@ -8,9 +7,16 @@ import Link from "next/link";
 
 type PanelProps = {
   data: InventoryItem;
+  displaying: GameDataFields[];
 };
+export type GameDataFields =
+  | "PlayerCount"
+  | "Duration"
+  | "Office"
+  | "Holder"
+  | "Owner";
 export function InventoryItemPanel(props: PanelProps) {
-  const { data } = props;
+  const { data, displaying } = props;
 
   const displayImage = data.bggData.thumb ? (
     <Image
@@ -35,32 +41,40 @@ export function InventoryItemPanel(props: PanelProps) {
         <div className="flex justify-center">{displayImage}</div>
       </Link>
       <div className="flex justify-center items-center text-center flex-col ">
-        <DataSummaryKeyValuePair
-          dataKey="Players"
-          dataValue={playerCount(
-            data.bggData.specs.maxPlayerCount,
-            data.bggData.specs.minPlayerCount
-          )}
-        ></DataSummaryKeyValuePair>
-        <DataSummaryKeyValuePair
-          dataKey="Duration"
-          dataValue={
-            <div className="text-right">
-              {playTime(
-                data.bggData.specs.maxPlayTime,
-                data.bggData.specs.minPlayTime
-              )}
-            </div>
-          }
-        ></DataSummaryKeyValuePair>
-        <DataSummaryKeyValuePair
-          dataKey="Office"
-          dataValue={<div className="text-right">{data.dsData.location}</div>}
-        ></DataSummaryKeyValuePair>
-        <DataSummaryKeyValuePair
-          dataKey="Holder"
-          dataValue={<div className="text-right">{data.dsData.holder}</div>}
-        ></DataSummaryKeyValuePair>
+        {displaying.includes("PlayerCount") && (
+          <DataSummaryKeyValuePair
+            dataKey="Players"
+            dataValue={playerCount(
+              data.bggData.specs.maxPlayerCount,
+              data.bggData.specs.minPlayerCount
+            )}
+          ></DataSummaryKeyValuePair>
+        )}
+        {displaying.includes("Duration") && (
+          <DataSummaryKeyValuePair
+            dataKey="Duration"
+            dataValue={
+              <div className="text-right">
+                {playTime(
+                  data.bggData.specs.maxPlayTime,
+                  data.bggData.specs.minPlayTime
+                )}
+              </div>
+            }
+          ></DataSummaryKeyValuePair>
+        )}
+        {displaying.includes("Office") && (
+          <DataSummaryKeyValuePair
+            dataKey="Office"
+            dataValue={<div className="text-right">{data.dsData.location}</div>}
+          ></DataSummaryKeyValuePair>
+        )}
+        {displaying.includes("Holder") && (
+          <DataSummaryKeyValuePair
+            dataKey="Holder"
+            dataValue={<div className="text-right">{data.dsData.holder}</div>}
+          ></DataSummaryKeyValuePair>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { RoleCheck } from "@/components/auth/RoleCheck";
+import { RoleCheck } from "@/components/auth/serverside/RoleCheck";
 
 export async function UnverifiedUserMessage() {
   return (

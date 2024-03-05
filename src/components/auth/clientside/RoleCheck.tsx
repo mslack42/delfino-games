@@ -1,5 +1,7 @@
-import { auth } from "@/auth";
+"use client";
+import { CustomUser } from "@/auth";
 import { UserRole } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 type RoleCheckProps = {
   type: "oneOf" | "noneOf";
@@ -7,10 +9,13 @@ type RoleCheckProps = {
   roles: UserRole[];
 };
 
-export async function RoleCheck(props: RoleCheckProps) {
-  const session = await auth();
-  const user = session?.user;
-  const role = (session?.user as any)?.role as string;
+export function RoleCheck(props: RoleCheckProps) {
+  const { data: session, status } = useSession();
+  if (!session || !session.user) {
+    return <></>;
+  }
+  const user: CustomUser = session.user! as CustomUser;
+  const role = user.role;
 
   let passesCheck;
   if (role) {

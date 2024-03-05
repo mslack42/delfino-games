@@ -17,6 +17,7 @@ export default async function ListGames(props: Props) {
       <GamesList
         inventoryData={inventoryData}
         controlsKeys={["tags", "playercount", "duration", "name", "inrotation"]}
+        details={["PlayerCount", "Duration"]}
       ></GamesList>
     </>
   );

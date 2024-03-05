@@ -87,21 +87,25 @@ export function DropDown(props: DropDownProps) {
 
   return (
     <>
-      <DropdownMenu open={open}>
-        <DropdownMenuTrigger onPointerDown={() => setOpen(true)}>
-          {props.head}
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="z-[1001] bg-teal-200"
-          onPointerDownOutside={() => setOpen(false)}
-          onFocusOutside={() => setOpen(false)}
-          onInteractOutside={() => setOpen(false)}
-          align="end"
-          avoidCollisions={true}
-        >
-          {content}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {props.items.length > 0 ? (
+        <DropdownMenu open={open}>
+          <DropdownMenuTrigger onPointerDown={() => setOpen(true)}>
+            {props.head}
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="z-[1001] bg-teal-200"
+            onPointerDownOutside={() => setOpen(false)}
+            onFocusOutside={() => setOpen(false)}
+            onInteractOutside={() => setOpen(false)}
+            align="end"
+            avoidCollisions={true}
+          >
+            {content}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        props.head
+      )}
     </>
   );
 }
