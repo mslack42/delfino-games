@@ -44,9 +44,9 @@ export function UserEditForm({ user }: EditProps) {
         },
       });
 
-      if(!res.ok) {
+      if (!res.ok) {
         // TODO some error handling
-        return
+        return;
       }
 
       router.push(ApplicationRoutes.Users);

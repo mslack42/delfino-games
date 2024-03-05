@@ -19,16 +19,20 @@ export function DsDataSummary(props: DsDataSummaryProps) {
       <div className="flex justify-center items-center text-center flex-col ">
         <DataSummaryKeyValuePair
           dataKey={"Ownership"}
-          dataValue={props.data.ownership} />
+          dataValue={props.data.ownership}
+        />
         <DataSummaryKeyValuePair
           dataKey={"Location"}
-          dataValue={props.data.location} />
+          dataValue={props.data.location}
+        />
         <DataSummaryKeyValuePair
           dataKey={"Held by"}
-          dataValue={props.data.holder} />
+          dataValue={props.data.holder}
+        />
         <DataSummaryKeyValuePair
           dataKey={"Currently in rotation?"}
-          dataValue={props.data.inRotation ? "Yes" : "No"} />
+          dataValue={props.data.inRotation ? "Yes" : "No"}
+        />
       </div>
     </div>
   );

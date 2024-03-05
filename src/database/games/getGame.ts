@@ -3,30 +3,30 @@ import { InventoryItem } from "../types";
 import { createInventoryItemFromPrisma } from "../util/createInventoryItemFromPrisma";
 
 export async function getInventoryItem(gameId: number): Promise<InventoryItem> {
-    const data = await prisma.boardGame.findFirstOrThrow({
+  const data = await prisma.boardGame.findFirstOrThrow({
+    include: {
+      bggData: {
         include: {
-          bggData: {
-            include: {
-              specs: true,
-              stats: true,
-            },
-          },
-          dsData: {
-            include: {
-              holder: true,
-              specs: true,
-            },
-          },
+          specs: true,
+          stats: true,
         },
-        orderBy: {
-          name: "asc",
+      },
+      dsData: {
+        include: {
+          holder: true,
+          specs: true,
         },
-        where: {
-            id: {
-                equals: gameId
-            }
-        }
-      });
+      },
+    },
+    orderBy: {
+      name: "asc",
+    },
+    where: {
+      id: {
+        equals: gameId,
+      },
+    },
+  });
 
-      return createInventoryItemFromPrisma(data)
+  return createInventoryItemFromPrisma(data);
 }

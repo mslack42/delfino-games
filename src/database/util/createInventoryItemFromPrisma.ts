@@ -1,7 +1,7 @@
 export function createInventoryItemFromPrisma(r: any) {
   return {
     bggData: {
-      bggId: (r.bggData?.bggId)!,
+      bggId: r.bggData?.bggId!,
       description: r.bggData?.description,
       image: r.bggData?.image,
       thumb: r.bggData?.thumb,
@@ -21,10 +21,10 @@ export function createInventoryItemFromPrisma(r: any) {
     name: r.name,
     id: r.id,
     dsData: {
-      holder: (r.dsData?.holder.name)!,
-      inRotation: (r.dsData?.inCurrentRotation)!,
-      location: (r.dsData?.holder.location)!,
-      ownership: (r.dsData?.ownership)!,
+      holder: r.dsData?.holder.name!,
+      inRotation: r.dsData?.inCurrentRotation!,
+      location: r.dsData?.holder.location!,
+      ownership: r.dsData?.ownership!,
     },
   };
 }

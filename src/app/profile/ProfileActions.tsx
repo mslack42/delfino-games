@@ -7,7 +7,7 @@ export function ProfileActions() {
   return (
     <div className="text-black h-2 w-full flex justify-end px-6">
       <Link href={ApplicationRoutes.EditProfile}>
-        <FontAwesomeIcon icon={faPenToSquare} className="h-6"/>
+        <FontAwesomeIcon icon={faPenToSquare} className="h-6" />
       </Link>
     </div>
   );

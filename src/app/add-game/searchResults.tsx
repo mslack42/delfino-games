@@ -32,7 +32,9 @@ export function SearchResult(props: ResultProps) {
         <BoardGameImage
           imageName={data.name}
           imageUrl={data.thumb}
-          size={160} lineHeight={36}        />
+          size={160}
+          lineHeight={36}
+        />
       </div>
       <div
         dangerouslySetInnerHTML={{ __html: data.description! }}

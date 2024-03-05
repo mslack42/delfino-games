@@ -12,7 +12,7 @@ export const editProfileSchema = object({
 });
 
 export const changePasswordSchema = object({
-  currentPassword: string({required_error: "Current Password is required"}),
+  currentPassword: string({ required_error: "Current Password is required" }),
   password: string({ required_error: "Password is required" })
     .min(1, "Password is required")
     .min(8, "Password must be more than 8 characters")
@@ -22,8 +22,8 @@ export const changePasswordSchema = object({
   }).min(1, "Please confirm your password"),
 }).refine((data) => data.password === data.passwordConfirm, {
   path: ["passwordConfirm"],
-  message: "Passwords do not match"
-})
+  message: "Passwords do not match",
+});
 
 export type EditProfileInput = TypeOf<typeof editProfileSchema>;
 export type ChangePasswordInput = TypeOf<typeof changePasswordSchema>;

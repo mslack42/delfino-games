@@ -18,7 +18,7 @@ export async function UnverifiedUserMessage() {
                 Your account is not verified. This means that you only have
                 limited functionality available to you.
               </p>
-              <br/>
+              <br />
               <p>
                 Contact anyone with an Admin account in order to get your
                 account verified.

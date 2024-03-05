@@ -18,7 +18,12 @@ export function BggDataSummary(props: Props) {
   return (
     <div className={className}>
       <div className="flex justify-center p-4">
-        <BoardGameImage imageUrl={data.image} imageName={data.name} size={200} lineHeight={60} />
+        <BoardGameImage
+          imageUrl={data.image}
+          imageName={data.name}
+          size={200}
+          lineHeight={60}
+        />
       </div>
       <h1 className="text-2xl font-bold pt-2">{data.name}</h1>
       <div className="flex justify-center items-center text-center flex-col ">
@@ -77,5 +82,3 @@ export function BggDataSummary(props: Props) {
     </div>
   );
 }
-
-

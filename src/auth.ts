@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import { passesPermissionsCheck } from "./security/passesPermissionsCheck";
 import { ApiRoutes, ApplicationRoutes } from "./constants/routes";
 
-export type CustomUser = User & {id: string, role:string}
+export type CustomUser = User & { id: string; role: string };
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
@@ -35,8 +35,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             email: String(credentials.email).toLowerCase(),
           },
           include: {
-            accounts: true
-          }
+            accounts: true,
+          },
         });
 
         if (
@@ -50,15 +50,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           id: user.id,
           email: user.email,
           name: user.name,
-          role:  user.accounts.length ? user.accounts[0].role : "Unverified"
+          role: user.accounts.length ? user.accounts[0].role : "Unverified",
         };
       },
     }),
   ],
   callbacks: {
-    authorized({ auth, request: {nextUrl} }) {
+    authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const passesCheck = passesPermissionsCheck(nextUrl.pathname, (auth?.user as CustomUser)?.role)
+      const passesCheck = passesPermissionsCheck(
+        nextUrl.pathname,
+        (auth?.user as CustomUser)?.role
+      );
 
       if (!passesCheck && !isLoggedIn) {
         const redirectUrl = new URL(ApiRoutes.SignIn, nextUrl.origin);
@@ -77,21 +80,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         user: {
           ...session.user,
           id: token.id as string,
-          role: token.role 
+          role: token.role,
         },
       };
     },
-    jwt: async ({ token, user, session,  trigger,}) => {
+    jwt: async ({ token, user, session, trigger }) => {
       if (trigger === "update") {
-        token.email = session.user.email
-        token.name = session.user.name
+        token.email = session.user.email;
+        token.name = session.user.name;
       }
       if (user) {
         const u = user as any;
         return {
           ...token,
           id: u.id,
-          role: u.role
+          role: u.role,
         };
       }
       return token;

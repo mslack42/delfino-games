@@ -58,7 +58,7 @@ export function ChangePasswordForm() {
         return;
       }
 
-      router.push(ApplicationRoutes.Home)
+      router.push(ApplicationRoutes.Home);
     } catch (error: any) {
       //   toast.error(error.message);
     } finally {

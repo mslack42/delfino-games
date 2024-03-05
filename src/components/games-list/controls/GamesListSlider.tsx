@@ -10,7 +10,7 @@ export type GamesListSliderProps = SliderProps & {
   filterName: string;
   filterKey: string;
   summariser: (range: [number, number]) => string;
-  step: number
+  step: number;
 };
 export function GamesListSlider(props: GamesListSliderProps) {
   const {
@@ -20,7 +20,7 @@ export function GamesListSlider(props: GamesListSliderProps) {
     filterName,
     filterKey,
     summariser,
-    step
+    step,
   } = props;
 
   return (

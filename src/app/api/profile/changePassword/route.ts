@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     const { currentPassword, password, passwordConfirm } =
       changePasswordSchema.parse(await req.json());
 
-    const dbUser = await getUser(sessionId)
+    const dbUser = await getUser(sessionId);
 
     if (!dbUser) {
       return NextResponse.json(
@@ -54,9 +54,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const newPasswordHash = await hash(password,12)
+    const newPasswordHash = await hash(password, 12);
 
-    await updateUserPassword(sessionId,newPasswordHash)
+    await updateUserPassword(sessionId, newPasswordHash);
 
     return NextResponse.json({
       status: "success",

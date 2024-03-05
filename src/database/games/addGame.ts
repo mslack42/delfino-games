@@ -1,6 +1,6 @@
 "use server";
 import { BggSummaryData } from "@/bgg/types";
-import { Location, Ownership,  } from "@prisma/client";
+import { Location, Ownership } from "@prisma/client";
 import prisma from "@/db";
 
 export type NewGameData = {
@@ -11,7 +11,7 @@ export type NewGameData = {
   newOwner?: string;
   holderId?: number;
   newHolder?: string;
-  isInRotation: boolean
+  isInRotation: boolean;
 };
 
 export async function addGame(newData: NewGameData): Promise<boolean> {
@@ -20,7 +20,7 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
     const newOwner = await prisma.person.create({
       data: {
         name: newData.newOwner!,
-        location: newData.location
+        location: newData.location,
       },
     });
     ownerId = newOwner.id;
@@ -28,13 +28,13 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
 
   let holderId = newData.holderId;
   if (newData.holderId === -2 && newData.ownership === "Personal") {
-    holderId = ownerId
+    holderId = ownerId;
   }
-  if ( newData.holderId === -1) {
+  if (newData.holderId === -1) {
     const newHolder = await prisma.person.create({
       data: {
         name: newData.newHolder!,
-        location: newData.location
+        location: newData.location,
       },
     });
     holderId = newHolder.id;
@@ -80,13 +80,15 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
                 id: holderId,
               },
             },
-            owner: ownerId ? {
-              connect: {
-                id: ownerId
-              }
-            } : undefined,
+            owner: ownerId
+              ? {
+                  connect: {
+                    id: ownerId,
+                  },
+                }
+              : undefined,
             ownership: newData.ownership,
-            inCurrentRotation: newData.isInRotation
+            inCurrentRotation: newData.isInRotation,
           },
         },
       },

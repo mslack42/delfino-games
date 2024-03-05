@@ -45,9 +45,9 @@ export function ProfileEdit({ user }: EditProps) {
         },
       });
 
-      if(!res.ok) {
+      if (!res.ok) {
         // TODO some error handling
-        return
+        return;
       }
 
       await updateSession({

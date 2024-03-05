@@ -19,9 +19,13 @@ export function CustomButton(props: CustomSubmitButtonProps) {
       type={props.type}
       className={twJoin(
         props.className ?? "",
-        actionType === "confirm" && !props.disabled ? "bg-teal-300 hover:bg-teal-200" : "",
-        actionType === "cancel" && !props.disabled? "bg-red-300 hover:bg-red-200" : "",
-        props.disabled ? "bg-slate-200": ""
+        actionType === "confirm" && !props.disabled
+          ? "bg-teal-300 hover:bg-teal-200"
+          : "",
+        actionType === "cancel" && !props.disabled
+          ? "bg-red-300 hover:bg-red-200"
+          : "",
+        props.disabled ? "bg-slate-200" : ""
       )}
       form={props.form ?? undefined}
       disabled={props.disabled}

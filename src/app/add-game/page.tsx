@@ -38,7 +38,12 @@ export default function AddNewGame() {
                   maxLength={100}
                   minLength={0}
                 />
-                <CustomButton type="submit" innerText="Go!" actionType="confirm" className="w-min py-1 px-3 rounded"/>
+                <CustomButton
+                  type="submit"
+                  innerText="Go!"
+                  actionType="confirm"
+                  className="w-min py-1 px-3 rounded"
+                />
               </form>
             </div>
           </div>

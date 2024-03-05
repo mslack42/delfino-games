@@ -1,7 +1,10 @@
-export type ControlsKey = BubbleTypeFilterKey | SliderTypeFilterKey | TextTypeFilterKey;
+export type ControlsKey =
+  | BubbleTypeFilterKey
+  | SliderTypeFilterKey
+  | TextTypeFilterKey;
 export type BubbleTypeFilterKey = "office" | "holders" | "tags";
-export type SliderTypeFilterKey = "playercount" | "duration"
-export type TextTypeFilterKey = "name"
+export type SliderTypeFilterKey = "playercount" | "duration";
+export type TextTypeFilterKey = "name";
 
 export type BubbleTypeFilter = {
   filterOn: boolean;
@@ -11,13 +14,13 @@ export type BubbleTypeFilter = {
 export type SliderTypeFilter = {
   filterOn: boolean;
   lower: number;
-  upper: number
-}
+  upper: number;
+};
 
 export type TextTypeFilter = {
   filterOn: boolean;
-  text: string
-}
+  text: string;
+};
 
 export type FilterState = {
   bubbleTypeFilters: {
@@ -28,5 +31,5 @@ export type FilterState = {
   };
   textTypeFilters: {
     [key in TextTypeFilterKey as string]: TextTypeFilter;
-  }
+  };
 };

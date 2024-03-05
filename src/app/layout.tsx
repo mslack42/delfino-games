@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Delfino Games",
-  description: "Dorset Software Boardgame Inventory Management"
+  description: "Dorset Software Boardgame Inventory Management",
 };
 
 export default function RootLayout({
@@ -18,14 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <SessionProvider >
-      <body className={inter.className}>
-        <NavigationBar></NavigationBar>
-        <main className="flex min-h-full flex-col items-center justify-between z-0">
-        {children}
-        </main>
+      <SessionProvider>
+        <body className={inter.className}>
+          <NavigationBar></NavigationBar>
+          <main className="flex min-h-full flex-col items-center justify-between z-0">
+            {children}
+          </main>
         </body>
-        </SessionProvider>
+      </SessionProvider>
     </html>
   );
 }

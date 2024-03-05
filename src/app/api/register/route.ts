@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
     const hashed_password = await hash(password, 12);
 
-    const user = await createUser(name,email,hashed_password)
+    const user = await createUser(name, email, hashed_password);
 
     return NextResponse.json({
       user: {

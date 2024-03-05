@@ -42,5 +42,3 @@ export async function listInventory(
 
   return data.map((r) => createInventoryItemFromPrisma(r));
 }
-
-

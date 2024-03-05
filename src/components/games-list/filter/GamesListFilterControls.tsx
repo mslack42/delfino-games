@@ -126,56 +126,59 @@ export function GamesListFilterControls(props: Props) {
   };
 
   return (
-    <LeftSheet 
-    head={<h2 className="text-xl">Filters...</h2>}
-    content={<div className="border border-black">
-      {props.controlsKeys.includes("office") && (
-        <BubbleFilterInput
-          filterName="Office"
-          filterState={filterState}
-          setFilterState={setFilterState}
-          filterKey="office"
-          allOptions={offices}
-        />
-      )}
-      {props.controlsKeys.includes("holders") && (
-        <BubbleFilterInput
-          filterName="Holders"
-          filterState={filterState}
-          setFilterState={setFilterState}
-          filterKey="holders"
-          allOptions={holders}
-        />
-      )}
-      {props.controlsKeys.includes("tags") && (
-        <BubbleFilterInput
-          filterName="Tags"
-          filterState={filterState}
-          setFilterState={setFilterState}
-          filterKey="tags"
-          allOptions={tags}
-        />
-      )}
-      {props.controlsKeys.includes("playercount") && (
-        <PlayerCountSlider
-          filterState={filterState}
-          setFilterState={setFilterState}
-          range={playerCountRange as [number, number]}
-        />
-      )}
-      {props.controlsKeys.includes("duration") && (
-        <DurationSlider
-          filterState={filterState}
-          setFilterState={setFilterState}
-          range={durationRange as [number, number]}
-        />
-      )}
-      {props.controlsKeys.includes("name") && (
-        <GameTextFilter
-          filterState={filterState}
-          setFilterState={setFilterState}
-        />
-      )}
-    </div>} />
+    <LeftSheet
+      head={<h2 className="text-xl">Filters...</h2>}
+      content={
+        <div className="border border-black">
+          {props.controlsKeys.includes("office") && (
+            <BubbleFilterInput
+              filterName="Office"
+              filterState={filterState}
+              setFilterState={setFilterState}
+              filterKey="office"
+              allOptions={offices}
+            />
+          )}
+          {props.controlsKeys.includes("holders") && (
+            <BubbleFilterInput
+              filterName="Holders"
+              filterState={filterState}
+              setFilterState={setFilterState}
+              filterKey="holders"
+              allOptions={holders}
+            />
+          )}
+          {props.controlsKeys.includes("tags") && (
+            <BubbleFilterInput
+              filterName="Tags"
+              filterState={filterState}
+              setFilterState={setFilterState}
+              filterKey="tags"
+              allOptions={tags}
+            />
+          )}
+          {props.controlsKeys.includes("playercount") && (
+            <PlayerCountSlider
+              filterState={filterState}
+              setFilterState={setFilterState}
+              range={playerCountRange as [number, number]}
+            />
+          )}
+          {props.controlsKeys.includes("duration") && (
+            <DurationSlider
+              filterState={filterState}
+              setFilterState={setFilterState}
+              range={durationRange as [number, number]}
+            />
+          )}
+          {props.controlsKeys.includes("name") && (
+            <GameTextFilter
+              filterState={filterState}
+              setFilterState={setFilterState}
+            />
+          )}
+        </div>
+      }
+    />
   );
 }

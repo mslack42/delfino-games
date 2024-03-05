@@ -7,13 +7,13 @@ import { ApiRoutes } from "@/constants/routes";
 
 export function VerifyUserModal({ user, setUser }: UserModalProps) {
   const router = useRouter();
-  const verifyHandler = async (user:UserType) => {
-    if(user) {
-      await fetch(ApiRoutes.VerifyUser(user.id), {method:"POST"})
-      setUser(null)
-      router.refresh()
+  const verifyHandler = async (user: UserType) => {
+    if (user) {
+      await fetch(ApiRoutes.VerifyUser(user.id), { method: "POST" });
+      setUser(null);
+      router.refresh();
     }
-  }
+  };
 
   return (
     <>
@@ -21,7 +21,7 @@ export function VerifyUserModal({ user, setUser }: UserModalProps) {
         isOpen={!!user}
         title={<b>{`Verify ${user?.name}'s account?`}</b>}
         content={
-          <div>            
+          <div>
             <div className="flex flex-row justify-end w-full space-x-2">
               <CustomButton
                 type="button"
@@ -36,6 +36,7 @@ export function VerifyUserModal({ user, setUser }: UserModalProps) {
                 actionType="cancel"
                 onClick={() => setUser(null)}
               />
+              
             </div>
           </div>
         }

@@ -1,80 +1,104 @@
 "use client";
 import React, { useState } from "react";
 import { twJoin } from "tailwind-merge";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../shadcn/ShadcnDropDown";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../shadcn/ShadcnDropDown";
 
 export type DropDownGroup = {
-  head: React.ReactNode,
-  items: React.ReactNode[]
-}
+  head: React.ReactNode;
+  items: React.ReactNode[];
+};
 export type DropDownGroupCollection = {
-  [key: string]: DropDownGroup
-}
+  [key: string]: DropDownGroup;
+};
 
 type DropDownProps = {
   head: React.ReactNode;
-  className?: string
-} & ({
-  type: "Single",
-  items: React.ReactNode[]
-} | {
-  type: "Multi",
-  items: DropDownGroup[]
-});
+  className?: string;
+} & (
+  | {
+      type: "Single";
+      items: React.ReactNode[];
+    }
+  | {
+      type: "Multi";
+      items: DropDownGroup[];
+    }
+);
 export function DropDown(props: DropDownProps) {
   const [open, setOpen] = useState(false);
 
-  const content = props.type === "Single" ? <>
-    {props.items.map((it, i) => (
-      <DropdownMenuItem
-        key={i}
-        className={twJoin([
-          "z-[1002] cursor-pointer rounded-lg last:border-b-0 px-2 focus:outline-none",
-          "focus:bg-teal-500 focus:text-white"
-        ])}
-        onPointerDown={() => setOpen(false)}
-      >
-        {it}
-      </DropdownMenuItem>
-    ))}
-  </> : <>
-    {props.items.map((it, i) => (
-      <span key={i}>
-        <DropdownMenuLabel 
-        className="bg-teal-500 rounded-lg"
-        onPointerDown={(evt) => evt.stopPropagation()}>
-          {it.head}
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator onPointerDown={(evt) => evt.stopPropagation()}/>
-        {it.items.map((sub, j) => {
-          return <DropdownMenuItem
-            key={j}
+  const content =
+    props.type === "Single" ? (
+      <>
+        {props.items.map((it, i) => (
+          <DropdownMenuItem
+            key={i}
             className={twJoin([
               "z-[1002] cursor-pointer rounded-lg last:border-b-0 px-2 focus:outline-none",
-              "focus:bg-teal-400 focus:text-white"
+              "focus:bg-teal-500 focus:text-white",
             ])}
             onPointerDown={() => setOpen(false)}
           >
-            {sub}
+            {it}
           </DropdownMenuItem>
-        })}
-        <DropdownMenuSeparator onPointerDown={(evt) => evt.stopPropagation()}/>
-      </span>
-
-    ))}
-  </>
+        ))}
+      </>
+    ) : (
+      <>
+        {props.items.map((it, i) => (
+          <span key={i}>
+            <DropdownMenuLabel
+              className="bg-teal-500 rounded-lg"
+              onPointerDown={(evt) => evt.stopPropagation()}
+            >
+              {it.head}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator
+              onPointerDown={(evt) => evt.stopPropagation()}
+            />
+            {it.items.map((sub, j) => {
+              return (
+                <DropdownMenuItem
+                  key={j}
+                  className={twJoin([
+                    "z-[1002] cursor-pointer rounded-lg last:border-b-0 px-2 focus:outline-none",
+                    "focus:bg-teal-400 focus:text-white",
+                  ])}
+                  onPointerDown={() => setOpen(false)}
+                >
+                  {sub}
+                </DropdownMenuItem>
+              );
+            })}
+            <DropdownMenuSeparator
+              onPointerDown={(evt) => evt.stopPropagation()}
+            />
+          </span>
+        ))}
+      </>
+    );
 
   return (
     <>
       <DropdownMenu open={open}>
-        <DropdownMenuTrigger onPointerDown={() => setOpen(true)}>{props.head}</DropdownMenuTrigger>
+        <DropdownMenuTrigger onPointerDown={() => setOpen(true)}>
+          {props.head}
+        </DropdownMenuTrigger>
         <DropdownMenuContent
           className="z-[1001] bg-teal-200"
           onPointerDownOutside={() => setOpen(false)}
           onFocusOutside={() => setOpen(false)}
           onInteractOutside={() => setOpen(false)}
           align="end"
-          avoidCollisions={true}>
+          avoidCollisions={true}
+        >
           {content}
         </DropdownMenuContent>
       </DropdownMenu>

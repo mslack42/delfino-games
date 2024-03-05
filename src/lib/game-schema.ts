@@ -1,6 +1,11 @@
 import { tryParseInt } from "@/util/tryParseInt";
 import { Ownership, Location } from "@prisma/client";
-import { TypeOf, object, string, number as number_, record, boolean } from "zod";
+import {
+  TypeOf,
+  object,
+  string,
+  boolean,
+} from "zod";
 
 const ownershipValues: string[] = Object.values(Ownership);
 const locationValues: string[] = Object.values(Location).map((v) => v);
@@ -12,7 +17,7 @@ export const addGameSchema = object({
   newOwner: string().optional(),
   holderId: string().min(-2, "Invalid Holder"),
   newHolder: string().optional(),
-  isInRotation: boolean().default(false)
+  isInRotation: boolean().default(false),
 })
   .refine((data) => ownershipValues.includes(data.ownership), {
     path: ["ownership"],
@@ -25,10 +30,11 @@ export const addGameSchema = object({
   .refine(
     (data) => {
       const ownerIdInt = tryParseInt(data.ownerId);
-      return data.ownerId !== "Personal" || (
-        ownerIdInt !== null &&
-        ownerIdInt !== undefined &&
-        (ownerIdInt >= 0 || data.newOwner)
+      return (
+        data.ownerId !== "Personal" ||
+        (ownerIdInt !== null &&
+          ownerIdInt !== undefined &&
+          (ownerIdInt >= 0 || data.newOwner))
       );
     },
     {
@@ -51,15 +57,16 @@ export const addGameSchema = object({
       path: ["newHolder"],
       message: "Holder must be specified",
     }
-  ).refine(
+  )
+  .refine(
     (data) => {
       const holderIdInt = tryParseInt(data.holderId);
       const ownerIdInt = tryParseInt(data.ownerId);
-      return !(holderIdInt === -2 && ownerIdInt === -2)
+      return !(holderIdInt === -2 && ownerIdInt === -2);
     },
     {
       path: ["holderId"],
-      message:"Holder must be specified"
+      message: "Holder must be specified",
     }
   );
 

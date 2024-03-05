@@ -5,18 +5,21 @@ import { auth, signOut } from "@/auth";
 import { LoggedInOnly } from "../auth/LoggedInOnly";
 import { LoggedOutOnly } from "../auth/LoggedOutOnly";
 import { RoleCheck } from "../auth/RoleCheck";
-import { DropDown, DropDownGroup, DropDownGroupCollection } from "../input/DropDown";
+import {
+  DropDown,
+  DropDownGroup,
+  DropDownGroupCollection,
+} from "../input/DropDown";
 import { listHolders } from "@/database/holders/listHolders";
 import { ApplicationRoutes } from "@/constants/routes";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export const NavigationBar = async () => {
-
   const menu: DropDownGroupCollection = {
-    "game": await gamesCollection(),
-    "admin": await adminControls(),
-    "profile": await profileControls()
-  }
+    game: await gamesCollection(),
+    admin: await adminControls(),
+    profile: await profileControls(),
+  };
   return (
     <div className="w-full h-16 bg-teal-400 sticky top-0  z-[500]">
       <div className="bg-teal-400 h-full">
@@ -33,9 +36,17 @@ export const NavigationBar = async () => {
             <div className="hidden md:flex justify-end flex-col h-full pb-3 z-[501]">
               <ul className="flex text-white divide-solid divide-x-2">
                 <li className="px-2">
-                  <DropDown type="Single" {...menu["game"]}/>
+                  <DropDown type="Single" {...menu["game"]} />
                 </li>
-                <RoleCheck type="oneOf" roles={["Admin"]} content={<li className="px-2"><DropDown type="Single" {...menu["admin"]} /></li>}></RoleCheck>
+                <RoleCheck
+                  type="oneOf"
+                  roles={["Admin"]}
+                  content={
+                    <li className="px-2">
+                      <DropDown type="Single" {...menu["admin"]} />
+                    </li>
+                  }
+                ></RoleCheck>
                 <li className="px-2">
                   <DropDown type="Single" {...menu["profile"]} />
                 </li>
@@ -49,11 +60,7 @@ export const NavigationBar = async () => {
                     <FontAwesomeIcon icon={faBars} className="text-white h-8" />
                   </div>
                 }
-                items={[
-                  menu["game"],
-                  menu["admin"],
-                  menu["profile"]
-                ]}
+                items={[menu["game"], menu["admin"], menu["profile"]]}
               />
             </div>
           </div>
@@ -62,7 +69,6 @@ export const NavigationBar = async () => {
     </div>
   );
 };
-
 
 async function profileControls(): Promise<DropDownGroup> {
   const logoutAction = async () => {
@@ -81,18 +87,25 @@ async function profileControls(): Promise<DropDownGroup> {
           </Link>
         }
       />
-      <LoggedInOnly content={
-        <div className="h-full w-full">{user?.name && user?.name.length < 15 ? user?.name : "User"}</div>
-      } />
+      <LoggedInOnly
+        content={
+          <div className="h-full w-full">
+            {user?.name && user?.name.length < 15 ? user?.name : "User"}
+          </div>
+        }
+      />
     </>
-
   );
 
   const items = [
     <Link href={ApplicationRoutes.Profile} key={-2} className="h-full w-full">
       Profile
     </Link>,
-    <Link href={ApplicationRoutes.ChangePassword} key={-3} className="h-full w-full">
+    <Link
+      href={ApplicationRoutes.ChangePassword}
+      key={-3}
+      className="h-full w-full"
+    >
       Change Password
     </Link>,
     <div key={-1} className="h-full w-full">
@@ -104,13 +117,17 @@ async function profileControls(): Promise<DropDownGroup> {
 
   return {
     head,
-    items
-  }
+    items,
+  };
 }
 
 async function adminControls(): Promise<DropDownGroup> {
   const items = [
-    <Link key={1} href={ApplicationRoutes.FindAndAddGame} className="h-full w-full">
+    <Link
+      key={1}
+      href={ApplicationRoutes.FindAndAddGame}
+      className="h-full w-full"
+    >
       <p>Add a new game</p>
     </Link>,
     <Link href={ApplicationRoutes.People} key={2} className="h-full w-full">
@@ -124,8 +141,8 @@ async function adminControls(): Promise<DropDownGroup> {
 
   return {
     head,
-    items
-  }
+    items,
+  };
 }
 
 async function gamesCollection(): Promise<DropDownGroup> {
@@ -139,7 +156,11 @@ async function gamesCollection(): Promise<DropDownGroup> {
       <b>All Games</b>
     </Link>,
     ...holders.map((h) => (
-      <Link key={h.id} href={ApplicationRoutes.PersonsGames(h.name)} className="h-full w-full">
+      <Link
+        key={h.id}
+        href={ApplicationRoutes.PersonsGames(h.name)}
+        className="h-full w-full"
+      >
         {h.name}
       </Link>
     )),
@@ -147,6 +168,6 @@ async function gamesCollection(): Promise<DropDownGroup> {
 
   return {
     head,
-    items
-  }
+    items,
+  };
 }

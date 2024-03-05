@@ -13,7 +13,9 @@ export default async function LoginPage() {
               <LoginForm />
             </Suspense>
           </div>
-          <Link href={ApplicationRoutes.Register}>{"Don't have an account?"}</Link>
+          <Link href={ApplicationRoutes.Register}>
+            {"Don't have an account?"}
+          </Link>
         </div>
       </section>
     </>

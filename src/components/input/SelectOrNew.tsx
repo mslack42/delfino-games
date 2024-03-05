@@ -23,8 +23,9 @@ export function SelectOrNew(props: Props) {
     newValueString,
   } = props;
   const realSelectValues: SelectListPair[] = useMemo(
-    () => selectListValues.filter(v => v !== undefined).map(v => v!),[selectListValues]
-  )
+    () => selectListValues.filter((v) => v !== undefined).map((v) => v!),
+    [selectListValues]
+  );
   const defaultValue = useMemo(
     () => (realSelectValues.length ? realSelectValues[0].value : "-2"),
     [realSelectValues]
@@ -32,7 +33,10 @@ export function SelectOrNew(props: Props) {
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
   useEffect(() => {
-    if (!["-1","-2"].includes(selectedValue) && realSelectValues.every((v) => v.value !== selectedValue)) {
+    if (
+      !["-1", "-2"].includes(selectedValue) &&
+      realSelectValues.every((v) => v.value !== selectedValue)
+    ) {
       setSelectedValue(() => "-2");
     }
   }, [realSelectValues, selectedValue]);
@@ -58,7 +62,7 @@ export function SelectOrNew(props: Props) {
             {kvp.display}
           </option>
         ))}
-        <option value={'-1'}>{newValueString}</option>
+        <option value={"-1"}>{newValueString}</option>
       </select>
       {selectedValue !== "-1" ? undefined : (
         <input {...defaultTextProps} {...textProps}></input>

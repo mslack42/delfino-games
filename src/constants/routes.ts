@@ -8,10 +8,10 @@ export const ApiRoutes = {
   EditProfile: "/api/profile",
   Register: "/api/register",
   DeleteUser: (userId: string) => `/api/user?id=${userId}`,
-  ResetUserPassword: (userId:string) => `/api/user/passwordReset?id=${userId}`,
-  VerifyUser: (userId:string) => `/api/user/verify?id=${userId}`,
+  ResetUserPassword: (userId: string) => `/api/user/passwordReset?id=${userId}`,
+  VerifyUser: (userId: string) => `/api/user/verify?id=${userId}`,
   EditUser: "/api/user",
-  SignIn:"/api/auth/signin"
+  SignIn: "/api/auth/signin",
 };
 
 export const ApplicationRoutes = {
@@ -22,11 +22,11 @@ export const ApplicationRoutes = {
   EditPerson: (id: number) => `/people/${id}`,
   Register: "/register",
   EditProfile: "/profile/edit",
-  Game: (id:number) => `/games/game/${id}`,
+  Game: (id: number) => `/games/game/${id}`,
   Home: "/",
   LogIn: "/login",
   Profile: "/profile",
   ChangePassword: "/profile/changePassword",
   FindAndAddGame: "/add-game",
-  Users: "/users"
+  Users: "/users",
 };

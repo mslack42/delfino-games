@@ -76,7 +76,7 @@ export function PeopleTable({ holders }: Props) {
         title={<b>Are you sure you want to delete {deleteHolder?.name}?</b>}
         subtitle={<p>This action is permanent.</p>}
         content={
-          <div>            
+          <div>
             <div className="flex flex-row justify-evenly space-x-2">
               <input
                 type="text"

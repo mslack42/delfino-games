@@ -18,7 +18,7 @@ export const RegisterForm = () => {
     handleSubmit,
     register,
     formState: { errors },
-    setError
+    setError,
   } = methods;
 
   const onSubmitHandler: SubmitHandler<CreateUserInput> = async (values) => {
@@ -40,7 +40,7 @@ export const RegisterForm = () => {
           //     toast.error(error.message);
           //   });
           if (errorData.errors[0].invitationCode) {
-            setError("invitationCode",errorData.errors[0].invitationCode)
+            setError("invitationCode", errorData.errors[0].invitationCode);
           }
 
           return;

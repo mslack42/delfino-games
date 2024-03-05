@@ -17,13 +17,11 @@ export async function DELETE(req: NextRequest) {
   return NextResponse.json({ message: "success" });
 }
 
-
-
 export async function POST(req: NextRequest) {
   try {
     const { name, email, id, role } = editUserSchema.parse(await req.json());
 
-    await updateUser(id,name,email,role as UserRole)
+    await updateUser(id, name, email, role as UserRole);
 
     return NextResponse.json({
       status: "success",

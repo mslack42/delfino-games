@@ -15,21 +15,21 @@ type Props = {
 export function EditHolderForm({ holder }: Props) {
   const [submitting, setSubmitting] = useState(false);
 
-  const router =useRouter()
+  const router = useRouter();
 
   const methods = useForm<EditHolderInput>({
     resolver: zodResolver(editHolderSchema),
     defaultValues: {
-        id: holder.id,
-        name: holder.name,
-        office: holder.location
-    }
+      id: holder.id,
+      name: holder.name,
+      office: holder.location,
+    },
   });
 
   const {
     handleSubmit,
     register,
-    formState: { errors }
+    formState: { errors },
   } = methods;
 
   const onSubmitHandler: SubmitHandler<EditHolderInput> = async (values) => {
@@ -52,15 +52,12 @@ export function EditHolderForm({ holder }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitHandler)}  id="editHolder">
+    <form onSubmit={handleSubmit(onSubmitHandler)} id="editHolder">
       <div>
         <label>
           <b>Name: </b>
         </label>
-        <input
-          {...register("name")}
-          placeholder={holder.name}
-        />
+        <input {...register("name")} placeholder={holder.name} />
         {errors["name"] && (
           <span className="text-red-500 text-xs pt-1 block">
             {errors["name"]?.message as string}

@@ -1,9 +1,6 @@
 import { fetchBggDetails } from "@/bgg/fetchBggDetails";
 import { BggDataSummary } from "@/components/data-display/BggDataSummary";
-import { NewGameData, addGame } from "@/database/games/addGame";
 import { listHolders } from "@/database/holders/listHolders";
-import { Ownership, Location } from "@prisma/client";
-import { redirect } from "next/navigation";
 import { AddGameForm } from "./AddGameForm";
 import { HalfPagePanel } from "../../../components/data-display/HalfPagePanel";
 

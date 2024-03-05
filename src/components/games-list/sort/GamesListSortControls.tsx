@@ -39,9 +39,8 @@ export function GamesListSortControls(props: GamesListSortingControlsProps) {
           break;
         }
         case "random": {
-          let pairs = sorted
-            .map((v) => [v, syncHash(v.name + salt)])
-          pairs.sort((a, b) => (a[1] as string).localeCompare(b[1] as string))
+          let pairs = sorted.map((v) => [v, syncHash(v.name + salt)]);
+          pairs.sort((a, b) => (a[1] as string).localeCompare(b[1] as string));
           sorted = pairs.map((p) => p[0] as InventoryItem);
           break;
         }
@@ -78,13 +77,21 @@ export function GamesListSortControls(props: GamesListSortingControlsProps) {
 
   return (
     <>
-    <div className="text-xl space-x-5">
-      <span>Sort: </span>
-      <button onClick={() => sortBy("random")}><FontAwesomeIcon icon={faShuffle}/></button>
-      <button onClick={() => sortBy("name")}><FontAwesomeIcon icon={faFont}/></button>
-      <button onClick={() => sortBy("min-duration")}><FontAwesomeIcon icon={faHourglass}/></button>
-      <button onClick={() => sortBy("min-player-count")}><FontAwesomeIcon icon={faUsers}/></button>
-    </div>
+      <div className="text-xl space-x-5">
+        <span>Sort: </span>
+        <button onClick={() => sortBy("random")}>
+          <FontAwesomeIcon icon={faShuffle} />
+        </button>
+        <button onClick={() => sortBy("name")}>
+          <FontAwesomeIcon icon={faFont} />
+        </button>
+        <button onClick={() => sortBy("min-duration")}>
+          <FontAwesomeIcon icon={faHourglass} />
+        </button>
+        <button onClick={() => sortBy("min-player-count")}>
+          <FontAwesomeIcon icon={faUsers} />
+        </button>
+      </div>
     </>
   );
 }

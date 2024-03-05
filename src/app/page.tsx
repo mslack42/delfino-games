@@ -16,9 +16,8 @@ export default async function Home() {
           You can use this website to help find a game to play, or request a
           game to be available to play on a Monday night.
         </p>
-        <UnverifiedUserMessage/>
+        <UnverifiedUserMessage />
       </div>
     </>
   );
 }
-
