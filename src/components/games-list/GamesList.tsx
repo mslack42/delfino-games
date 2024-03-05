@@ -56,6 +56,7 @@ export function GamesList(props: Props) {
           <GamesListSortControls
             gamesList={filteredGamesList}
             onSortChange={applySorting}
+            defaultSort="name"
           />
         </div>
       </div>

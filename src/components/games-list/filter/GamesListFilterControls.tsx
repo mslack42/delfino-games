@@ -55,7 +55,11 @@ export function GamesListFilterControls(props: Props) {
 
   return (
     <LeftSheet
-      head={<h2 className="text-xl">Filters...</h2>}
+      head={
+        <h2 className="text-xl rounded border-2 border-black p-1">
+          Filters...
+        </h2>
+      }
       content={
         <div className="border border-black">
           {props.controlsKeys.includes("office") && offices.length > 1 && (

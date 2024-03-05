@@ -5,21 +5,18 @@ import { faFont } from "@fortawesome/free-solid-svg-icons/faFont";
 import { faHourglass } from "@fortawesome/free-solid-svg-icons/faHourglass";
 import { faShuffle } from "@fortawesome/free-solid-svg-icons/faShuffle";
 import { faUsers } from "@fortawesome/free-solid-svg-icons/faUsers";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { SortButton } from "./SortButton";
+import { average } from "./util/average";
 
 type GamesListSortingControlsProps = {
+  defaultSort: SortType;
   gamesList: InventoryItem[];
   onSortChange: (sortMethod: (lst: InventoryItem[]) => InventoryItem[]) => void;
 };
-type SortType = "random" | "name" | "min-duration" | "min-player-count";
-function average(vals: (number | null | undefined)[]) {
-  const actualVals = vals.filter((v) => v) as number[];
-  if (actualVals.length === 0) {
-    return 0;
-  }
-  return actualVals.reduce((a, b) => a + b, 0) / actualVals.length;
-}
+export type SortType = "random" | "name" | "min-duration" | "min-player-count";
 export function GamesListSortControls(props: GamesListSortingControlsProps) {
+  const [currentSort, setCurrentSort] = useState<SortType>(props.defaultSort);
   const sortBy = (type: SortType) => {
     const newSalt = Math.random().toString();
     const newSortMethod = sort(type, newSalt);
@@ -72,25 +69,38 @@ export function GamesListSortControls(props: GamesListSortingControlsProps) {
           );
         }
       }
+      setCurrentSort(type);
       return sorted;
     };
 
   return (
     <>
-      <div className="text-xl space-x-5">
+      <div className="space-x-5 text-xl rounded border-2 border-black p-1">
         <span>Sort: </span>
-        <button onClick={() => sortBy("random")}>
-          <FontAwesomeIcon icon={faShuffle} />
-        </button>
-        <button onClick={() => sortBy("name")}>
-          <FontAwesomeIcon icon={faFont} />
-        </button>
-        <button onClick={() => sortBy("min-duration")}>
-          <FontAwesomeIcon icon={faHourglass} />
-        </button>
-        <button onClick={() => sortBy("min-player-count")}>
-          <FontAwesomeIcon icon={faUsers} />
-        </button>
+        <SortButton
+          type={"name"}
+          sortMethod={sortBy}
+          icon={faFont}
+          isActive={currentSort === "name"}
+        />
+        <SortButton
+          type={"min-duration"}
+          sortMethod={sortBy}
+          icon={faHourglass}
+          isActive={currentSort === "min-duration"}
+        />
+        <SortButton
+          type={"min-player-count"}
+          sortMethod={sortBy}
+          icon={faUsers}
+          isActive={currentSort === "min-player-count"}
+        />
+        <SortButton
+          type={"random"}
+          sortMethod={sortBy}
+          icon={faShuffle}
+          isActive={currentSort === "random"}
+        />
       </div>
     </>
   );
