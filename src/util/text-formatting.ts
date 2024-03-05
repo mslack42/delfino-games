@@ -24,11 +24,11 @@ export function playTime(
     minPlaytimeMinutes &&
     maxPlaytimeMinutes &&
     minPlaytimeMinutes !== maxPlaytimeMinutes
-      ? `${minPlaytimeMinutes}-${maxPlaytimeMinutes} minutes`
+      ? `${minPlaytimeMinutes}-${maxPlaytimeMinutes} mins`
       : minPlaytimeMinutes
-        ? `${minPlaytimeMinutes} minutes`
+        ? `${minPlaytimeMinutes} mins`
         : maxPlaytimeMinutes
-          ? `${maxPlaytimeMinutes} minutes`
+          ? `${maxPlaytimeMinutes} mins`
           : "?";
 
   return playTimeString;

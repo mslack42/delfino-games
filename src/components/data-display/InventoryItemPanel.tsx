@@ -4,6 +4,7 @@ import { InventoryItem } from "@/database/types";
 import { playerCount, playTime } from "@/util/text-formatting";
 import Image from "next/image";
 import Link from "next/link";
+import { twJoin } from "tailwind-merge";
 
 type PanelProps = {
   data: InventoryItem;
@@ -33,7 +34,12 @@ export function InventoryItemPanel(props: PanelProps) {
   );
 
   return (
-    <div className="rounded-lg bg-cyan-200 w-60 max-h-96 overflow-hidden p-2 m-1">
+    <div
+      className={twJoin(
+        "rounded-lg w-60 bg-cyan-200 overflow-hidden p-2 m-1",
+        data.dsData.inRotation ? "" : "grayscale"
+      )}
+    >
       <Link href={ApplicationRoutes.Game(data.id)}>
         <h1 className="text-center font-bold line-clamp-1" title={data.name}>
           {data.name}
