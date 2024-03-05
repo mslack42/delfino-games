@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react";
 import { Slider } from "../shadcn/ShadcnSlider";
 
@@ -19,8 +18,8 @@ export function CustomRangeSlider(props: Props) {
 
   const min = useMemo(() => Math.min(...props.fullRange), [props.fullRange]);
   const max = useMemo(() => Math.max(...props.fullRange), [props.fullRange]);
-  const [lower, setLower] = useState(props.defaultRange[0]);
-  const [upper, setUpper] = useState(props.defaultRange[1]);
+  const [lower, setLower] = useState(Math.max(props.defaultRange[0], min));
+  const [upper, setUpper] = useState(Math.min(props.defaultRange[1], max));
 
   const summary = props.summariser([lower, upper]);
   return (
@@ -31,7 +30,7 @@ export function CustomRangeSlider(props: Props) {
           max={max}
           step={props.step ?? 1}
           minStepsBetweenThumbs={0}
-          defaultValue={[lower,upper]}
+          defaultValue={[lower, upper]}
           onValueChange={onSliderChange}
           className="w-52 py-2"
         ></Slider>

@@ -5,7 +5,6 @@ import { GamesListFilterControls } from "./filter/GamesListFilterControls";
 import { InventoryItemPanel } from "../data-display/InventoryItemPanel";
 import { ControlsKey } from "./types";
 import { GamesListSortControls } from "./sort/GamesListSortControls";
-import { LeftSheet } from "../common/LeftSheet";
 
 type Props = {
   inventoryData: InventoryItem[];
@@ -61,9 +60,15 @@ export function GamesList(props: Props) {
         </div>
       </div>
       <div className="flex max-w-full flex-wrap justify-around px-3">
-        {sorted.map((id) => (
-          <InventoryItemPanel key={id.id} data={id}></InventoryItemPanel>
-        ))}
+        {sorted.length ? (
+          sorted.map((id) => (
+            <InventoryItemPanel key={id.id} data={id}></InventoryItemPanel>
+          ))
+        ) : (
+          <div className="text-lg h-60 flex  flex-col justify-center align-middle">
+            <p>Nothing to see here 😢</p>
+          </div>
+        )}
       </div>
     </div>
   );
