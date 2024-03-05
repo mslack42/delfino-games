@@ -57,18 +57,6 @@ export function InventoryItemPanel(props: PanelProps) {
           {displayImage}
         </div>
       </div>
-      <div className="absolute h-40 w-40 text-white z-index-2000">
-        <Link href={ApplicationRoutes.Game(data.id)}>
-          <div className="bg-gradient-to-b from-teal-600 via-teal-600 to-transparent py-1 rounded-lg">
-            <h1
-              className="text-center text-sm font-bold line-clamp-1  "
-              title={data.name}
-            >
-              {data.name}
-            </h1>
-          </div>
-        </Link>
-      </div>
       <div className="absolute h-40 w-40 text-white">
         <div className="absolute w-40 text-xs bottom-0 left-0  bg-gradient-to-t from-teal-600 via-teal-600 to-transparent pt-8 rounded-lg">
           <div className="absoulte w-2/3 bottom-0 left-0 ">
@@ -106,6 +94,18 @@ export function InventoryItemPanel(props: PanelProps) {
             </div>
           </div>
         </div>
+      </div>
+      <div className="absolute h-40 w-40 text-white">
+        <Link href={ApplicationRoutes.Game(data.id)}>
+          <div className="bg-gradient-to-b from-teal-600 via-teal-600 to-transparent py-1 rounded-lg">
+            <h1
+              className="text-center text-sm font-bold line-clamp-1  "
+              title={data.name}
+            >
+              {data.name}
+            </h1>
+          </div>
+        </Link>
       </div>
     </div>
   );
