@@ -22,7 +22,7 @@ export function SortButton(props: SortButtonProps) {
     return () => {
       setMounted(false);
     };
-  });
+  }, []);
 
   return (
     <>
