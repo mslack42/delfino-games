@@ -10,6 +10,7 @@ import { PlayerCountSlider } from "../controls/PlayerCountSlider";
 import { DurationSlider } from "../controls/DurationSlider";
 import { GameTextFilter } from "../controls/GameTextFilter";
 import { LeftSheet } from "@/components/common/LeftSheet";
+import { BooleanFilter } from "../controls/BooleanFilter";
 
 const initialFilterState: FilterState = {
   bubbleTypeFilters: {
@@ -42,6 +43,11 @@ const initialFilterState: FilterState = {
     name: {
       filterOn: false,
       text: "",
+    },
+  },
+  booleanTypeFilters: {
+    inrotation: {
+      filterOn: true,
     },
   },
 };
@@ -146,6 +152,14 @@ export function GamesListFilterControls(props: Props) {
               setFilterState={setFilterState}
               filterKey="holders"
               allOptions={holders}
+            />
+          )}
+          {props.controlsKeys.includes("inrotation") && (
+            <BooleanFilter
+              filterName="Only show games in current rotation?"
+              filterState={filterState}
+              setFilterState={setFilterState}
+              filterKey="inrotation"
             />
           )}
           {props.controlsKeys.includes("tags") && (

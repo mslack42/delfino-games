@@ -16,7 +16,7 @@ export default async function ListGames(props: Props) {
       <h1 className="text-4xl py-2">{title}</h1>
       <GamesList
         inventoryData={inventoryData}
-        controlsKeys={["tags", "playercount", "duration", "name"]}
+        controlsKeys={["tags", "playercount", "duration", "name", "inrotation"]}
       ></GamesList>
     </>
   );

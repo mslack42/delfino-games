@@ -8,6 +8,12 @@ export const filterData = (
 ) => {
   return (data: InventoryItem[]) =>
     data
+      .filter(
+        (g) =>
+          !controlsKeys.includes("inrotation") ||
+          !filterState.booleanTypeFilters["inrotation"].filterOn ||
+          g.dsData.inRotation
+      )
       .filter((g) =>
         controlsKeys.includes("office")
           ? applyBubbleTypeFilter(filterState, "office", g.dsData.location)

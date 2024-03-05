@@ -16,6 +16,7 @@ export default async function ListGames() {
           "playercount",
           "duration",
           "name",
+          "inrotation",
         ]}
       ></GamesList>
     </>
