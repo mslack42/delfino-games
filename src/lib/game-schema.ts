@@ -1,11 +1,6 @@
 import { tryParseInt } from "@/util/tryParseInt";
 import { Ownership, Location } from "@prisma/client";
-import {
-  TypeOf,
-  object,
-  string,
-  boolean,
-} from "zod";
+import { TypeOf, object, string, boolean } from "zod";
 
 const ownershipValues: string[] = Object.values(Ownership);
 const locationValues: string[] = Object.values(Location).map((v) => v);

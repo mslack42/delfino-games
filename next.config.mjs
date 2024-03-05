@@ -6,7 +6,7 @@ const nextConfig = {
         hostname: "cf.geekdo-images.com",
       },
     ],
-  }
+  },
 };
 
 export default nextConfig;

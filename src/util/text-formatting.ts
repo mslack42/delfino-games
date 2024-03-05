@@ -8,10 +8,10 @@ export function playerCount(
     minPlayerCount && maxPlayerCount && minPlayerCount !== maxPlayerCount
       ? `${minPlayerCount}-${maxPlayerCount} players`
       : minPlayerCount
-      ? `${minPlayerCount} players`
-      : maxPlayerCount
-      ? `${maxPlayerCount} players`
-      : "?";
+        ? `${minPlayerCount} players`
+        : maxPlayerCount
+          ? `${maxPlayerCount} players`
+          : "?";
 
   return playerCountString;
 }
@@ -26,10 +26,10 @@ export function playTime(
     minPlaytimeMinutes !== maxPlaytimeMinutes
       ? `${minPlaytimeMinutes}-${maxPlaytimeMinutes} minutes`
       : minPlaytimeMinutes
-      ? `${minPlaytimeMinutes} minutes`
-      : maxPlaytimeMinutes
-      ? `${maxPlaytimeMinutes} minutes`
-      : "?";
+        ? `${minPlaytimeMinutes} minutes`
+        : maxPlaytimeMinutes
+          ? `${maxPlaytimeMinutes} minutes`
+          : "?";
 
   return playTimeString;
 }

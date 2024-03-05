@@ -36,7 +36,6 @@ export function VerifyUserModal({ user, setUser }: UserModalProps) {
                 actionType="cancel"
                 onClick={() => setUser(null)}
               />
-              
             </div>
           </div>
         }

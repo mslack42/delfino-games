@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write .",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -36,6 +37,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "3.2.5",
     "@types/bcryptjs": "^2.4.6",
     "@types/crypto-js": "^4.2.2",
     "@types/next-auth": "^3.15.0",
