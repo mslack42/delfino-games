@@ -1,9 +1,11 @@
-import { DataSummaryKeyValuePair } from "@/components/data-display/DataSummaryKeyValuePair";
 import { ApplicationRoutes } from "@/constants/routes";
 import { InventoryItem } from "@/database/types";
 import { playerCount, playTime } from "@/util/text-formatting";
 import {
+  faBagShopping,
+  faHandPointUp,
   faHourglass,
+  faPenToSquare,
   faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -107,6 +109,37 @@ export function InventoryItemPanel(props: PanelProps) {
           </div>
         </Link>
       </div>
+      <div className="absolute h-40 w-40 text-white text-sm">
+        <div className="absolute bottom-0 right-0 rounded-lg p-2 ">
+          <ul className="flex flex-col space-y-1">
+            <li>
+              <GameCardActionButton
+                body={<FontAwesomeIcon icon={faBagShopping} />}
+              />
+            </li>
+            <li>
+              <GameCardActionButton
+                body={<FontAwesomeIcon icon={faPenToSquare} />}
+              />
+            </li>
+            <li>
+              <GameCardActionButton
+                body={<FontAwesomeIcon icon={faHandPointUp} />}
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+type GameCardActionProps = {
+  body: React.ReactNode | string;
+};
+function GameCardActionButton(props: GameCardActionProps) {
+  return (
+    <div className="bg-cyan-500 p-1 rounded-lg text-xs">
+      <button>{props.body}</button>
     </div>
   );
 }
