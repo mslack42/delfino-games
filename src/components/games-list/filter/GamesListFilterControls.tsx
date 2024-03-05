@@ -1,56 +1,20 @@
 import { InventoryItem } from "@/database/types";
 import { useState } from "react";
-import { dedupe } from "../../../util/dedupe";
 import { FilterBubbleData } from "../../input/FilterBubbleBucket";
 import { BubbleFilterInput } from "../../input/BubbleFilterInput";
 import { FilterState, ControlsKey } from "../types";
-import { filterData } from "../utils/filterData";
-import { sortBubbleData } from "../utils/sortBubbleData";
-import { PlayerCountSlider } from "../controls/PlayerCountSlider";
-import { DurationSlider } from "../controls/DurationSlider";
-import { GameTextFilter } from "../controls/GameTextFilter";
+import { filterData } from "./util/filterData";
+import { PlayerCountSlider } from "./controls/PlayerCountSlider";
+import { DurationSlider } from "./controls/DurationSlider";
+import { GameTextFilter } from "./controls/GameTextFilter";
 import { LeftSheet } from "@/components/common/LeftSheet";
-import { BooleanFilter } from "../controls/BooleanFilter";
-
-const initialFilterState: FilterState = {
-  bubbleTypeFilters: {
-    office: {
-      filterOn: false,
-      values: [],
-    },
-    holders: {
-      filterOn: false,
-      values: [],
-    },
-    tags: {
-      filterOn: false,
-      values: [],
-    },
-  },
-  sliderTypeFilters: {
-    playercount: {
-      filterOn: false,
-      lower: 1,
-      upper: 12,
-    },
-    duration: {
-      filterOn: false,
-      lower: 5,
-      upper: 120,
-    },
-  },
-  textTypeFilters: {
-    name: {
-      filterOn: false,
-      text: "",
-    },
-  },
-  booleanTypeFilters: {
-    inrotation: {
-      filterOn: true,
-    },
-  },
-};
+import { BooleanFilter } from "./controls/BooleanFilter";
+import { initialFilterState } from "./util/initialFilterState";
+import { extractOffices } from "./util/extractOffices";
+import { extractDurationRange } from "./util/extractDurationRange";
+import { extractPlayerCountRange } from "./util/extractPlayerCountRange";
+import { extractTags } from "./util/extractTags";
+import { extractHolders } from "./util/extractHolders";
 
 type Props = {
   gamesList: InventoryItem[];
@@ -58,55 +22,13 @@ type Props = {
   controlsKeys: ControlsKey[];
 };
 export function GamesListFilterControls(props: Props) {
-  const onFilterChange = props.onFilterChange;
-  const gamesList = props.gamesList;
+  const { onFilterChange, gamesList } = props;
 
-  const offices: FilterBubbleData[] = sortBubbleData(
-    dedupe(gamesList.map((g) => g.dsData.location)).map((d) => {
-      return {
-        name: d,
-        data: d,
-      };
-    })
-  );
-  const holders: FilterBubbleData[] = sortBubbleData(
-    dedupe(gamesList.map((g) => g.dsData.holder)).map((d) => {
-      return {
-        name: d,
-        data: d,
-      };
-    })
-  );
-  const tags: FilterBubbleData[] = sortBubbleData(
-    dedupe(gamesList.map((g) => g.bggData.specs.tags).flat()).map((d) => {
-      return {
-        name: d,
-        data: d,
-      };
-    })
-  );
-  const playerCountRange: number[] = gamesList
-    .map((g) => {
-      return [g.bggData.specs.minPlayerCount, g.bggData.specs.maxPlayerCount];
-    })
-    .reduce(
-      (a, b) => {
-        const vals = a.concat(b).filter((v) => v) as number[];
-        return [Math.min(...vals), Math.min(Math.max(...vals), 12)];
-      },
-      [null, null]
-    ) as number[];
-  const durationRange: number[] = gamesList
-    .map((g) => {
-      return [g.bggData.specs.minPlayTime, g.bggData.specs.maxPlayTime];
-    })
-    .reduce(
-      (a, b) => {
-        const vals = a.concat(b).filter((v) => v) as number[];
-        return [Math.min(...vals), Math.min(Math.max(...vals), 120)];
-      },
-      [null, null]
-    ) as number[];
+  const offices: FilterBubbleData[] = extractOffices(gamesList);
+  const holders: FilterBubbleData[] = extractHolders(gamesList);
+  const tags: FilterBubbleData[] = extractTags(gamesList);
+  const playerCountRange: number[] = extractPlayerCountRange(gamesList);
+  const durationRange: number[] = extractDurationRange(gamesList);
 
   const [filterState, _setFilterState] = useState<FilterState>({
     ...initialFilterState,
@@ -136,7 +58,7 @@ export function GamesListFilterControls(props: Props) {
       head={<h2 className="text-xl">Filters...</h2>}
       content={
         <div className="border border-black">
-          {props.controlsKeys.includes("office") && (
+          {props.controlsKeys.includes("office") && offices.length > 1 && (
             <BubbleFilterInput
               filterName="Office"
               filterState={filterState}
@@ -145,7 +67,7 @@ export function GamesListFilterControls(props: Props) {
               allOptions={offices}
             />
           )}
-          {props.controlsKeys.includes("holders") && (
+          {props.controlsKeys.includes("holders") && holders.length > 1 && (
             <BubbleFilterInput
               filterName="Holders"
               filterState={filterState}

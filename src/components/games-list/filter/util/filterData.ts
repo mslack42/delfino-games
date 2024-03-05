@@ -1,5 +1,5 @@
 import { InventoryItem } from "@/database/types";
-import { FilterState, ControlsKey } from "../types";
+import { FilterState, ControlsKey } from "../../types";
 import { applyBubbleTypeFilter } from "./applyBubbleTypeFilter";
 
 export const filterData = (

@@ -1,4 +1,4 @@
-import { FilterState } from "../types";
+import { FilterState } from "../../types";
 
 export type GameTextFilterProps = {
   filterState: FilterState;

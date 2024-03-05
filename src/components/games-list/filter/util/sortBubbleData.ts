@@ -1,4 +1,4 @@
-import { FilterBubbleData } from "../../input/FilterBubbleBucket";
+import { FilterBubbleData } from "../../../input/FilterBubbleBucket";
 
 export function sortBubbleData(data: FilterBubbleData[]) {
   let newData = [...data];

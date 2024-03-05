@@ -1,4 +1,4 @@
-import { FilterState, BubbleTypeFilterKey } from "../types";
+import { FilterState, BubbleTypeFilterKey } from "../../types";
 
 export const applyBubbleTypeFilter = (
   filterState: FilterState,
