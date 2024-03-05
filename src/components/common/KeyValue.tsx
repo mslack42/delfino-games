@@ -1,5 +1,5 @@
 type KeyValueProps = {
-  dataKey: string;
+  dataKey: string | React.ReactNode;
   dataValue: string | React.ReactNode;
   className?: string;
 };

@@ -6,6 +6,7 @@ const nextConfig = {
         hostname: "cf.geekdo-images.com",
       },
     ],
+    minimumCacheTTL: 1000000,
   },
 };
 

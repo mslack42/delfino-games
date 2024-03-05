@@ -7,5 +7,13 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   plugins: [require("tailwindcss-animate")],
+  theme: {
+    extend: {
+      blur: {
+        xs: "2px",
+        xxs: "1px",
+      },
+    },
+  },
 };
 export default config;

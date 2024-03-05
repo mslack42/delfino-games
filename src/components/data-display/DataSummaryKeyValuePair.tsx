@@ -3,7 +3,7 @@ import { KeyValue } from "../common/KeyValue";
 import React from "react";
 
 type DataSummaryKeyValueProps = {
-  dataKey: string;
+  dataKey: string | React.ReactNode;
   dataValue: string | React.ReactNode;
   isMultiline?: boolean;
 };
