@@ -9,7 +9,7 @@ export function Logo() {
       <Link href={ApplicationRoutes.Home} className="flex bottom-0">
         <FontAwesomeIcon icon={faDice} className="h-12 text-white  " />
         <div className="h-12 flex align-text-bottom justify-end flex-col pl-2">
-          <h1 className="text-xl text-white align-text-bottom">
+          <h1 className="text-4xl text-white align-text-bottom">
             Delfino Games
           </h1>
         </div>
