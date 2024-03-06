@@ -1,9 +1,8 @@
+import { useContext } from "react";
 import { CustomRangeSlider } from "../../../input/CustomRangeSlider";
-import { FilterState } from "../../types";
+import { GamesFilterContext } from "../GamesFilterContext";
 
 export type SliderProps = {
-  filterState: FilterState;
-  setFilterState: (newState: FilterState) => void;
   range: [number, number];
 };
 export type GamesListSliderProps = SliderProps & {
@@ -13,15 +12,8 @@ export type GamesListSliderProps = SliderProps & {
   step: number;
 };
 export function GamesListSlider(props: GamesListSliderProps) {
-  const {
-    filterState,
-    setFilterState,
-    range,
-    filterName,
-    filterKey,
-    summariser,
-    step,
-  } = props;
+  const { range, filterName, filterKey, summariser, step } = props;
+  const { filterState, setFilterState } = useContext(GamesFilterContext);
 
   return (
     <div className="flex justify-center space-x-2">

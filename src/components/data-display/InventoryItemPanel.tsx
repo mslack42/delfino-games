@@ -14,6 +14,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { twJoin } from "tailwind-merge";
+import { MouseEventHandler } from "react";
+import { changeRotationStatus } from "@/database/games/changeRotationStatus";
 
 type PanelProps = {
   data: InventoryItem;
@@ -48,6 +50,11 @@ export function InventoryItemPanel(props: PanelProps) {
       <span>No image found</span>
     </div>
   );
+
+  // async function toggleRotation() {
+  //   "use server";
+  //   await changeRotationStatus(data.id, !data.dsData.inRotation);
+  // }
 
   return (
     <div
@@ -118,6 +125,9 @@ export function InventoryItemPanel(props: PanelProps) {
               <li>
                 <GameCardActionButton
                   body={<FontAwesomeIcon icon={faBagShopping} />}
+                  onClick={() =>
+                    changeRotationStatus(data.id, !data.dsData.inRotation)
+                  }
                 />
               </li>
             )}
@@ -143,11 +153,12 @@ export function InventoryItemPanel(props: PanelProps) {
 }
 type GameCardActionProps = {
   body: React.ReactNode | string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 function GameCardActionButton(props: GameCardActionProps) {
   return (
     <div className="bg-cyan-500 p-1 rounded-lg text-xs">
-      <button>{props.body}</button>
+      <button onClick={props.onClick}>{props.body}</button>
     </div>
   );
 }

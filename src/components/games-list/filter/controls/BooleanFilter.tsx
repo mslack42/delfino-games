@@ -1,14 +1,14 @@
-import { FilterState } from "../../types";
+import { useContext } from "react";
+import { GamesFilterContext } from "../GamesFilterContext";
 
 export type BooleanFilterProps = {
   filterName: string;
   filterKey: string;
-  filterState: FilterState;
-  setFilterState: (newState: FilterState) => void;
 };
 
 export function BooleanFilter(props: BooleanFilterProps) {
-  const { filterName, filterKey, filterState, setFilterState } = props;
+  const { filterName, filterKey } = props;
+  const { filterState, setFilterState } = useContext(GamesFilterContext);
 
   return (
     <div className="flex justify-center space-x-2">

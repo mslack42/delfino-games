@@ -1,7 +1,7 @@
 import { listInventory } from "@/database/games/listInventory";
 import { GamesList } from "../../components/games-list/GamesList";
 import { RoleCheck } from "@/components/auth/serverside/RoleCheck";
-import { ControlsKey } from "@/components/games-list/types";
+import { ControlsKey } from "@/components/games-list/filter/types";
 import {
   GameActions,
   GameDataFields,

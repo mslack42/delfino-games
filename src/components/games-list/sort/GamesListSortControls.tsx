@@ -5,22 +5,23 @@ import { faFont } from "@fortawesome/free-solid-svg-icons/faFont";
 import { faHourglass } from "@fortawesome/free-solid-svg-icons/faHourglass";
 import { faShuffle } from "@fortawesome/free-solid-svg-icons/faShuffle";
 import { faUsers } from "@fortawesome/free-solid-svg-icons/faUsers";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SortButton } from "./SortButton";
 import { average } from "./util/average";
+import { GamesListContext } from "../GamesListContext";
 
 type GamesListSortingControlsProps = {
   defaultSort: SortType;
-  gamesList: InventoryItem[];
-  onSortChange: (sortMethod: (lst: InventoryItem[]) => InventoryItem[]) => void;
 };
 export type SortType = "random" | "name" | "min-duration" | "min-player-count";
 export function GamesListSortControls(props: GamesListSortingControlsProps) {
+  const { setSortingMethod } = useContext(GamesListContext);
+
   const [currentSort, setCurrentSort] = useState<SortType>(props.defaultSort);
   const sortBy = (type: SortType) => {
     const newSalt = Math.random().toString();
     const newSortMethod = sort(type, newSalt);
-    props.onSortChange(newSortMethod);
+    setSortingMethod(() => newSortMethod);
   };
 
   const sort =

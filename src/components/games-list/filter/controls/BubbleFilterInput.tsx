@@ -1,16 +1,19 @@
-import { FilterState, BubbleTypeFilter } from "../games-list/types";
-import { FilterBubbleData, FilterBubbleBucket } from "./FilterBubbleBucket";
+import { FilterState, BubbleTypeFilter } from "../types";
+import {
+  FilterBubbleData,
+  FilterBubbleBucket,
+} from "../../../input/FilterBubbleBucket";
+import { useContext } from "react";
+import { GamesFilterContext } from "../GamesFilterContext";
 
 export type BubbleFilterInput = {
   filterName: string;
-  filterState: FilterState;
-  setFilterState: (newState: FilterState) => void;
   filterKey: string;
   allOptions: FilterBubbleData[];
 };
 export function BubbleFilterInput(props: BubbleFilterInput) {
-  const { filterName, filterState, filterKey, setFilterState, allOptions } =
-    props;
+  const { filterName, filterKey, allOptions } = props;
+  const { filterState, setFilterState } = useContext(GamesFilterContext);
 
   const filterBubbleToggle = (key: string) => {
     return (toggledValue: string) => {

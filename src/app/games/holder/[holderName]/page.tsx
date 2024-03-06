@@ -4,7 +4,7 @@ import {
   GameDataFields,
   GameActions,
 } from "@/components/data-display/InventoryItemPanel";
-import { ControlsKey } from "@/components/games-list/types";
+import { ControlsKey } from "@/components/games-list/filter/types";
 import { isNotRole } from "@/util/auth/server/isNotRole";
 import { isRole } from "@/util/auth/server/isRole";
 

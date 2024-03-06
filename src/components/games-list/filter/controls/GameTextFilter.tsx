@@ -1,15 +1,11 @@
-import { FilterState } from "../../types";
+import { useContext } from "react";
+import { GamesFilterContext } from "../GamesFilterContext";
 
-export type GameTextFilterProps = {
-  filterState: FilterState;
-  setFilterState: (newState: FilterState) => void;
-};
-
-export function GameTextFilter(props: GameTextFilterProps) {
+export function GameTextFilter() {
   const filterName = "Search";
   const filterKey = "name";
 
-  const { filterState, setFilterState } = props;
+  const { filterState, setFilterState } = useContext(GamesFilterContext);
 
   return (
     <div className="flex justify-center space-x-2">

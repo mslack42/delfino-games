@@ -1,8 +1,8 @@
 import { InventoryItem } from "@/database/types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FilterBubbleData } from "../../input/FilterBubbleBucket";
-import { BubbleFilterInput } from "../../input/BubbleFilterInput";
-import { FilterState, ControlsKey } from "../types";
+import { BubbleFilterInput } from "./controls/BubbleFilterInput";
+import { FilterState } from "./types";
 import { filterData } from "./util/filterData";
 import { PlayerCountSlider } from "./controls/PlayerCountSlider";
 import { DurationSlider } from "./controls/DurationSlider";
@@ -15,20 +15,18 @@ import { extractDurationRange } from "./util/extractDurationRange";
 import { extractPlayerCountRange } from "./util/extractPlayerCountRange";
 import { extractTags } from "./util/extractTags";
 import { extractHolders } from "./util/extractHolders";
+import { GamesListContext } from "../GamesListContext";
+import { GamesFilterContext } from "./GamesFilterContext";
 
-type Props = {
-  gamesList: InventoryItem[];
-  onFilterChange: (filteredList: InventoryItem[]) => void;
-  controlsKeys: ControlsKey[];
-};
-export function GamesListFilterControls(props: Props) {
-  const { onFilterChange, gamesList } = props;
+export function GamesListFilterControls() {
+  const { inventoryData, controlsKeys, setFilterMethod } =
+    useContext(GamesListContext);
 
-  const offices: FilterBubbleData[] = extractOffices(gamesList);
-  const holders: FilterBubbleData[] = extractHolders(gamesList);
-  const tags: FilterBubbleData[] = extractTags(gamesList);
-  const playerCountRange: number[] = extractPlayerCountRange(gamesList);
-  const durationRange: number[] = extractDurationRange(gamesList);
+  const offices: FilterBubbleData[] = extractOffices(inventoryData);
+  const holders: FilterBubbleData[] = extractHolders(inventoryData);
+  const tags: FilterBubbleData[] = extractTags(inventoryData);
+  const playerCountRange: number[] = extractPlayerCountRange(inventoryData);
+  const durationRange: number[] = extractDurationRange(inventoryData);
 
   const [filterState, _setFilterState] = useState<FilterState>({
     ...initialFilterState,
@@ -49,76 +47,63 @@ export function GamesListFilterControls(props: Props) {
     },
   });
   const setFilterState = (newState: FilterState) => {
-    _setFilterState(newState),
-      onFilterChange(filterData(newState, props.controlsKeys)(gamesList));
+    _setFilterState(newState);
+    setFilterMethod(() => (lst: InventoryItem[]) => {
+      if (!!lst) {
+        return filterData(newState, controlsKeys)(lst);
+      } else {
+        return lst;
+      }
+    });
   };
 
   return (
-    <LeftSheet
-      head={
-        <h2 className="text-xl rounded border-2 border-black p-1">
-          Filters...
-        </h2>
-      }
-      content={
-        <div className="border border-black">
-          {props.controlsKeys.includes("office") && offices.length > 1 && (
-            <BubbleFilterInput
-              filterName="Office"
-              filterState={filterState}
-              setFilterState={setFilterState}
-              filterKey="office"
-              allOptions={offices}
-            />
-          )}
-          {props.controlsKeys.includes("holders") && holders.length > 1 && (
-            <BubbleFilterInput
-              filterName="Holders"
-              filterState={filterState}
-              setFilterState={setFilterState}
-              filterKey="holders"
-              allOptions={holders}
-            />
-          )}
-          {props.controlsKeys.includes("inrotation") && (
-            <BooleanFilter
-              filterName="Only show games in current rotation?"
-              filterState={filterState}
-              setFilterState={setFilterState}
-              filterKey="inrotation"
-            />
-          )}
-          {props.controlsKeys.includes("tags") && (
-            <BubbleFilterInput
-              filterName="Tags"
-              filterState={filterState}
-              setFilterState={setFilterState}
-              filterKey="tags"
-              allOptions={tags}
-            />
-          )}
-          {props.controlsKeys.includes("playercount") && (
-            <PlayerCountSlider
-              filterState={filterState}
-              setFilterState={setFilterState}
-              range={playerCountRange as [number, number]}
-            />
-          )}
-          {props.controlsKeys.includes("duration") && (
-            <DurationSlider
-              filterState={filterState}
-              setFilterState={setFilterState}
-              range={durationRange as [number, number]}
-            />
-          )}
-          {props.controlsKeys.includes("name") && (
-            <GameTextFilter
-              filterState={filterState}
-              setFilterState={setFilterState}
-            />
-          )}
-        </div>
-      }
-    />
+    <GamesFilterContext.Provider value={{ filterState, setFilterState }}>
+      <LeftSheet
+        head={
+          <h2 className="text-xl rounded border-2 border-black p-1">
+            Filters...
+          </h2>
+        }
+        content={
+          <div className="border border-black">
+            {controlsKeys.includes("office") && offices.length > 1 && (
+              <BubbleFilterInput
+                filterName="Office"
+                filterKey="office"
+                allOptions={offices}
+              />
+            )}
+            {controlsKeys.includes("holders") && holders.length > 1 && (
+              <BubbleFilterInput
+                filterName="Holders"
+                filterKey="holders"
+                allOptions={holders}
+              />
+            )}
+            {controlsKeys.includes("inrotation") && (
+              <BooleanFilter
+                filterName="Only show games in current rotation?"
+                filterKey="inrotation"
+              />
+            )}
+            {controlsKeys.includes("tags") && (
+              <BubbleFilterInput
+                filterName="Tags"
+                filterKey="tags"
+                allOptions={tags}
+              />
+            )}
+            {controlsKeys.includes("playercount") && (
+              <PlayerCountSlider range={playerCountRange as [number, number]} />
+            )}
+            {controlsKeys.includes("duration") && (
+              <DurationSlider range={durationRange as [number, number]} />
+            )}
+            {controlsKeys.includes("name") && <GameTextFilter />}
+          </div>
+        }
+      />
+    </GamesFilterContext.Provider>
   );
 }
