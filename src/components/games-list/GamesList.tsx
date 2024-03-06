@@ -5,8 +5,8 @@ import { GamesListFilterControls } from "./filter/GamesListFilterControls";
 import {
   GameActions,
   GameDataFields,
-  InventoryItemPanel,
 } from "../data-display/InventoryItemPanel";
+import { InventoryItemPanel } from "../data-display/InventoryItemPanel";
 import { ControlsKey } from "./types";
 import { GamesListSortControls } from "./sort/GamesListSortControls";
 
@@ -66,23 +66,25 @@ export function GamesList(props: Props) {
           />
         </div>
       </div>
-      <div className="flex max-w-full flex-wrap justify-around px-3">
-        {sorted.length ? (
-          sorted.map((id) => (
-            <span key={id.id}>
-              <InventoryItemPanel
-                key={id.id}
-                data={id}
-                displaying={props.details}
-                actions={props.actions}
-              ></InventoryItemPanel>
-            </span>
-          ))
-        ) : (
-          <div className="text-lg h-60 flex  flex-col justify-center align-middle">
-            <p>Nothing to see here 😢</p>
-          </div>
-        )}
+      <div className="flex max-w-screen-xl flex-row flex-wrap justify-center">
+        <div className="grid columns-auto w-full row-auto grid-cols-game-cards gap-4 ">
+          {sorted.length ? (
+            sorted.map((id) => (
+              <span key={id.id} className="flex justify-center">
+                <InventoryItemPanel
+                  key={id.id}
+                  data={id}
+                  displaying={props.details}
+                  actions={props.actions}
+                ></InventoryItemPanel>
+              </span>
+            ))
+          ) : (
+            <div className="text-lg h-60 flex  flex-col justify-center align-middle">
+              <p>Nothing to see here 😢</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

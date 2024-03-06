@@ -13,6 +13,9 @@ const config: Config = {
         xs: "2px",
         xxs: "1px",
       },
+      gridTemplateColumns: {
+        "game-cards": "repeat(auto-fit, minmax(180px, 1fr))",
+      },
     },
   },
 };
