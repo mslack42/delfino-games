@@ -6,8 +6,6 @@ import { Logo } from "./Logo";
 import { gamesCollection } from "./loggedIn/gamesCollection";
 import { adminControls } from "./loggedIn/adminControls";
 import { profileControls } from "./loggedIn/profileControls";
-import Link from "next/link";
-import { ApplicationRoutes } from "@/constants/routes";
 import { BurgerButton } from "./BurgerButton";
 import { loggedOutMenuItems } from "./loggedOut/loggedOutMenuItems";
 
