@@ -18,6 +18,7 @@ import { twJoin } from "tailwind-merge";
 type PanelProps = {
   data: InventoryItem;
   displaying: GameDataFields[];
+  actions: GameActions[];
 };
 export type GameDataFields =
   | "PlayerCount"
@@ -25,8 +26,9 @@ export type GameDataFields =
   | "Office"
   | "Holder"
   | "Owner";
+export type GameActions = "Edit" | "ToggleRotation" | "ToggleRequest";
 export function InventoryItemPanel(props: PanelProps) {
-  const { data, displaying } = props;
+  const { data, displaying, actions } = props;
 
   const displayImage = data.bggData.thumb ? (
     <div className="h-40 w-40 relative overflow-hidden flex justify-center align-middle">
@@ -112,21 +114,27 @@ export function InventoryItemPanel(props: PanelProps) {
       <div className="absolute h-40 w-40 text-white text-sm">
         <div className="absolute bottom-0 right-0 rounded-lg p-2 ">
           <ul className="flex flex-col space-y-1">
-            <li>
-              <GameCardActionButton
-                body={<FontAwesomeIcon icon={faBagShopping} />}
-              />
-            </li>
-            <li>
-              <GameCardActionButton
-                body={<FontAwesomeIcon icon={faPenToSquare} />}
-              />
-            </li>
-            <li>
-              <GameCardActionButton
-                body={<FontAwesomeIcon icon={faHandPointUp} />}
-              />
-            </li>
+            {actions.includes("ToggleRotation") && (
+              <li>
+                <GameCardActionButton
+                  body={<FontAwesomeIcon icon={faBagShopping} />}
+                />
+              </li>
+            )}
+            {actions.includes("Edit") && (
+              <li>
+                <GameCardActionButton
+                  body={<FontAwesomeIcon icon={faPenToSquare} />}
+                />
+              </li>
+            )}
+            {actions.includes("ToggleRequest") && (
+              <li>
+                <GameCardActionButton
+                  body={<FontAwesomeIcon icon={faHandPointUp} />}
+                />
+              </li>
+            )}
           </ul>
         </div>
       </div>

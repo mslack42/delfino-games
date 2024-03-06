@@ -75,8 +75,8 @@ export function GamesListSortControls(props: GamesListSortingControlsProps) {
 
   return (
     <>
-      <div className="space-x-5 text-xl rounded border-2 border-black p-1">
-        <span>Sort: </span>
+      <div className="space-x-3 text-xl rounded border-2 border-black p-1">
+        <span>Sort:</span>
         <SortButton
           type={"name"}
           sortMethod={sortBy}

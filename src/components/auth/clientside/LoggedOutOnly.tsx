@@ -1,11 +1,9 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { isLoggedOut } from "@/util/auth/client/isLoggedOut";
 
 type LoggedOutOnlyProps = {
   content: React.ReactNode;
 };
 export function LoggedOutOnly(props: LoggedOutOnlyProps) {
-  const { status } = useSession();
-
-  return <>{status === "unauthenticated" && props.content}</>;
+  return <>{isLoggedOut() && props.content}</>;
 }

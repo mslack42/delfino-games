@@ -3,6 +3,7 @@ import { InventoryItem } from "@/database/types";
 import { useState } from "react";
 import { GamesListFilterControls } from "./filter/GamesListFilterControls";
 import {
+  GameActions,
   GameDataFields,
   InventoryItemPanel,
 } from "../data-display/InventoryItemPanel";
@@ -13,6 +14,7 @@ type Props = {
   inventoryData: InventoryItem[];
   controlsKeys: ControlsKey[];
   details: GameDataFields[];
+  actions: GameActions[];
 };
 
 const defaultSort = (gamelist: InventoryItem[]) => {
@@ -72,6 +74,7 @@ export function GamesList(props: Props) {
                 key={id.id}
                 data={id}
                 displaying={props.details}
+                actions={props.actions}
               ></InventoryItemPanel>
             </span>
           ))

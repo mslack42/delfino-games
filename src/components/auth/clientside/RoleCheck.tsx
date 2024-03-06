@@ -1,5 +1,7 @@
 "use client";
 import { CustomUser } from "@/auth";
+import { isNotRole } from "@/util/auth/client/isNotRole";
+import { isRole } from "@/util/auth/client/isRole";
 import { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
 
@@ -10,26 +12,14 @@ type RoleCheckProps = {
 };
 
 export function RoleCheck(props: RoleCheckProps) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   if (!session || !session.user) {
     return <></>;
   }
   const user: CustomUser = session.user! as CustomUser;
-  const role = user.role;
 
-  let passesCheck;
-  if (role) {
-    switch (props.type) {
-      case "oneOf": {
-        passesCheck = props.roles.includes(role as UserRole);
-        break;
-      }
-      case "noneOf": {
-        passesCheck = !props.roles.includes(role as UserRole);
-        break;
-      }
-    }
-  }
+  let passesCheck =
+    props.type === "oneOf" ? isRole(...props.roles) : isNotRole(...props.roles);
 
   return <>{user && passesCheck && props.content}</>;
 }

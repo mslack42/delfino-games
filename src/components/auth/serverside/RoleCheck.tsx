@@ -1,4 +1,6 @@
 import { auth } from "@/auth";
+import { isRole } from "@/util/auth/server/isRole";
+import { isNotRole } from "@/util/auth/server/isNotRole";
 import { UserRole } from "@prisma/client";
 
 type RoleCheckProps = {
@@ -11,21 +13,12 @@ type RoleCheckProps = {
 export async function RoleCheck(props: RoleCheckProps) {
   const session = await auth();
   const user = session?.user;
-  const role = (session?.user as any)?.role as string;
 
-  let passesCheck;
-  if (role) {
-    switch (props.type) {
-      case "oneOf": {
-        passesCheck = props.roles.includes(role as UserRole);
-        break;
-      }
-      case "noneOf": {
-        passesCheck = !props.roles.includes(role as UserRole);
-        break;
-      }
-    }
-  }
+  let passesCheck =
+    props.type === "oneOf"
+      ? await isRole(...props.roles)
+      : await isNotRole(...props.roles);
+
   const display = user && passesCheck;
 
   return (

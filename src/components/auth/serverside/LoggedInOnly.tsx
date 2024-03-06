@@ -1,11 +1,10 @@
-import { auth } from "@/auth";
+import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
 
 type LoggedInOnlyProps = {
   content: React.ReactNode;
 };
 export async function LoggedInOnly(props: LoggedInOnlyProps) {
-  const session = await auth();
-  const user = session?.user;
+  const loggedIn = await isLoggedIn();
 
-  return <>{user && props.content}</>;
+  return <>{loggedIn && props.content}</>;
 }

@@ -1,11 +1,9 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { isLoggedIn } from "@/util/auth/client/isLoggedIn";
 
 type LoggedInOnlyProps = {
   content: React.ReactNode;
 };
 export function LoggedInOnly(props: LoggedInOnlyProps) {
-  const { status } = useSession();
-
-  return <>{status === "authenticated" && props.content}</>;
+  return <>{isLoggedIn() && props.content}</>;
 }
