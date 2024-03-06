@@ -17,6 +17,7 @@ import { extractTags } from "./util/extractTags";
 import { extractHolders } from "./util/extractHolders";
 import { GamesListContext } from "../GamesListContext";
 import { GamesFilterContext } from "./GamesFilterContext";
+import { BubbleAccordion } from "@/components/common/Accordion";
 
 export function GamesListFilterControls() {
   const { inventoryData, controlsKeys, setFilterMethod } =
@@ -57,6 +58,8 @@ export function GamesListFilterControls() {
     });
   };
 
+  const [testBool, setTestBool] = useState(false);
+
   return (
     <GamesFilterContext.Provider value={{ filterState, setFilterState }}>
       <LeftSheet
@@ -66,41 +69,116 @@ export function GamesListFilterControls() {
           </h2>
         }
         content={
-          <div className="border border-black">
-            {controlsKeys.includes("office") && offices.length > 1 && (
-              <BubbleFilterInput
-                filterName="Office"
-                filterKey="office"
-                allOptions={offices}
+          <div className="border border-black overflow-y-auto h-full p-2">
+            <h2 className="text-2xl">Filters</h2>
+            <div className="flex flex-wrap justify-center">
+              {controlsKeys.includes("office") && offices.length > 1 && (
+                <BubbleFilterInput
+                  filterName="Filter by office?"
+                  filterKey="office"
+                  allOptions={offices}
+                />
+              )}
+              {controlsKeys.includes("holders") && holders.length > 1 && (
+                <BubbleFilterInput
+                  filterName="Filter by game holder?"
+                  filterKey="holders"
+                  allOptions={holders}
+                />
+              )}
+              {controlsKeys.includes("inrotation") && (
+                <BooleanFilter
+                  filterName="Show only available games?"
+                  filterKey="inrotation"
+                />
+              )}
+              {controlsKeys.includes("tags") && (
+                <BubbleFilterInput
+                  filterName="Filter by BGG tags?"
+                  filterKey="tags"
+                  allOptions={tags}
+                />
+              )}
+              {controlsKeys.includes("playercount") && (
+                <PlayerCountSlider
+                  range={playerCountRange as [number, number]}
+                />
+              )}
+              {controlsKeys.includes("duration") && (
+                <DurationSlider range={durationRange as [number, number]} />
+              )}
+              {controlsKeys.includes("name") && <GameTextFilter />}
+              <BubbleAccordion
+                items={[
+                  {
+                    head: "Office",
+                    body: (
+                      <BubbleFilterInput
+                        filterName="Filter by office?"
+                        filterKey="office"
+                        allOptions={offices}
+                      />
+                    ),
+                    open:
+                      filterState.bubbleTypeFilters["office"]?.filterOn ??
+                      false,
+                    setOpen: (b: boolean) => {
+                      console.log("setopen");
+                      setFilterState({
+                        ...filterState,
+                        bubbleTypeFilters: {
+                          ...filterState.bubbleTypeFilters,
+                          office: {
+                            ...filterState.bubbleTypeFilters.office,
+                            filterOn: b,
+                          },
+                        },
+                      });
+                    },
+                  },
+                  {
+                    head: "Game Holder",
+                    body: <div>test</div>,
+                    open: testBool,
+                    setOpen: (b: boolean) => {
+                      setTestBool(b);
+                    },
+                  },
+                  {
+                    head: "BGG Tags",
+                    body: <div>test</div>,
+                    open: testBool,
+                    setOpen: (b: boolean) => {
+                      setTestBool(b);
+                    },
+                  },
+                  {
+                    head: "Number Of Players",
+                    body: <div>test</div>,
+                    open: testBool,
+                    setOpen: (b: boolean) => {
+                      setTestBool(b);
+                    },
+                  },
+                  {
+                    head: "Duration",
+                    body: <div>test</div>,
+                    open: testBool,
+                    setOpen: (b: boolean) => {
+                      setTestBool(b);
+                    },
+                  },
+                  {
+                    head: "Search",
+                    body: <div>test</div>,
+                    open: testBool,
+                    setOpen: (b: boolean) => {
+                      setTestBool(b);
+                    },
+                  },
+                ]}
               />
-            )}
-            {controlsKeys.includes("holders") && holders.length > 1 && (
-              <BubbleFilterInput
-                filterName="Holders"
-                filterKey="holders"
-                allOptions={holders}
-              />
-            )}
-            {controlsKeys.includes("inrotation") && (
-              <BooleanFilter
-                filterName="Only show games in current rotation?"
-                filterKey="inrotation"
-              />
-            )}
-            {controlsKeys.includes("tags") && (
-              <BubbleFilterInput
-                filterName="Tags"
-                filterKey="tags"
-                allOptions={tags}
-              />
-            )}
-            {controlsKeys.includes("playercount") && (
-              <PlayerCountSlider range={playerCountRange as [number, number]} />
-            )}
-            {controlsKeys.includes("duration") && (
-              <DurationSlider range={durationRange as [number, number]} />
-            )}
-            {controlsKeys.includes("name") && <GameTextFilter />}
+            </div>
           </div>
         }
       />

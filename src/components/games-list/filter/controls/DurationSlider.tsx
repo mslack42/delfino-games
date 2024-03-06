@@ -1,7 +1,7 @@
 import { GamesListSlider, SliderProps } from "./GamesListSlider";
 
 export function DurationSlider(props: SliderProps) {
-  const filterName = "Duration";
+  const filterName = "Filter by duration?";
   const filterKey = "duration";
 
   const summariser = (range: [number, number]) => {

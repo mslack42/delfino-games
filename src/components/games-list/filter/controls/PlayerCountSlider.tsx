@@ -1,7 +1,7 @@
 import { GamesListSlider, SliderProps } from "./GamesListSlider";
 
 export function PlayerCountSlider(props: SliderProps) {
-  const filterName = "Player Count";
+  const filterName = "Filter by number of players?";
   const filterKey = "playercount";
 
   const summariser = (range: [number, number]) => {

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GamesFilterContext } from "../GamesFilterContext";
 
 export function GameTextFilter() {
-  const filterName = "Search";
+  const filterName = "Filter by search term?";
   const filterKey = "name";
 
   const { filterState, setFilterState } = useContext(GamesFilterContext);
