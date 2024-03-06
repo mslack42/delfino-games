@@ -79,8 +79,6 @@ export function GamesList(props: Props) {
                   <InventoryItemPanel
                     key={id.id}
                     data={id}
-                    displaying={props.details}
-                    actions={props.actions}
                   ></InventoryItemPanel>
                 </span>
               ))
