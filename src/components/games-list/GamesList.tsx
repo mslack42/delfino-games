@@ -2,11 +2,8 @@
 import { InventoryItem } from "@/database/types";
 import { useCallback, useEffect, useState } from "react";
 import { GamesListFilterControls } from "./filter/GamesListFilterControls";
-import {
-  GameActions,
-  GameDataFields,
-} from "../data-display/InventoryItemPanel";
-import { InventoryItemPanel } from "../data-display/InventoryItemPanel";
+import { GameActions, GameDataFields } from "./card/InventoryItemPanel";
+import { InventoryItemPanel } from "./card/InventoryItemPanel";
 import { ControlsKey } from "./filter/types";
 import { GamesListSortControls } from "./sort/GamesListSortControls";
 import {
@@ -61,7 +58,7 @@ export function GamesList(props: Props) {
       newDisplay = sortingMethod(newDisplay);
     }
     setDisplayedInventory(newDisplay);
-  }, [appliedFilter, appliedSort]);
+  }, [appliedFilter, appliedSort, inventoryData]);
 
   return (
     <GamesListContext.Provider value={gamesListContext}>

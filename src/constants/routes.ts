@@ -12,6 +12,7 @@ export const ApiRoutes = {
   VerifyUser: (userId: string) => `/api/user/verify?id=${userId}`,
   EditUser: "/api/user",
   SignIn: "/api/auth/signin",
+  ChangeRotationStatus: "/api/games/changeRotationStatus",
 };
 
 export const ApplicationRoutes = {

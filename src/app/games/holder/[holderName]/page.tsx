@@ -3,7 +3,7 @@ import { GamesList } from "../../../../components/games-list/GamesList";
 import {
   GameDataFields,
   GameActions,
-} from "@/components/data-display/InventoryItemPanel";
+} from "@/components/games-list/card/InventoryItemPanel";
 import { ControlsKey } from "@/components/games-list/filter/types";
 import { isNotRole } from "@/util/auth/server/isNotRole";
 import { isRole } from "@/util/auth/server/isRole";

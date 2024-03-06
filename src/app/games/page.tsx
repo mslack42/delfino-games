@@ -1,13 +1,14 @@
 import { listInventory } from "@/database/games/listInventory";
 import { GamesList } from "../../components/games-list/GamesList";
-import { RoleCheck } from "@/components/auth/serverside/RoleCheck";
+
 import { ControlsKey } from "@/components/games-list/filter/types";
+
+import { isNotRole } from "@/util/auth/server/isNotRole";
+import { isRole } from "@/util/auth/server/isRole";
 import {
   GameActions,
   GameDataFields,
-} from "@/components/data-display/InventoryItemPanel";
-import { isNotRole } from "@/util/auth/server/isNotRole";
-import { isRole } from "@/util/auth/server/isRole";
+} from "@/components/games-list/card/InventoryItemPanel";
 
 export default async function ListGames() {
   const inventoryData = await listInventory();

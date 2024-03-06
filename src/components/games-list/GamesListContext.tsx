@@ -1,9 +1,6 @@
 import { InventoryItem } from "@/database/types";
 import { Dispatch, SetStateAction, createContext } from "react";
-import {
-  GameDataFields,
-  GameActions,
-} from "../data-display/InventoryItemPanel";
+import { GameDataFields, GameActions } from "./card/InventoryItemPanel";
 import { ControlsKey } from "./filter/types";
 
 export type GamesListContextType = {

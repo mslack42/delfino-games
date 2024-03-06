@@ -1,11 +1,12 @@
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import { InventoryItem } from "@/database/types";
 import { playerCount, playTime } from "@/util/text-formatting";
 import {
-  faBagShopping,
   faHandPointUp,
   faHourglass,
   faPenToSquare,
+  faSquareCheck,
+  faSquareXmark,
   faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -14,8 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { twJoin } from "tailwind-merge";
-import { MouseEventHandler } from "react";
-import { changeRotationStatus } from "@/database/games/changeRotationStatus";
+import { MouseEventHandler, useContext } from "react";
+import { GamesListContext } from "../GamesListContext";
 
 type PanelProps = {
   data: InventoryItem;
@@ -31,6 +32,7 @@ export type GameDataFields =
 export type GameActions = "Edit" | "ToggleRotation" | "ToggleRequest";
 export function InventoryItemPanel(props: PanelProps) {
   const { data, displaying, actions } = props;
+  const { inventoryData, setInventoryData } = useContext(GamesListContext);
 
   const displayImage = data.bggData.thumb ? (
     <div className="h-40 w-40 relative overflow-hidden flex justify-center align-middle">
@@ -51,10 +53,39 @@ export function InventoryItemPanel(props: PanelProps) {
     </div>
   );
 
-  // async function toggleRotation() {
-  //   "use server";
-  //   await changeRotationStatus(data.id, !data.dsData.inRotation);
-  // }
+  async function changeRotationStatus() {
+    try {
+      const gameId = data.id;
+      const newStatus = !data.dsData.inRotation;
+
+      const res = await fetch(ApiRoutes.ChangeRotationStatus, {
+        method: "POST",
+        body: JSON.stringify({
+          id: gameId,
+          newStatus: newStatus,
+        }),
+      });
+      if (!res.ok) {
+        // TODO some error handling
+      }
+      setInventoryData(
+        inventoryData.map((v) => {
+          if (v.id !== gameId) {
+            return v;
+          }
+          return {
+            ...v,
+            dsData: {
+              ...v.dsData,
+              inRotation: newStatus,
+            },
+          };
+        })
+      );
+    } catch (error: any) {
+      //
+    }
+  }
 
   return (
     <div
@@ -124,10 +155,14 @@ export function InventoryItemPanel(props: PanelProps) {
             {actions.includes("ToggleRotation") && (
               <li>
                 <GameCardActionButton
-                  body={<FontAwesomeIcon icon={faBagShopping} />}
-                  onClick={() =>
-                    changeRotationStatus(data.id, !data.dsData.inRotation)
+                  body={
+                    data.dsData.inRotation ? (
+                      <FontAwesomeIcon icon={faSquareCheck} />
+                    ) : (
+                      <FontAwesomeIcon icon={faSquareXmark} />
+                    )
                   }
+                  onClick={changeRotationStatus}
                 />
               </li>
             )}
