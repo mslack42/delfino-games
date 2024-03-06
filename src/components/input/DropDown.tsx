@@ -60,9 +60,6 @@ export function DropDown(props: DropDownProps) {
             >
               {it.head}
             </DropdownMenuLabel>
-            <DropdownMenuSeparator
-              onPointerDown={(evt) => evt.stopPropagation()}
-            />
             {it.items.map((sub, j) => {
               return (
                 <DropdownMenuItem
