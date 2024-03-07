@@ -16,8 +16,8 @@ export const NavigationBar = async () => {
     profile: await profileControls(),
   };
   return (
-    <div className="w-full h-16 bg-teal-400 sticky top-0  z-[500]">
-      <div className="bg-teal-400 h-full">
+    <div className="w-full h-16 bg-teal-600 sticky top-0  z-[500]">
+      <div className="bg-teal-600 h-full">
         <div className="container mx-auto px-4 h-full">
           <div className="flex justify-between items-center h-full align-middle">
             <Logo />

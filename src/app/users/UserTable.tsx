@@ -36,14 +36,14 @@ export function UserTable({ users }: Props) {
       <div className="rounded-lg flex flex-row justify-center">
         <table className="table-auto rounded-sm">
           <tbody className="rounded-lg">
-            <tr className="bg-teal-300 p-1">
+            <tr className="bg-headbar p-1">
               <th className="p-1">Name</th>
               <th className="p-1">Email</th>
               <th className="p-1">Role</th>
               <th className="p-1">Actions</th>
             </tr>
             {users.map((user: UserType) => (
-              <tr key={user.id} className="bg-cyan-100 even:bg-cyan-200">
+              <tr key={user.id} className="bg-teal-100 even:bg-teal-200">
                 <td className="p-2">{user.name}</td>
                 <td className="p-2">{user.email}</td>
                 <td className="p-2">{user.accounts[0].role}</td>

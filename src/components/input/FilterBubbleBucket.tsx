@@ -40,7 +40,7 @@ type FilterBubbleProps = {
 function FilterBubble(props: FilterBubbleProps) {
   const enableDisableStyling =
     props.inputEnabled && props.isActive
-      ? "bg-pink-300 hover:bg-pink-200"
+      ? "bg-teal-600 hover:bg-teal-500"
       : "bg-slate-400 hover:bg-slate-300";
   return (
     <div

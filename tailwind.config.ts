@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colours from "tailwindcss/colors";
 
 const config: Config = {
   content: [
@@ -30,6 +31,18 @@ const config: Config = {
       gridTemplateColumns: {
         "game-cards": "repeat(auto-fit, minmax(180px, 1fr))",
       },
+    },
+    // Defining various key words, for site consistency in colours
+    colors: {
+      ...colours,
+      primary: {
+        ...colours.teal,
+      },
+      card: colours.teal[200],
+      cardScroller: colours.teal[100],
+      tag: colours.sky[300],
+      headbar: colours.teal[600],
+      warning: colours.red[500],
     },
   },
 };

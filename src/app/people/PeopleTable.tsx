@@ -37,13 +37,13 @@ export function PeopleTable({ holders }: Props) {
       <div className="rounded-lg flex flex-row justify-center">
         <table className="table-auto">
           <tbody className="rounded-lg">
-            <tr className="bg-teal-300 p-1">
+            <tr className="bg-headbar p-1 text-white">
               <th className="p-1">Name</th>
               <th className="p-1">Office</th>
               <th className="p-1">Actions</th>
             </tr>
             {holders.map((holder) => (
-              <tr key={holder.id} className="bg-cyan-100 even:bg-cyan-200">
+              <tr key={holder.id} className="bg-teal-100 even:bg-teal-200">
                 <td className="p-2">{holder.name}</td>
                 <td className="p-2">{holder.location as string}</td>
                 <td className="p-2">
