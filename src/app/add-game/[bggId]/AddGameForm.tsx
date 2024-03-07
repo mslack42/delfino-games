@@ -92,7 +92,7 @@ export function AddGameForm(props: AddGameFormProps) {
                 ))}
               </select>
               {errors["ownership"] && (
-                <span className="text-red-500 text-xs pt-1 block">
+                <span className="text-warning text-xs pt-1 block">
                   {errors["ownership"]?.message as string}
                 </span>
               )}
@@ -117,7 +117,7 @@ export function AddGameForm(props: AddGameFormProps) {
                 ))}
               </select>
               {errors["location"] && (
-                <span className="text-red-500 text-xs pt-1 block">
+                <span className="text-warning text-xs pt-1 block">
                   {errors["location"]?.message as string}
                 </span>
               )}
@@ -150,12 +150,12 @@ export function AddGameForm(props: AddGameFormProps) {
                   className="text-right grow flex-nowrap"
                 ></SelectOrNew>
                 {errors["ownerId"] && (
-                  <span className="text-red-500 text-xs pt-1 block">
+                  <span className="text-warning text-xs pt-1 block">
                     {errors["ownerId"]?.message as string}
                   </span>
                 )}
                 {errors["newOwner"] && (
-                  <span className="text-red-500 text-xs pt-1 block">
+                  <span className="text-warning text-xs pt-1 block">
                     {errors["newOwner"]?.message as string}
                   </span>
                 )}
@@ -190,12 +190,12 @@ export function AddGameForm(props: AddGameFormProps) {
                 className="text-right grow flex-nowrap"
               ></SelectOrNew>
               {errors["holderId"] && (
-                <span className="text-red-500 text-xs pt-1 block">
+                <span className="text-warning text-xs pt-1 block">
                   {errors["holderId"]?.message as string}
                 </span>
               )}
               {errors["newHolder"] && (
-                <span className="text-red-500 text-xs pt-1 block">
+                <span className="text-warning text-xs pt-1 block">
                   {errors["newHolder"]?.message as string}
                 </span>
               )}
@@ -215,7 +215,7 @@ export function AddGameForm(props: AddGameFormProps) {
           innerText={submitting ? "loading..." : "Save"}
           actionType="confirm"
           disabled={submitting}
-          className="w-20"
+          className="w-20 rounded-lg py-1"
           form="addNewGame"
         />
       </form>

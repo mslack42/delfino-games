@@ -6,7 +6,7 @@ type GameCardActionProps = {
 };
 export function GameCardActionButton(props: GameCardActionProps) {
   return (
-    <div className="bg-cyan-500 p-1 rounded-lg text-xs">
+    <div className="bg-teal-400 p-1 rounded-lg text-xs">
       <button onClick={props.onClick}>{props.body}</button>
     </div>
   );

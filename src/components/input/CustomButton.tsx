@@ -20,7 +20,7 @@ export function CustomButton(props: CustomSubmitButtonProps) {
       className={twJoin(
         props.className ?? "",
         actionType === "confirm" && !props.disabled
-          ? "bg-teal-300 hover:bg-teal-200"
+          ? "bg-teal-600 hover:bg-teal-500 text-white"
           : "",
         actionType === "cancel" && !props.disabled
           ? "bg-red-300 hover:bg-red-200"

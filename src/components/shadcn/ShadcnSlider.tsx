@@ -18,10 +18,10 @@ const Slider = React.forwardRef<
     {...props}
   >
     <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-slate-300">
-      <SliderPrimitive.Range className="absolute h-full bg-cyan-400" />
+      <SliderPrimitive.Range className="absolute h-full bg-teal-400" />
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="ring-cyan-500 ring-2 bg-white block h-4 w-4 rounded-full border shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 z-[500]" />
-    <SliderPrimitive.Thumb className="ring-cyan-500 ring-2 bg-white block h-4 w-4 rounded-full border shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 z-[500]" />
+    <SliderPrimitive.Thumb className="ring-teal-500 ring-2 bg-white block h-4 w-4 rounded-full border shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 z-[500]" />
+    <SliderPrimitive.Thumb className="ring-teal-500 ring-2 bg-white block h-4 w-4 rounded-full border shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 z-[500]" />
   </SliderPrimitive.Root>
 ));
 Slider.displayName = SliderPrimitive.Root.displayName;
