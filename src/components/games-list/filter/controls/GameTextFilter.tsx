@@ -8,7 +8,7 @@ export function GameTextFilter() {
   const { filterState, setFilterState } = useContext(GamesFilterContext);
 
   return (
-    <div className="flex justify-center space-x-2 py-3">
+    <div className="flex justify-center space-x-2 py-3 max-w-5/6">
       <input
         type="text"
         maxLength={50}
@@ -26,7 +26,7 @@ export function GameTextFilter() {
             },
           });
         }}
-        className="border"
+        className="border w-5/6"
       />
     </div>
   );

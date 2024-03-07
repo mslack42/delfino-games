@@ -165,7 +165,7 @@ export function GamesListFilterControls() {
       <LeftSheet
         head={<h2 className="text-xl rounded p-1">Filters...</h2>}
         content={
-          <div className="h-full w-full px-1">
+          <div className="h-full w-full">
             <h2 className="text-2xl">Filters</h2>
             <div className="flex flex-wrap justify-center w-full">
               <BubbleAccordion items={items} />

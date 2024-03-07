@@ -24,7 +24,7 @@ export function CustomRangeSlider(props: Props) {
   const summary = props.summariser([lower, upper]);
   return (
     <>
-      <div className="flex px-4 space-x-2 w-60">
+      <div className="flex space-x-2 max-w-full w-full px-2">
         <Slider
           min={min}
           max={max}
@@ -32,9 +32,9 @@ export function CustomRangeSlider(props: Props) {
           minStepsBetweenThumbs={0}
           defaultValue={[lower, upper]}
           onValueChange={onSliderChange}
-          className="w-52 py-2"
+          className="py-2 w-4/5"
         ></Slider>
-        <div className="w-16">{summary}</div>
+        <div className="w-2/5">{summary}</div>
       </div>
     </>
   );
