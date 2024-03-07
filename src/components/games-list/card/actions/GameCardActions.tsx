@@ -1,4 +1,4 @@
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import {
   faHandPointUp,
   faPenToSquare,
@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { GamesListContext } from "../../GamesListContext";
 import { GameCardActionButton } from "./GameCardActionButton";
 import { PanelProps } from "../InventoryItemPanel";
+import Link from "next/link";
 
 export function GameCardActions(props: PanelProps) {
   const { data } = props;
@@ -68,7 +69,11 @@ export function GameCardActions(props: PanelProps) {
         {actions.includes("Edit") && (
           <li>
             <GameCardActionButton
-              body={<FontAwesomeIcon icon={faPenToSquare} />}
+              body={
+                <Link href={ApplicationRoutes.EditGame(data.id)}>
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </Link>
+              }
             />
           </li>
         )}

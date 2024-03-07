@@ -30,4 +30,5 @@ export const ApplicationRoutes = {
   ChangePassword: "/profile/changePassword",
   FindAndAddGame: "/add-game",
   Users: "/users",
+  EditGame: (id: number) => `/games/game/${id}/edit`,
 };
