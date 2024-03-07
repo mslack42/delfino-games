@@ -14,24 +14,29 @@ import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
 export default async function ListGames() {
   const inventoryData = await listInventory();
 
-  const controlKeys: ControlsKey[] = [
-    "holders",
-    "office",
-    "tags",
-    "playercount",
-    "duration",
-    "name",
-    "inrotation",
-  ];
+  const loggedIn = await isLoggedIn();
 
-  const loggedIn = (await isLoggedIn())
+  const controlKeys: ControlsKey[] = loggedIn
+    ? [
+        "holders",
+        "office",
+        "tags",
+        "playercount",
+        "duration",
+        "name",
+        "inrotation",
+      ]
+    : ["office", "tags", "playercount", "duration", "name", "inrotation"];
 
-  const details: GameDataFields[] = (loggedIn && await isNotRole("Unverified"))
-    ? ["PlayerCount", "Duration", "Holder"]
-    : ["PlayerCount", "Duration"];
+  const details: GameDataFields[] =
+    loggedIn && (await isNotRole("Unverified"))
+      ? ["PlayerCount", "Duration", "Holder"]
+      : ["PlayerCount", "Duration"];
   const actions: GameActions[] = (await isRole("Admin", "Holder"))
     ? ["Edit", "ToggleRequest", "ToggleRotation"]
-    : loggedIn ? ["ToggleRequest"] : [];
+    : loggedIn
+      ? ["ToggleRequest"]
+      : [];
 
   return (
     <>

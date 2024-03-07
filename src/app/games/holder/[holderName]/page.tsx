@@ -5,8 +5,8 @@ import {
   GameActions,
 } from "@/components/games-list/card/InventoryItemPanel";
 import { ControlsKey } from "@/components/games-list/filter/types";
-import { isNotRole } from "@/util/auth/server/isNotRole";
 import { isRole } from "@/util/auth/server/isRole";
+import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
 
 type Props = {
   params: {
@@ -19,19 +19,25 @@ export default async function ListGames(props: Props) {
   const inventoryData = await listInventory(holderName);
   const title = `${holderName}'s Games`;
 
-  const controlKeys: ControlsKey[] = [
-    "holders",
-    "office",
-    "tags",
-    "playercount",
-    "duration",
-    "name",
-    "inrotation",
-  ];
+  const loggedIn = await isLoggedIn();
+
+  const controlKeys: ControlsKey[] = loggedIn
+    ? [
+        "holders",
+        "office",
+        "tags",
+        "playercount",
+        "duration",
+        "name",
+        "inrotation",
+      ]
+    : ["office", "tags", "playercount", "duration", "name", "inrotation"];
   const details: GameDataFields[] = ["PlayerCount", "Duration"];
   const actions: GameActions[] = (await isRole("Admin", "Holder"))
     ? ["Edit", "ToggleRequest", "ToggleRotation"]
-    : ["ToggleRequest"];
+    : loggedIn
+      ? ["ToggleRequest"]
+      : [];
 
   return (
     <>
