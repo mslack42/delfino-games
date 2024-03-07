@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { DropDownGroup } from "../../input/DropDown";
 import { ApplicationRoutes } from "@/constants/routes";
 
-export async function profileControls(): Promise<DropDownGroup> {
-  const logoutAction = async () => {
-    "use server";
-    await signOut();
-  };
+export async function profileControls(
+  logoutAction: () => Promise<void>
+): Promise<DropDownGroup> {
   const session = await auth();
   const user = session?.user;
 

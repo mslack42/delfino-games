@@ -8,12 +8,17 @@ import { adminControls } from "./loggedIn/adminControls";
 import { profileControls } from "./loggedIn/profileControls";
 import { BurgerButton } from "./BurgerButton";
 import { loggedOutMenuItems } from "./loggedOut/loggedOutMenuItems";
+import { signOut } from "@/auth";
 
 export const NavigationBar = async () => {
+  const logoutAction = async () => {
+    "use server";
+    await signOut();
+  };
   const menu: DropDownGroupCollection = {
     game: await gamesCollection(),
     admin: await adminControls(),
-    profile: await profileControls(),
+    profile: await profileControls(logoutAction),
   };
   return (
     <div className="w-full h-16 bg-teal-600 sticky top-0  z-[500]">
