@@ -51,11 +51,11 @@ export function GamesList(props: Props) {
   const [displayedInventory, setDisplayedInventory] = useState(inventoryData);
   useEffect(() => {
     let newDisplay: InventoryItem[] = inventoryData;
-    if (filterMethod) {
-      newDisplay = filterMethod(newDisplay);
+    if (appliedFilter) {
+      newDisplay = appliedFilter(newDisplay);
     }
-    if (sortingMethod) {
-      newDisplay = sortingMethod(newDisplay);
+    if (appliedSort) {
+      newDisplay = appliedSort(newDisplay);
     }
     setDisplayedInventory(newDisplay);
   }, [appliedFilter, appliedSort, inventoryData]);
@@ -72,22 +72,22 @@ export function GamesList(props: Props) {
           </div>
         </div>
         <div className="flex max-w-full flex-row flex-wrap justify-center">
-          <div className="grid columns-auto w-full row-auto grid-cols-game-cards gap-4 ">
-            {displayedInventory.length ? (
-              displayedInventory.map((id) => (
+          {displayedInventory.length ? (
+            <div className="grid columns-auto w-full row-auto grid-cols-game-cards gap-4 ">
+              {displayedInventory.map((id) => (
                 <span key={id.id} className="flex justify-center">
                   <InventoryItemPanel
                     key={id.id}
                     data={id}
                   ></InventoryItemPanel>
                 </span>
-              ))
-            ) : (
-              <div className="text-lg h-60 flex  flex-col justify-center align-middle">
-                <p>Nothing to see here 😢</p>
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-lg h-60 flex  flex-col justify-center align-middle">
+              <p>Nothing to see here 😢</p>
+            </div>
+          )}
         </div>
       </div>
     </GamesListContext.Provider>

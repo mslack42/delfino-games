@@ -50,33 +50,12 @@ export function BubbleFilterInput(props: BubbleFilterInput) {
 
   return (
     <div>
-      <label>
-        <b>{filterName}: </b>
-      </label>
-      <input
-        type="checkbox"
-        checked={filterState.bubbleTypeFilters[filterKey].filterOn}
-        onChange={() => {
-          setFilterState({
-            ...filterState,
-            bubbleTypeFilters: {
-              ...filterState.bubbleTypeFilters,
-              [filterKey]: {
-                ...filterState.bubbleTypeFilters[filterKey],
-                filterOn: !filterState.bubbleTypeFilters[filterKey].filterOn,
-              },
-            },
-          });
-        }}
+      <FilterBubbleBucket
+        allValues={allOptions}
+        selectedValues={filterState.bubbleTypeFilters[filterKey].values}
+        enabled={filterState.bubbleTypeFilters[filterKey].filterOn}
+        toggleFn={filterBubbleToggle(filterKey)}
       />
-      {filterState.bubbleTypeFilters[filterKey].filterOn ? (
-        <FilterBubbleBucket
-          allValues={allOptions}
-          selectedValues={filterState.bubbleTypeFilters[filterKey].values}
-          enabled={filterState.bubbleTypeFilters[filterKey].filterOn}
-          toggleFn={filterBubbleToggle(filterKey)}
-        />
-      ) : undefined}
     </div>
   );
 }

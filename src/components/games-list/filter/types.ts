@@ -28,6 +28,11 @@ export type BooleanTypeFilter = {
   filterOn: boolean;
 };
 
+export type FilterType =
+  | "bubbleTypeFilters"
+  | "sliderTypeFilters"
+  | "textTypeFilters"
+  | "booleanTypeFilters";
 export type FilterState = {
   bubbleTypeFilters: {
     [key in BubbleTypeFilterKey as string]: BubbleTypeFilter;

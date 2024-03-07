@@ -2,13 +2,12 @@ import { InventoryItem } from "@/database/types";
 import { useContext, useState } from "react";
 import { FilterBubbleData } from "../../input/FilterBubbleBucket";
 import { BubbleFilterInput } from "./controls/BubbleFilterInput";
-import { FilterState } from "./types";
+import { ControlsKey, FilterState, FilterType } from "./types";
 import { filterData } from "./util/filterData";
 import { PlayerCountSlider } from "./controls/PlayerCountSlider";
 import { DurationSlider } from "./controls/DurationSlider";
 import { GameTextFilter } from "./controls/GameTextFilter";
 import { LeftSheet } from "@/components/common/LeftSheet";
-import { BooleanFilter } from "./controls/BooleanFilter";
 import { initialFilterState } from "./util/initialFilterState";
 import { extractOffices } from "./util/extractOffices";
 import { extractDurationRange } from "./util/extractDurationRange";
@@ -17,7 +16,10 @@ import { extractTags } from "./util/extractTags";
 import { extractHolders } from "./util/extractHolders";
 import { GamesListContext } from "../GamesListContext";
 import { GamesFilterContext } from "./GamesFilterContext";
-import { BubbleAccordion } from "@/components/common/Accordion";
+import {
+  AccordionItem,
+  BubbleAccordion,
+} from "@/components/games-list/filter/controls/BubbleAccordion";
 
 export function GamesListFilterControls() {
   const { inventoryData, controlsKeys, setFilterMethod } =
@@ -58,130 +60,143 @@ export function GamesListFilterControls() {
     });
   };
 
-  const [testBool, setTestBool] = useState(false);
+  let items: AccordionItem[] = [
+    {
+      key: "inrotation",
+      head: "Show only available games?",
+      body: null,
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "booleanTypeFilters",
+        "inrotation"
+      ),
+      trayless: true,
+    },
+    {
+      key: "office",
+      head: "Office",
+      body: (
+        <BubbleFilterInput
+          filterName="Filter by office?"
+          filterKey="office"
+          allOptions={offices}
+        />
+      ),
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "bubbleTypeFilters",
+        "office"
+      ),
+    },
+    {
+      key: "holders",
+      head: "Game Holder",
+      body: (
+        <BubbleFilterInput
+          filterName="Filter by game holder?"
+          filterKey="holders"
+          allOptions={holders}
+        />
+      ),
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "bubbleTypeFilters",
+        "holders"
+      ),
+    },
+    {
+      key: "tags",
+      head: "BGG Tags",
+      body: (
+        <BubbleFilterInput
+          filterName="Filter by BGG tags?"
+          filterKey="tags"
+          allOptions={tags}
+        />
+      ),
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "bubbleTypeFilters",
+        "tags"
+      ),
+    },
+    {
+      key: "playercount",
+      head: "Number Of Players",
+      body: <PlayerCountSlider range={playerCountRange as [number, number]} />,
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "sliderTypeFilters",
+        "playercount"
+      ),
+    },
+    {
+      key: "duration",
+      head: "Duration",
+      body: <DurationSlider range={durationRange as [number, number]} />,
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "sliderTypeFilters",
+        "duration"
+      ),
+    },
+    {
+      key: "name",
+      head: "Search",
+      body: <GameTextFilter />,
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "textTypeFilters",
+        "name"
+      ),
+    },
+  ];
+  items = items.filter((it) => controlsKeys.includes(it.key));
 
   return (
     <GamesFilterContext.Provider value={{ filterState, setFilterState }}>
       <LeftSheet
-        head={
-          <h2 className="text-xl rounded border-2 border-black p-1">
-            Filters...
-          </h2>
-        }
+        head={<h2 className="text-xl rounded p-1">Filters...</h2>}
         content={
-          <div className="border border-black overflow-y-auto h-full p-2">
+          <div className="h-full w-full px-1">
             <h2 className="text-2xl">Filters</h2>
-            <div className="flex flex-wrap justify-center">
-              {controlsKeys.includes("office") && offices.length > 1 && (
-                <BubbleFilterInput
-                  filterName="Filter by office?"
-                  filterKey="office"
-                  allOptions={offices}
-                />
-              )}
-              {controlsKeys.includes("holders") && holders.length > 1 && (
-                <BubbleFilterInput
-                  filterName="Filter by game holder?"
-                  filterKey="holders"
-                  allOptions={holders}
-                />
-              )}
-              {controlsKeys.includes("inrotation") && (
-                <BooleanFilter
-                  filterName="Show only available games?"
-                  filterKey="inrotation"
-                />
-              )}
-              {controlsKeys.includes("tags") && (
-                <BubbleFilterInput
-                  filterName="Filter by BGG tags?"
-                  filterKey="tags"
-                  allOptions={tags}
-                />
-              )}
-              {controlsKeys.includes("playercount") && (
-                <PlayerCountSlider
-                  range={playerCountRange as [number, number]}
-                />
-              )}
-              {controlsKeys.includes("duration") && (
-                <DurationSlider range={durationRange as [number, number]} />
-              )}
-              {controlsKeys.includes("name") && <GameTextFilter />}
-              <BubbleAccordion
-                items={[
-                  {
-                    head: "Office",
-                    body: (
-                      <BubbleFilterInput
-                        filterName="Filter by office?"
-                        filterKey="office"
-                        allOptions={offices}
-                      />
-                    ),
-                    open:
-                      filterState.bubbleTypeFilters["office"]?.filterOn ??
-                      false,
-                    setOpen: (b: boolean) => {
-                      console.log("setopen");
-                      setFilterState({
-                        ...filterState,
-                        bubbleTypeFilters: {
-                          ...filterState.bubbleTypeFilters,
-                          office: {
-                            ...filterState.bubbleTypeFilters.office,
-                            filterOn: b,
-                          },
-                        },
-                      });
-                    },
-                  },
-                  {
-                    head: "Game Holder",
-                    body: <div>test</div>,
-                    open: testBool,
-                    setOpen: (b: boolean) => {
-                      setTestBool(b);
-                    },
-                  },
-                  {
-                    head: "BGG Tags",
-                    body: <div>test</div>,
-                    open: testBool,
-                    setOpen: (b: boolean) => {
-                      setTestBool(b);
-                    },
-                  },
-                  {
-                    head: "Number Of Players",
-                    body: <div>test</div>,
-                    open: testBool,
-                    setOpen: (b: boolean) => {
-                      setTestBool(b);
-                    },
-                  },
-                  {
-                    head: "Duration",
-                    body: <div>test</div>,
-                    open: testBool,
-                    setOpen: (b: boolean) => {
-                      setTestBool(b);
-                    },
-                  },
-                  {
-                    head: "Search",
-                    body: <div>test</div>,
-                    open: testBool,
-                    setOpen: (b: boolean) => {
-                      setTestBool(b);
-                    },
-                  },
-                ]}
-              />
+            <div className="flex flex-wrap justify-center w-full">
+              <BubbleAccordion items={items} />
             </div>
           </div>
         }
       />
     </GamesFilterContext.Provider>
   );
+}
+
+function getAccordionOpeningMechanism(
+  filterState: FilterState,
+  setFilterState: (newState: FilterState) => void,
+  filterType: FilterType,
+  filterKey: ControlsKey
+): { open: boolean; setOpen: (b: boolean) => void } {
+  return {
+    open: filterState[filterType][filterKey]?.filterOn ?? false,
+    setOpen: (b: boolean) => {
+      console.log("setopen");
+      setFilterState({
+        ...filterState,
+        [filterType]: {
+          ...filterState[filterType],
+          [filterKey]: {
+            ...filterState[filterType][filterKey],
+            filterOn: b,
+          },
+        },
+      });
+    },
+  };
 }

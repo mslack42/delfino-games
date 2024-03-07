@@ -12,54 +12,33 @@ export type GamesListSliderProps = SliderProps & {
   step: number;
 };
 export function GamesListSlider(props: GamesListSliderProps) {
-  const { range, filterName, filterKey, summariser, step } = props;
+  const { range, filterKey, summariser, step } = props;
   const { filterState, setFilterState } = useContext(GamesFilterContext);
 
   return (
-    <div className="flex justify-center space-x-2">
-      <label>
-        <b>{filterName}</b>
-      </label>
-      <input
-        type="checkbox"
-        checked={filterState.sliderTypeFilters[filterKey].filterOn}
-        onChange={() => {
+    <div className="flex justify-center space-x-2 py-3">
+      <CustomRangeSlider
+        fullRange={range}
+        defaultRange={[
+          filterState.sliderTypeFilters[filterKey].lower,
+          filterState.sliderTypeFilters[filterKey].upper,
+        ]}
+        step={step}
+        summariser={summariser}
+        onChange={(range: number[]) => {
           setFilterState({
             ...filterState,
             sliderTypeFilters: {
               ...filterState.sliderTypeFilters,
               [filterKey]: {
                 ...filterState.sliderTypeFilters[filterKey],
-                filterOn: !filterState.sliderTypeFilters[filterKey].filterOn,
+                upper: Math.max(...range),
+                lower: Math.min(...range),
               },
             },
           });
         }}
-      />
-      {filterState.sliderTypeFilters[filterKey]?.filterOn ? (
-        <CustomRangeSlider
-          fullRange={range}
-          defaultRange={[
-            filterState.sliderTypeFilters[filterKey].lower,
-            filterState.sliderTypeFilters[filterKey].upper,
-          ]}
-          step={step}
-          summariser={summariser}
-          onChange={(range: number[]) => {
-            setFilterState({
-              ...filterState,
-              sliderTypeFilters: {
-                ...filterState.sliderTypeFilters,
-                [filterKey]: {
-                  ...filterState.sliderTypeFilters[filterKey],
-                  upper: Math.max(...range),
-                  lower: Math.min(...range),
-                },
-              },
-            });
-          }}
-        ></CustomRangeSlider>
-      ) : undefined}
+      ></CustomRangeSlider>
     </div>
   );
 }

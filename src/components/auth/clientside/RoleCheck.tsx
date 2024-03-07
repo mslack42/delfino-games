@@ -1,7 +1,6 @@
 "use client";
 import { CustomUser } from "@/auth";
-import { isNotRole } from "@/util/auth/client/isNotRole";
-import { isRole } from "@/util/auth/client/isRole";
+import { useUserRoleInspection } from "@/util/auth/client/useUserRoleInspection";
 import { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
 
@@ -13,6 +12,8 @@ type RoleCheckProps = {
 
 export function RoleCheck(props: RoleCheckProps) {
   const { data: session } = useSession();
+  const { isRole, isNotRole } = useUserRoleInspection();
+
   if (!session || !session.user) {
     return <></>;
   }
