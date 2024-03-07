@@ -77,7 +77,7 @@ export function GameActionButtons(props: { id: number }) {
           </div>
         }
         onClose={() => {
-          setDeleteHolder(null);
+          setDeleteId(null);
           setDeleteConfirmed(false);
         }}
       ></CustomModal>
