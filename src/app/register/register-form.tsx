@@ -61,7 +61,7 @@ export const RegisterForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <div className="mb-6">
-        <input {...register("name")} placeholder="Name" />
+        <input {...register("name")} placeholder="Name" maxLength={20} />
         {errors["name"] && (
           <span className="text-red-500 text-xs pt-1 block">
             {errors["name"]?.message as string}

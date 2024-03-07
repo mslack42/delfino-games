@@ -71,7 +71,7 @@ model BoardGameInternalData {
 
 model Person {
   id         Int                     @id @default(autoincrement())
-  name       String
+  name       String                  @db.VarChar(20)
   location   Location                @default(Poole)
   heldGames  BoardGameInternalData[] @relation("holderRel")
   ownedGames BoardGameInternalData[] @relation("ownerRel")
