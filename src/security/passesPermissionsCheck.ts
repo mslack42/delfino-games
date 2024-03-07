@@ -53,6 +53,7 @@ const routeChecks: RouteCheck[] = [
   { pathMatch: "/api/user", requiredRoles: atLeast("Admin") },
   { pathMatch: "/add-game", requiredRoles: atLeast("Holder") },
   { pathMatch: "/api/games", requiredRoles: atLeast("Holder") },
+  { pathMatch: "/api/game", requiredRoles: atLeast("Holder") },
   { pathMatch: "/api/add-game", requiredRoles: atLeast("Holder") },
   {
     pathMatch: "/games/game/[id]/edit",
