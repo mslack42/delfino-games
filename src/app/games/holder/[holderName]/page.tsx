@@ -21,17 +21,13 @@ export default async function ListGames(props: Props) {
 
   const loggedIn = await isLoggedIn();
 
-  const controlKeys: ControlsKey[] = loggedIn
-    ? [
-        "holders",
-        "office",
-        "tags",
-        "playercount",
-        "duration",
-        "name",
-        "inrotation",
-      ]
-    : ["office", "tags", "playercount", "duration", "name", "inrotation"];
+  const controlKeys: ControlsKey[] = [
+    "tags",
+    "playercount",
+    "duration",
+    "name",
+    "inrotation",
+  ];
   const details: GameDataFields[] = ["PlayerCount", "Duration"];
   const actions: GameActions[] = (await isRole("Admin", "Holder"))
     ? ["Edit", "ToggleRequest", "ToggleRotation"]
