@@ -2,7 +2,6 @@ import { fetchBggDetails } from "@/bgg/fetchBggDetails";
 import { BggDataSummary } from "@/components/data-display/BggDataSummary";
 import { listHolders } from "@/database/holders/listHolders";
 import { AddGameForm } from "./AddGameForm";
-import { HalfPagePanel } from "../../../components/data-display/HalfPagePanel";
 
 type Props = {
   params: {
@@ -23,18 +22,20 @@ export default async function AddGame(props: Props) {
   return (
     <div className="w-full max-w-4xl">
       <div className="flex flex-wrap justify-between">
-        <HalfPagePanel
-          content={<BggDataSummary data={data}></BggDataSummary>}
-        ></HalfPagePanel>
-        <HalfPagePanel
-          content={
+        <div className="w-full md:w-1/2 ">
+          <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
+            <BggDataSummary data={data}></BggDataSummary>
+          </div>
+        </div>
+        <div className="w-full md:w-1/2 ">
+          <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
             <AddGameForm
               holders={holders}
               bggData={data}
               className="flex flex-col justify-center items-center max-w-4/5"
             ></AddGameForm>
-          }
-        ></HalfPagePanel>
+          </div>
+        </div>
       </div>
     </div>
   );

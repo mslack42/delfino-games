@@ -4,9 +4,13 @@ export function passesPermissionsCheck(
   path: string,
   role: string | null | undefined
 ): boolean {
-  const routeChecksHit = routeChecks.filter((rc) =>
-    path.startsWith(rc.pathMatch)
-  );
+  const routeChecksHit = routeChecks.filter((rc) => {
+    if (rc.pathMatchOverride) {
+      return rc.pathMatchOverride(path);
+    } else {
+      return path.startsWith(rc.pathMatch);
+    }
+  });
   if (routeChecksHit.length === 0) {
     return true;
   }
@@ -21,6 +25,7 @@ export function passesPermissionsCheck(
 
 type RouteCheck = {
   pathMatch: string;
+  pathMatchOverride?: (s: string) => boolean;
   requiredRoles: UserRole[];
 };
 
@@ -49,6 +54,14 @@ const routeChecks: RouteCheck[] = [
   { pathMatch: "/add-game", requiredRoles: atLeast("Holder") },
   { pathMatch: "/api/games", requiredRoles: atLeast("Holder") },
   { pathMatch: "/api/add-game", requiredRoles: atLeast("Holder") },
+  {
+    pathMatch: "/games/game/[id]/edit",
+    requiredRoles: atLeast("Holder"),
+    pathMatchOverride: (p: string) => {
+      const regex = new RegExp(`\/games\/game\/\d+\/edit`);
+      return regex.test(p);
+    },
+  },
   { pathMatch: "/games/holder", requiredRoles: atLeast("Unverified") },
   { pathMatch: "/profile", requiredRoles: atLeast("Unverified") },
   { pathMatch: "/api/profile", requiredRoles: atLeast("Unverified") },

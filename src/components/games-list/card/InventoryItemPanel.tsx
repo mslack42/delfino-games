@@ -34,10 +34,10 @@ export function InventoryItemPanel(props: PanelProps) {
         <GameCardData data={data} />
       </div>
       <div className="absolute h-40 w-40 text-white">
-        <GameTitle id={data.id} name={data.name} />
-      </div>
-      <div className="absolute h-40 w-40 text-white">
         <GameCardActions data={data} />
+      </div>
+      <div className="absolute h-15 w-40 text-white">
+        <GameTitle id={data.id} name={data.name} />
       </div>
     </div>
   );

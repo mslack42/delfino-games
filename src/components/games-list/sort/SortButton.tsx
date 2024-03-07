@@ -1,9 +1,8 @@
 "use client";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { twJoin } from "tailwind-merge";
 import { SortType } from "./GamesListSortControls";
-import { useEffect, useState } from "react";
+import { CustomFontAwesomeIcon } from "../../common/CustomFontAwesomeIcon";
 
 type SortButtonProps = {
   type: SortType;
@@ -13,16 +12,6 @@ type SortButtonProps = {
 };
 export function SortButton(props: SortButtonProps) {
   const { type, sortMethod, icon, isActive } = props;
-  const [mounted, setMounted] = useState(false);
-
-  // Check for mount before loading fa icons, else they go bug-eyed
-  // Might be able to mitigate with caching?
-  useEffect(() => {
-    setMounted(true);
-    return () => {
-      setMounted(false);
-    };
-  }, []);
 
   return (
     <>
@@ -33,7 +22,7 @@ export function SortButton(props: SortButtonProps) {
           isActive ? "bg-teal-600" : "bg-slate-300"
         )}
       >
-        {mounted && <FontAwesomeIcon icon={icon} />}
+        <CustomFontAwesomeIcon icon={icon} />
       </button>
     </>
   );
