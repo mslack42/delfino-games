@@ -30,7 +30,7 @@ export async function profileControls(
     </Link>,
     <div key={-1} className="h-full w-full">
       <form action={logoutAction}>
-        <button>Log Out</button>
+        <button type="submit">Log Out</button>
       </form>
     </div>,
   ];
