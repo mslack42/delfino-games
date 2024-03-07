@@ -59,6 +59,7 @@ export function GamesListFilterControls() {
       }
     });
   };
+  console.log(filterState);
 
   let items: AccordionItem[] = [
     {
@@ -163,7 +164,11 @@ export function GamesListFilterControls() {
   return (
     <GamesFilterContext.Provider value={{ filterState, setFilterState }}>
       <LeftSheet
-        head={<h2 className="text-xl rounded p-1">Filters...</h2>}
+        head={
+          <h2 className="text-xl rounded p-1 border-2 border-black">
+            Filters...
+          </h2>
+        }
         content={
           <div className="h-full w-full">
             <h2 className="text-2xl">Filters</h2>
