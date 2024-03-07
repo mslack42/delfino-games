@@ -9,6 +9,7 @@ import {
   GameActions,
   GameDataFields,
 } from "@/components/games-list/card/InventoryItemPanel";
+import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
 
 export default async function ListGames() {
   const inventoryData = await listInventory();
@@ -22,12 +23,15 @@ export default async function ListGames() {
     "name",
     "inrotation",
   ];
-  const details: GameDataFields[] = (await isNotRole("Unverified"))
+
+  const loggedIn = (await isLoggedIn())
+
+  const details: GameDataFields[] = (loggedIn && await isNotRole("Unverified"))
     ? ["PlayerCount", "Duration", "Holder"]
     : ["PlayerCount", "Duration"];
   const actions: GameActions[] = (await isRole("Admin", "Holder"))
     ? ["Edit", "ToggleRequest", "ToggleRotation"]
-    : ["ToggleRequest"];
+    : loggedIn ? ["ToggleRequest"] : [];
 
   return (
     <>
