@@ -169,7 +169,7 @@ export function GamesListFilterControls() {
           </h2>
         }
         content={
-          <div className="h-full w-full">
+          <div className="h-full w-full overflow-y-auto">
             <h2 className="text-2xl">Filters</h2>
             <div className="flex flex-wrap justify-center w-full">
               <BubbleAccordion items={items} />
