@@ -59,7 +59,6 @@ export function GamesListFilterControls() {
       }
     });
   };
-  console.log(filterState);
 
   let items: AccordionItem[] = [
     {
@@ -191,7 +190,6 @@ function getAccordionOpeningMechanism(
   return {
     open: filterState[filterType][filterKey]?.filterOn ?? false,
     setOpen: (b: boolean) => {
-      console.log("setopen");
       setFilterState({
         ...filterState,
         [filterType]: {
