@@ -13,14 +13,15 @@ datasource db {
 model BoardGame {
   id          Int                    @id @default(autoincrement())
   name        String
-  bggData     BoardGameBggData?      @relation("bggData", fields: [id], references: [boardGameId], map: "bgg")
-  dsData      BoardGameInternalData? @relation("dsData", fields: [id], references: [boardGameId], map: "ds", onDelete: Cascade)
+  bggData     BoardGameBggData?      @relation("bggData", fields: [bggDataId], references: [id], map: "bgg")
+  dsData      BoardGameInternalData? @relation("dsData", fields: [dsDataId], references: [id], map: "ds", onDelete: Cascade)
+  bggDataId   Int
+  dsDataId    Int
   GameRequest GameRequest[]
 }
 
 model BoardGameBggData {
   id                      Int                   @id @default(autoincrement())
-  boardGameId             Int                   @unique
   boardGame               BoardGame[]           @relation("bggData")
   bggId                   Int                   @unique
   thumb                   String
@@ -55,7 +56,6 @@ model BoardGameBggDataStats {
 
 model BoardGameInternalData {
   id                   Int                 @id @default(autoincrement())
-  boardGameId          Int                 @unique
   boardGame            BoardGame[]         @relation("dsData")
   specs                BoardGameDataSpecs? @relation(fields: [boardGameDataSpecsId], references: [id])
   tags                 CustomTag[]

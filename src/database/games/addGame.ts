@@ -1,6 +1,6 @@
 "use server";
 import { BggSummaryData } from "@/bgg/types";
-import { Location, Ownership } from "@prisma/client";
+import { Location, Ownership, Prisma } from "@prisma/client";
 import prisma from "@/db";
 
 export type NewGameData = {
@@ -41,9 +41,12 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
   }
 
   try {
-    await prisma.boardGame.create({
-      data: {
-        bggData: {
+    let game: Prisma.BoardGameCreateInput = {
+      bggData: {
+        connectOrCreate: {
+          where: {
+            bggId: newData.bggData.bggId,
+          },
           create: {
             bggId: newData.bggData.bggId,
             image: newData.bggData.image ?? "",
@@ -68,30 +71,32 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
                 bggId: newData.bggData.bggId,
               },
             },
-            boardGameId: newData.bggData.bggId,
-          },
-        },
-        name: newData.bggData.name,
-        dsData: {
-          create: {
-            boardGameId: newData.bggData.bggId,
-            holder: {
-              connect: {
-                id: holderId,
-              },
-            },
-            owner: ownerId
-              ? {
-                  connect: {
-                    id: ownerId,
-                  },
-                }
-              : undefined,
-            ownership: newData.ownership,
-            inCurrentRotation: newData.isInRotation,
           },
         },
       },
+      name: newData.bggData.name,
+      dsData: {
+        create: {
+          holder: {
+            connect: {
+              id: holderId,
+            },
+          },
+          owner: ownerId
+            ? {
+                connect: {
+                  id: ownerId,
+                },
+              }
+            : undefined,
+          ownership: newData.ownership,
+          inCurrentRotation: newData.isInRotation,
+        },
+      },
+      GameRequest: undefined,
+    };
+    await prisma.boardGame.create({
+      data: game,
     });
   } catch (e) {
     console.log(e);

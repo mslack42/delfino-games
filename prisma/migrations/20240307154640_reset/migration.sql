@@ -11,6 +11,8 @@ CREATE TYPE "UserRole" AS ENUM ('Admin', 'Holder', 'Verified', 'Unverified');
 CREATE TABLE "BoardGame" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "bggDataId" INTEGER NOT NULL,
+    "dsDataId" INTEGER NOT NULL,
 
     CONSTRAINT "BoardGame_pkey" PRIMARY KEY ("id")
 );
@@ -18,7 +20,6 @@ CREATE TABLE "BoardGame" (
 -- CreateTable
 CREATE TABLE "BoardGameBggData" (
     "id" SERIAL NOT NULL,
-    "boardGameId" INTEGER NOT NULL,
     "bggId" INTEGER NOT NULL,
     "thumb" TEXT NOT NULL,
     "image" TEXT NOT NULL,
@@ -56,7 +57,6 @@ CREATE TABLE "BoardGameBggDataStats" (
 -- CreateTable
 CREATE TABLE "BoardGameInternalData" (
     "id" SERIAL NOT NULL,
-    "boardGameId" INTEGER NOT NULL,
     "boardGameDataSpecsId" INTEGER,
     "lastUpdated" TIMESTAMP(3) NOT NULL,
     "ownership" "Ownership" NOT NULL DEFAULT 'Personal',
@@ -70,7 +70,7 @@ CREATE TABLE "BoardGameInternalData" (
 -- CreateTable
 CREATE TABLE "Person" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" VARCHAR(20) NOT NULL,
     "location" "Location" NOT NULL DEFAULT 'Poole',
 
     CONSTRAINT "Person_pkey" PRIMARY KEY ("id")
@@ -143,16 +143,10 @@ CREATE TABLE "VerificationRequest" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "BoardGameBggData_boardGameId_key" ON "BoardGameBggData"("boardGameId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "BoardGameBggData_bggId_key" ON "BoardGameBggData"("bggId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "BoardGameBggDataStats_bggId_key" ON "BoardGameBggDataStats"("bggId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "BoardGameInternalData_boardGameId_key" ON "BoardGameInternalData"("boardGameId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
@@ -167,10 +161,10 @@ CREATE UNIQUE INDEX "VerificationRequest_token_key" ON "VerificationRequest"("to
 CREATE UNIQUE INDEX "VerificationRequest_identifier_token_key" ON "VerificationRequest"("identifier", "token");
 
 -- AddForeignKey
-ALTER TABLE "BoardGame" ADD CONSTRAINT "bgg" FOREIGN KEY ("id") REFERENCES "BoardGameBggData"("boardGameId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "BoardGame" ADD CONSTRAINT "bgg" FOREIGN KEY ("bggDataId") REFERENCES "BoardGameBggData"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BoardGame" ADD CONSTRAINT "ds" FOREIGN KEY ("id") REFERENCES "BoardGameInternalData"("boardGameId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "BoardGame" ADD CONSTRAINT "ds" FOREIGN KEY ("dsDataId") REFERENCES "BoardGameInternalData"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "BoardGameBggData" ADD CONSTRAINT "BoardGameBggData_boardGameDataSpecsId_fkey" FOREIGN KEY ("boardGameDataSpecsId") REFERENCES "BoardGameDataSpecs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
