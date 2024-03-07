@@ -36,14 +36,14 @@ export function BubbleAccordion(props: BubbleAccordionProps) {
                 v.setOpen(!v.open);
               }}
               className={twJoin(
-                "rounded-lg text-center flex justify-center mx-2  my-1 text-white w-full",
+                "rounded-lg text-center flex justify-center  my-1 text-white w-full",
                 v.open ? "bg-teal-500" : "bg-slate-400"
               )}
             >
               {v.head}
             </AccordionTrigger>
             {v.body ? (
-              <AccordionContent className={twJoin("w-full px-6 -mt-2")}>
+              <AccordionContent className={twJoin("w-full px-2 -mt-2")}>
                 <div className="border-teal-500 rounded-lg border-solid border-2 ">
                   {v.body}
                 </div>
