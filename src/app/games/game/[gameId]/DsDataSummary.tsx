@@ -9,6 +9,7 @@ type DsSummaryData = {
 };
 type DsDataSummaryProps = {
   data: DsSummaryData;
+  fullDetails?: boolean;
 };
 export function DsDataSummary(props: DsDataSummaryProps) {
   return (
@@ -25,10 +26,12 @@ export function DsDataSummary(props: DsDataSummaryProps) {
           dataKey={"Location"}
           dataValue={props.data.location}
         />
-        <DataSummaryKeyValuePair
-          dataKey={"Held by"}
-          dataValue={props.data.holder}
-        />
+        {props.fullDetails ? (
+          <DataSummaryKeyValuePair
+            dataKey={"Held by"}
+            dataValue={props.data.holder}
+          />
+        ) : undefined}
         <DataSummaryKeyValuePair
           dataKey={"Currently in rotation?"}
           dataValue={props.data.inRotation ? "Yes" : "No"}
