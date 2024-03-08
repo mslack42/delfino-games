@@ -6,6 +6,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { CreateUserInput, createUserSchema } from "@/lib/user-schema";
 import { ApiRoutes } from "@/constants/routes";
+import { CustomButton } from "@/components/input/CustomButton";
 
 export const RegisterForm = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -116,9 +117,12 @@ export const RegisterForm = () => {
           </span>
         )}
       </div>
-      <button type="submit" disabled={submitting}>
-        {submitting ? "loading..." : "Sign Up"}
-      </button>
+      <CustomButton
+        type="submit"
+        innerText={submitting ? "loading..." : "Sign Up"}
+        disabled={submitting}
+        className="p-2 rounded-lg"
+      />
     </form>
   );
 };

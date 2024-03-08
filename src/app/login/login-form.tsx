@@ -6,6 +6,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { LoginUserInput, loginUserSchema } from "@/lib/user-schema";
+import { CustomButton } from "@/components/input/CustomButton";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -84,9 +85,13 @@ export const LoginForm = () => {
           </span>
         )}
       </div>
-      <button type="submit" disabled={submitting}>
-        {submitting ? "loading..." : "Sign In"}
-      </button>
+      <CustomButton
+        type={"submit"}
+        innerText={submitting ? "loading..." : "Sign In"}
+        actionType="confirm"
+        disabled={submitting}
+        className="p-2 rounded-lg"
+      />
     </form>
   );
 };
