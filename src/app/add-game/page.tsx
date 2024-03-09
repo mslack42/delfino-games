@@ -12,13 +12,14 @@ export default function AddNewGame() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+    const searchTerm = formData.get("searchTerm") as string;
+    if (!searchTerm) {
+      return;
+    }
 
-    const searchResults = await fetch(
-      ApiRoutes.SearchNewGame(formData.get("searchTerm") as string),
-      {
-        method: "GET",
-      }
-    );
+    const searchResults = await fetch(ApiRoutes.SearchNewGame(searchTerm), {
+      method: "GET",
+    });
     const searchResultItems: BggSummaryData[] = (await searchResults.json())
       .results;
     setSearchResults(() => searchResultItems);
@@ -37,7 +38,7 @@ export default function AddNewGame() {
                     type="text"
                     name="searchTerm"
                     maxLength={100}
-                    minLength={0}
+                    minLength={1}
                   />
                   <CustomButton
                     type="submit"
