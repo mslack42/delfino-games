@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NavigationBar } from "@/components/navigation/NavigationBar";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/shadcn/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           <main className="flex min-h-full flex-col items-center justify-between z-0">
             {children}
           </main>
+          <Toaster />
         </body>
       </SessionProvider>
     </html>

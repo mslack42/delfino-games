@@ -11,11 +11,13 @@ import { GamesListContext } from "../../GamesListContext";
 import { GameCardActionButton } from "./GameCardActionButton";
 import { PanelProps } from "../InventoryItemPanel";
 import Link from "next/link";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export function GameCardActions(props: PanelProps) {
   const { data } = props;
   const { inventoryData, setInventoryData, actions } =
     useContext(GamesListContext);
+  const { toast } = useToast();
   async function changeRotationStatus() {
     try {
       const gameId = data.id;
@@ -45,6 +47,12 @@ export function GameCardActions(props: PanelProps) {
           };
         })
       );
+      toast({
+        type: "background",
+        title: newStatus
+          ? "Game added to rotation"
+          : "Game removed from rotation",
+      });
     } catch (error: any) {
       //
     }

@@ -7,11 +7,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CustomModal } from "@/components/common/CustomModal";
 import { CustomButton } from "@/components/input/CustomButton";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export function GameActionButtons(props: { id: number }) {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const deleteHandler = async (id: number | undefined | null) => {
     if (id) {
@@ -19,6 +21,9 @@ export function GameActionButtons(props: { id: number }) {
         method: "DELETE",
       });
       setDeleteId(null);
+      toast({
+        title: "Game deleted successfully",
+      });
       router.push(ApplicationRoutes.Games);
     }
   };
