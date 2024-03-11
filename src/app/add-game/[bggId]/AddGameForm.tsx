@@ -19,6 +19,10 @@ type AddGameFormProps = {
 export function AddGameForm(props: AddGameFormProps) {
   const [currLocation, setCurrLocation] = useState<Location>("Poole");
   const [currOwnership, setCurrOwnership] = useState<Ownership>("Personal");
+  const resetPeople = () => {
+    resetField("ownerId", { defaultValue: "-2" });
+    resetField("holderId", { defaultValue: "-2" });
+  };
   const locationHolders = useMemo(
     () => props.holders.filter((h) => h.location === currLocation),
     [props.holders, currLocation]
@@ -39,6 +43,7 @@ export function AddGameForm(props: AddGameFormProps) {
     handleSubmit,
     register,
     formState: { errors },
+    resetField,
   } = methods;
 
   const onSubmitHandler: SubmitHandler<AddGameInput> = async (values) => {
@@ -106,9 +111,10 @@ export function AddGameForm(props: AddGameFormProps) {
               <select
                 {...register("location")}
                 value={currLocation}
-                onChange={(evt) =>
-                  setCurrLocation(evt.currentTarget.value as Location)
-                }
+                onChange={(evt) => {
+                  setCurrLocation(evt.currentTarget.value as Location);
+                  resetPeople();
+                }}
               >
                 {Object.values(Location).map((loc) => (
                   <option value={loc} key={loc}>

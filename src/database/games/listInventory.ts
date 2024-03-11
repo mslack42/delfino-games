@@ -30,6 +30,7 @@ export async function listInventory(
       dsData: {
         include: {
           holder: true,
+          owner: true,
           specs: true,
         },
       },

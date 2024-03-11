@@ -23,6 +23,9 @@ export type InventoryItem = {
   id: number;
   dsData: {
     holder: string;
+    holderId: number;
+    owner: string;
+    ownerId: number;
     inRotation: boolean;
     location: Location;
     ownership: Ownership;

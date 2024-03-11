@@ -14,6 +14,7 @@ export const ApiRoutes = {
   SignIn: "/api/auth/signin",
   ChangeRotationStatus: "/api/game/changeRotationStatus",
   DeleteGame: (gameId: string) => `/api/game?id=${gameId}`,
+  EditGame: (gameId: string) => `/api/game?id=${gameId}`,
 };
 
 export const ApplicationRoutes = {

@@ -14,6 +14,7 @@ export async function getInventoryItem(gameId: number): Promise<InventoryItem> {
       dsData: {
         include: {
           holder: true,
+          owner: true,
           specs: true,
         },
       },

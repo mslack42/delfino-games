@@ -3,6 +3,7 @@ import { Ownership } from "@prisma/client";
 
 type DsSummaryData = {
   holder: string;
+  owner: string;
   location: string;
   inRotation: boolean;
   ownership: Ownership;
@@ -27,10 +28,16 @@ export function DsDataSummary(props: DsDataSummaryProps) {
           dataValue={props.data.location}
         />
         {props.fullDetails ? (
-          <DataSummaryKeyValuePair
-            dataKey={"Held by"}
-            dataValue={props.data.holder}
-          />
+          <>
+            <DataSummaryKeyValuePair
+              dataKey={"Owned by"}
+              dataValue={props.data.owner}
+            />
+            <DataSummaryKeyValuePair
+              dataKey={"Held by"}
+              dataValue={props.data.holder}
+            />
+          </>
         ) : undefined}
         <DataSummaryKeyValuePair
           dataKey={"Currently in rotation?"}

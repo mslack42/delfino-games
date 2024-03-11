@@ -12,6 +12,7 @@ type Props = {
   selectProps: any & { name: string };
   textProps: any & { name: string; placeholder: string };
   className?: string;
+  value?: string;
 };
 
 export function SelectOrNew(props: Props) {
@@ -21,14 +22,20 @@ export function SelectOrNew(props: Props) {
     textProps,
     className,
     newValueString,
+    value,
   } = props;
   const realSelectValues: SelectListPair[] = useMemo(
     () => selectListValues.filter((v) => v !== undefined).map((v) => v!),
     [selectListValues]
   );
   const defaultValue = useMemo(
-    () => (realSelectValues.length ? realSelectValues[0].value : "-2"),
-    [realSelectValues]
+    () =>
+      realSelectValues.length &&
+      value &&
+      realSelectValues.map((rsv) => rsv.value).includes(value!)
+        ? value
+        : "-2",
+    [realSelectValues, value]
   );
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
@@ -37,6 +44,7 @@ export function SelectOrNew(props: Props) {
       !["-1", "-2"].includes(selectedValue) &&
       realSelectValues.every((v) => v.value !== selectedValue)
     ) {
+      console.log("memo hit");
       setSelectedValue(() => "-2");
     }
   }, [realSelectValues, selectedValue]);

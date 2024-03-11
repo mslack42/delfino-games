@@ -1,18 +1,7 @@
 "use server";
-import { BggSummaryData } from "@/bgg/types";
-import { Location, Ownership, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import prisma from "@/db";
-
-export type NewGameData = {
-  bggData: BggSummaryData;
-  ownership: Ownership;
-  location: Location;
-  ownerId?: number;
-  newOwner?: string;
-  holderId?: number;
-  newHolder?: string;
-  isInRotation: boolean;
-};
+import { NewGameData } from "./types";
 
 export async function addGame(newData: NewGameData): Promise<boolean> {
   let ownerId = newData.ownership === "Personal" ? newData.ownerId : undefined;

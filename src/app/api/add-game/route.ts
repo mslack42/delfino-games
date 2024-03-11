@@ -1,5 +1,6 @@
 import { BggSummaryData } from "@/bgg/types";
-import { NewGameData, addGame } from "@/database/games/addGame";
+import { addGame } from "@/database/games/addGame";
+import { NewGameData } from "@/database/games/types";
 import { addGameSchema } from "@/lib/game-schema";
 import { tryParseInt } from "@/util/tryParseInt";
 import { Ownership, Location } from "@prisma/client";
