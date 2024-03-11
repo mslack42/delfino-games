@@ -54,8 +54,12 @@ export function UserTable({ users }: Props) {
           <TableBody>
             {users.map((user: UserType) => (
               <TableRow key={user.id} className="bg-teal-100 even:bg-teal-200">
-                <TableCell className="p-2">{user.name}</TableCell>
-                <TableCell className="p-2">{user.email}</TableCell>
+                <TableCell className="p-2 break-words break-all">
+                  {user.name}
+                </TableCell>
+                <TableCell className="p-2 break-words break-all">
+                  {user.email}
+                </TableCell>
                 <TableCell className="p-2">{user.accounts[0].role}</TableCell>
                 <TableCell className="p-2">
                   <ul className="flex space-x-2 justify-end">
