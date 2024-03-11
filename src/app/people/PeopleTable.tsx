@@ -62,7 +62,7 @@ export function PeopleTable({ holders }: Props) {
                   {holder.location as string}
                 </TableCell>
                 <TableCell className="p-2">
-                  <ul className="flex space-x-2">
+                  <ul className="flex space-x-2 justify-center">
                     <li>
                       <Link
                         href={ApplicationRoutes.PersonsGames(holder.name!)}
