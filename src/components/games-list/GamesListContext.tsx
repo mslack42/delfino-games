@@ -28,7 +28,7 @@ export const defaultSort = (gamelist: InventoryItem[]) => {
   return sorted;
 };
 export const defaultFilter = (gamelist: InventoryItem[]) => {
-  return gamelist;
+  return gamelist.filter((g) => g.dsData.inRotation);
 };
 
 export const defaultGamesListContext: GamesListContextType = {

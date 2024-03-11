@@ -10,7 +10,11 @@ const defaultContext: FilterContext = {
     bubbleTypeFilters: {},
     sliderTypeFilters: {},
     textTypeFilters: {},
-    booleanTypeFilters: {},
+    booleanTypeFilters: {
+      inrotation: {
+        filterOn: true,
+      },
+    },
   },
   setFilterState: (_: FilterState) => {},
 };

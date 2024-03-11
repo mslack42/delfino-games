@@ -1,6 +1,6 @@
 "use client";
 import { InventoryItem } from "@/database/types";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { GamesListFilterControls } from "./filter/GamesListFilterControls";
 import { GameActions, GameDataFields } from "./card/InventoryItemPanel";
 import { InventoryItemPanel } from "./card/InventoryItemPanel";
@@ -13,6 +13,7 @@ import {
   defaultGamesListContext,
   defaultSort,
 } from "./GamesListContext";
+import { LoadingIdler } from "../common/LoadingIdler";
 
 type Props = {
   inventoryData: InventoryItem[];
@@ -48,17 +49,13 @@ export function GamesList(props: Props) {
   const appliedSort = useCallback(sortingMethod, [sortingMethod]);
   const appliedFilter = useCallback(filterMethod, [filterMethod]);
 
-  const [displayedInventory, setDisplayedInventory] = useState(inventoryData);
-  useEffect(() => {
-    let newDisplay: InventoryItem[] = inventoryData;
-    if (appliedFilter) {
-      newDisplay = appliedFilter(newDisplay);
-    }
-    if (appliedSort) {
-      newDisplay = appliedSort(newDisplay);
-    }
-    setDisplayedInventory(newDisplay);
-  }, [appliedFilter, appliedSort, inventoryData]);
+  let displayedInventory = inventoryData;
+  if (appliedFilter) {
+    displayedInventory = appliedFilter(displayedInventory);
+  }
+  if (appliedSort) {
+    displayedInventory = appliedSort(displayedInventory);
+  }
 
   return (
     <GamesListContext.Provider value={gamesListContext}>
@@ -72,22 +69,24 @@ export function GamesList(props: Props) {
           </div>
         </div>
         <div className="flex max-w-full flex-row flex-wrap justify-center">
-          {displayedInventory.length ? (
-            <div className="grid columns-auto w-full row-auto grid-cols-game-cards-sm md:grid-cols-game-cards-md gap-4 ">
-              {displayedInventory.map((id) => (
-                <span key={id.id} className="flex justify-center">
-                  <InventoryItemPanel
-                    key={id.id}
-                    data={id}
-                  ></InventoryItemPanel>
-                </span>
-              ))}
-            </div>
-          ) : (
-            <div className="text-lg h-60 flex  flex-col justify-center align-middle">
-              <p>Nothing to see here 😢</p>
-            </div>
-          )}
+          <Suspense fallback={<LoadingIdler />}>
+            {displayedInventory.length ? (
+              <div className="grid columns-auto w-full row-auto grid-cols-game-cards-sm md:grid-cols-game-cards-md gap-4 ">
+                {displayedInventory.map((id) => (
+                  <span key={id.id} className="flex justify-center">
+                    <InventoryItemPanel
+                      key={id.id}
+                      data={id}
+                    ></InventoryItemPanel>
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <div className="text-lg h-60 flex  flex-col justify-center align-middle">
+                <p>Nothing to see here 😢</p>
+              </div>
+            )}
+          </Suspense>
         </div>
       </div>
     </GamesListContext.Provider>

@@ -34,6 +34,9 @@ const config: Config = {
       },
     },
     colors: {
+      ...colours,
+      black: colours.black,
+      blue: { ...colours.blue },
       teal: { ...colours.teal },
       white: colours.white,
       slate: { ...colours.slate },

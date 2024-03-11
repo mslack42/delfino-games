@@ -35,7 +35,7 @@ export const initialFilterState: FilterState = {
   },
   booleanTypeFilters: {
     inrotation: {
-      filterOn: false,
+      filterOn: true,
     },
   },
 };
