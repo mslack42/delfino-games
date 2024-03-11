@@ -1,15 +1,18 @@
 "use client";
 import { BggSummaryData } from "@/bgg/types";
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import { SearchResults } from "./searchResults";
 import { CustomButton } from "../../components/input/CustomButton";
 import { ApiRoutes } from "@/constants/routes";
+import { LoadingIdler } from "@/components/common/LoadingIdler";
 
 export default function AddNewGame() {
   const [searchResults, setSearchResults] = useState<BggSummaryData[]>([]);
+  const [searching, setSearching] = useState<boolean>(false);
 
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSearching(true);
 
     const formData = new FormData(event.currentTarget);
     const searchTerm = formData.get("searchTerm") as string;
@@ -23,7 +26,14 @@ export default function AddNewGame() {
     const searchResultItems: BggSummaryData[] = (await searchResults.json())
       .results;
     setSearchResults(() => searchResultItems);
+    setSearching(false);
   }
+
+  const idler = (
+    <div className="h-full w-full text-lg flex justify-center">
+      <LoadingIdler />
+    </div>
+  );
 
   return (
     <>
@@ -52,7 +62,12 @@ export default function AddNewGame() {
           </div>
         </div>
         <br></br>
-        <SearchResults results={searchResults}></SearchResults>
+        {!searching && (
+          <Suspense fallback={idler}>
+            <SearchResults results={searchResults}></SearchResults>
+          </Suspense>
+        )}
+        {searching && <>{idler}</>}
       </div>
     </>
   );

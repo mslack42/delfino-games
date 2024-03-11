@@ -21,7 +21,7 @@ export function SearchResultImage({
       </div>
     </div>
   ) : (
-    <div className="text-lg h-40 w-40 md:h-60 md:w-60 text-center bg-slate-400 text-gray-300 align-middle">
+    <div className="text-lg h-40 w-40 md:h-60 md:w-60 text-center bg-slate-400 text-gray-300 align-middle flex flex-col justify-center">
       <span>No image found</span>
     </div>
   );

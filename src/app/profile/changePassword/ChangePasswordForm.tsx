@@ -74,7 +74,11 @@ export function ChangePasswordForm() {
             dataKey={"Current"}
             dataValue={
               <>
-                <input {...register("currentPassword")} type="password" />
+                <input
+                  {...register("currentPassword")}
+                  type="password"
+                  placeholder="Current Password"
+                />
                 {errors["currentPassword"] && (
                   <span className="text-red-500 text-xs pt-1 block">
                     {errors["currentPassword"]?.message as string}
@@ -88,7 +92,11 @@ export function ChangePasswordForm() {
             dataKey={"Password"}
             dataValue={
               <>
-                <input {...register("password")} type="password" />
+                <input
+                  {...register("password")}
+                  type="password"
+                  placeholder="New Password"
+                />
                 {errors["password"] && (
                   <span className="text-red-500 text-xs pt-1 block">
                     {errors["password"]?.message as string}
@@ -102,7 +110,11 @@ export function ChangePasswordForm() {
             dataKey={"Confirm Password"}
             dataValue={
               <>
-                <input {...register("passwordConfirm")} type="password" />
+                <input
+                  {...register("passwordConfirm")}
+                  type="password"
+                  placeholder="Confirm Password"
+                />
                 {errors["passwordConfirm"] && (
                   <span className="text-red-500 text-xs pt-1 block">
                     {errors["passwordConfirm"]?.message as string}

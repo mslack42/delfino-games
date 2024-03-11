@@ -33,9 +33,12 @@ const config: Config = {
         "game-cards-md": "repeat(auto-fit, minmax(250px, 1fr))",
       },
     },
-    // Defining various key words, for site consistency in colours
     colors: {
-      ...colours,
+      teal: { ...colours.teal },
+      white: colours.white,
+      slate: { ...colours.slate },
+      red: { ...colours.red },
+      // Defining various key words, for site consistency in colours
       primary: {
         ...colours.teal,
       },
