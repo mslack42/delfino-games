@@ -9,6 +9,14 @@ import { SetStateAction, useState } from "react";
 import { VerifyUserModal } from "./VerifyUserModal";
 import { PasswordResetModal } from "./PasswordResetModal";
 import { DeleteUserModal } from "./DeleteUserModal";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/shadcn/ShadcnTable";
 
 type Props = {
   users: UserType[];
@@ -34,20 +42,22 @@ export function UserTable({ users }: Props) {
   return (
     <>
       <div className="rounded-lg flex flex-row justify-center">
-        <table className="table-auto rounded-sm">
-          <tbody className="rounded-lg">
-            <tr className="bg-headbar p-1">
-              <th className="p-1">Name</th>
-              <th className="p-1">Email</th>
-              <th className="p-1">Role</th>
-              <th className="p-1">Actions</th>
-            </tr>
+        <Table className="table-auto rounded-sm">
+          <TableHeader className="bg-headbar text-white">
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {users.map((user: UserType) => (
-              <tr key={user.id} className="bg-teal-100 even:bg-teal-200">
-                <td className="p-2">{user.name}</td>
-                <td className="p-2">{user.email}</td>
-                <td className="p-2">{user.accounts[0].role}</td>
-                <td className="p-2">
+              <TableRow key={user.id} className="bg-teal-100 even:bg-teal-200">
+                <TableCell className="p-2">{user.name}</TableCell>
+                <TableCell className="p-2">{user.email}</TableCell>
+                <TableCell className="p-2">{user.accounts[0].role}</TableCell>
+                <TableCell className="p-2">
                   <ul className="flex space-x-2 justify-end">
                     {user.accounts[0].role === "Unverified" ? (
                       <li onClick={() => setVerifyUser(user)}>
@@ -73,11 +83,11 @@ export function UserTable({ users }: Props) {
                       <FontAwesomeIcon icon={faUnlock} className="h-5" />
                     </li>
                   </ul>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
       <DeleteUserModal user={deleteUser} setUser={setDeleteUser} />
       <PasswordResetModal

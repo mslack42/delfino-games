@@ -1,6 +1,14 @@
 "use client";
 import { CustomModal } from "@/components/common/CustomModal";
 import { CustomButton } from "@/components/input/CustomButton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/shadcn/ShadcnTable";
 import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import { faDice } from "@fortawesome/free-solid-svg-icons/faDice";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
@@ -35,18 +43,25 @@ export function PeopleTable({ holders }: Props) {
   return (
     <>
       <div className="rounded-lg flex flex-row justify-center">
-        <table className="table-auto">
-          <tbody className="rounded-lg">
-            <tr className="bg-headbar p-1 text-white">
-              <th className="p-1">Name</th>
-              <th className="p-1">Office</th>
-              <th className="p-1">Actions</th>
-            </tr>
+        <Table className="table-auto">
+          <TableHeader className="bg-headbar text-white text-center">
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Office</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {holders.map((holder) => (
-              <tr key={holder.id} className="bg-teal-100 even:bg-teal-200">
-                <td className="p-2">{holder.name}</td>
-                <td className="p-2">{holder.location as string}</td>
-                <td className="p-2">
+              <TableRow
+                key={holder.id}
+                className="bg-teal-100 even:bg-teal-200"
+              >
+                <TableCell className="p-2">{holder.name}</TableCell>
+                <TableCell className="p-2">
+                  {holder.location as string}
+                </TableCell>
+                <TableCell className="p-2">
                   <ul className="flex space-x-2">
                     <li>
                       <Link
@@ -65,11 +80,11 @@ export function PeopleTable({ holders }: Props) {
                       <FontAwesomeIcon icon={faTrash} className="h-5" />
                     </li>
                   </ul>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
       <CustomModal
         isOpen={!!deleteHolder}
