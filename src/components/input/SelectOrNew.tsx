@@ -44,7 +44,6 @@ export function SelectOrNew(props: Props) {
       !["-1", "-2"].includes(selectedValue) &&
       realSelectValues.every((v) => v.value !== selectedValue)
     ) {
-      console.log("memo hit");
       setSelectedValue(() => "-2");
     }
   }, [realSelectValues, selectedValue]);

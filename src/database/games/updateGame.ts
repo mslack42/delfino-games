@@ -5,7 +5,6 @@ export async function updateGame(
   gameData: DsGameData,
   gameId: number
 ): Promise<boolean> {
-  console.log(gameData);
   let ownerId =
     gameData.ownership === "Personal" ? gameData.ownerId : undefined;
   if (ownerId === -1) {
