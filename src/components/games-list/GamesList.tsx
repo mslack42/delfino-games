@@ -73,7 +73,7 @@ export function GamesList(props: Props) {
         </div>
         <div className="flex max-w-full flex-row flex-wrap justify-center">
           {displayedInventory.length ? (
-            <div className="grid columns-auto w-full row-auto grid-cols-game-cards gap-4 ">
+            <div className="grid columns-auto w-full row-auto grid-cols-game-cards-sm md:grid-cols-game-cards-md gap-4 ">
               {displayedInventory.map((id) => (
                 <span key={id.id} className="flex justify-center">
                   <InventoryItemPanel

@@ -29,7 +29,8 @@ const config: Config = {
         xxs: "1px",
       },
       gridTemplateColumns: {
-        "game-cards": "repeat(auto-fit, minmax(180px, 1fr))",
+        "game-cards-sm": "repeat(auto-fit, minmax(180px, 1fr))",
+        "game-cards-md": "repeat(auto-fit, minmax(250px, 1fr))",
       },
     },
     // Defining various key words, for site consistency in colours

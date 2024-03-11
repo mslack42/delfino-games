@@ -1,6 +1,8 @@
 import { BggSummaryData } from "@/bgg/types";
-import { ActionBar } from "./ActionBar";
-import { BoardGameImage } from "@/components/data-display/BoardGameImage";
+import { SearchResultActionBar } from "./SearchResultActionBar";
+import { SearchResultTitle } from "./SearchResultTitle";
+import { SearchResultDescription } from "./SearchResultDescription";
+import { SearchResultImage } from "./SearchResultImage";
 
 type ResultsProps = {
   results: BggSummaryData[];
@@ -8,9 +10,11 @@ type ResultsProps = {
 
 export function SearchResults(props: ResultsProps) {
   return (
-    <div className="flex max-w-full flex-wrap justify-around pl-3 pr-3">
+    <div className="grid columns-auto w-full row-auto grid-cols-game-cards-sm md:grid-cols-game-cards-md grid-cols-game-cards gap-4 ">
       {props.results.map((r) => (
-        <SearchResult result={r} key={r.bggId}></SearchResult>
+        <span className="flex justify-center" key={r.bggId}>
+          <SearchResult result={r} key={r.bggId}></SearchResult>
+        </span>
       ))}
     </div>
   );
@@ -21,26 +25,24 @@ type ResultProps = {
 };
 
 export function SearchResult(props: ResultProps) {
-  const data = props.result;
+  const src = props.result.image;
+  const alt = props.result.name;
+  const bggId = props.result.bggId;
 
   return (
-    <div className="rounded-lg bg-card flex-none w-60 max-h-96 overflow-hidden p-2 m-1 justify-evenly text-teal-900">
-      <div className="text-center font-bold line-clamp-1" title={data.name}>
-        {data.name}
+    <div className="h-60 w-40 md:w-60 md:h-96 bg-teal-600 rounded-lg my-2">
+      <div>
+        <SearchResultImage src={src} alt={alt} />
       </div>
-      <div className="flex justify-center">
-        <BoardGameImage
-          imageName={data.name}
-          imageUrl={data.thumb}
-          size={160}
-          lineHeight={36}
-        />
+      <div className="absolute h-40 w-40 md:h-60 md:w-60 text-white">
+        <SearchResultTitle name={props.result.name} />
       </div>
-      <div
-        dangerouslySetInnerHTML={{ __html: data.description! }}
-        className="text-left h-36 overflow-hidden hover:overflow-y-scroll pl-1 pr-1 bg-cardScroller rounded-lg mt-2 text-teal-900"
-      ></div>
-      <ActionBar bggId={data.bggId}></ActionBar>
+      <div className="absolute h-60 w-40 md:w-60 md:h-96 ">
+        <SearchResultActionBar bggId={bggId} />
+      </div>
+      <div className="absolute h-12 w-40 mt-32 md:mt-48 md:h-32 md:w-60 bg-gradient-to-t from-teal-600 via-teal-600 to-transparent">
+        <SearchResultDescription text={props.result.description!} />
+      </div>
     </div>
   );
 }

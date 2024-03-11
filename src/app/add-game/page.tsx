@@ -27,7 +27,7 @@ export default function AddNewGame() {
 
   return (
     <>
-      <div className="h-full ">
+      <div className="h-full w-full">
         <div className="py-4 text-center flex justify-center">
           <div className="flex flex-col justify-center h-full">
             <div className="py-6 w-96 rounded-lg bg-teal-200  border-solid border-4 border-teal-800">

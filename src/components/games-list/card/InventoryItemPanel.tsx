@@ -21,7 +21,7 @@ export function InventoryItemPanel(props: PanelProps) {
   return (
     <div
       className={twJoin(
-        "rounded-xl h-40 w-40 overflow-hidden mx-2 my-2",
+        "rounded-xl h-40 w-40 md:h-60 md:w-60 overflow-hidden mx-2 my-2",
         data.dsData.inRotation ? "" : "grayscale"
       )}
     >
@@ -30,13 +30,13 @@ export function InventoryItemPanel(props: PanelProps) {
           <GameCardImage src={data.bggData.thumb} alt={data.name} />
         </div>
       </div>
-      <div className="absolute h-40 w-40 text-white">
+      <div className="absolute h-40 w-40 md:h-60 md:w-60 text-white">
         <GameCardData data={data} />
       </div>
-      <div className="absolute h-40 w-40 text-white">
+      <div className="absolute h-40 w-40 md:h-60 md:w-60 text-white">
         <GameCardActions data={data} />
       </div>
-      <div className="absolute h-15 w-40 text-white">
+      <div className="absolute h-15 w-40 md:w-60 md:h-20 text-white">
         <GameTitle id={data.id} name={data.name} />
       </div>
     </div>
