@@ -54,6 +54,7 @@ const routeChecks: RouteCheck[] = [
   { pathMatch: "/add-game", requiredRoles: atLeast("Holder") },
   { pathMatch: "/api/games", requiredRoles: atLeast("Holder") },
   { pathMatch: "/api/game", requiredRoles: atLeast("Holder") },
+  { pathMatch: "/api/game", requiredRoles: atLeast("Holder") },
   { pathMatch: "/api/add-game", requiredRoles: atLeast("Holder") },
   {
     pathMatch: "/games/game/[id]/edit",
@@ -63,6 +64,7 @@ const routeChecks: RouteCheck[] = [
       return regex.test(p);
     },
   },
+  { pathMatch: "/api/request", requiredRoles: atLeast("Verified") },
   { pathMatch: "/games/holder", requiredRoles: atLeast("Unverified") },
   { pathMatch: "/profile", requiredRoles: atLeast("Unverified") },
   { pathMatch: "/api/profile", requiredRoles: atLeast("Unverified") },

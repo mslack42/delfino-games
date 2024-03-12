@@ -15,7 +15,7 @@ export const ApiRoutes = {
   ChangeRotationStatus: "/api/game/changeRotationStatus",
   DeleteGame: (gameId: string) => `/api/game?id=${gameId}`,
   EditGame: (gameId: string) => `/api/game?id=${gameId}`,
-  ToggleGameRequest: "/api/game/request",
+  ToggleGameRequest: "/api/request",
 };
 
 export const ApplicationRoutes = {
