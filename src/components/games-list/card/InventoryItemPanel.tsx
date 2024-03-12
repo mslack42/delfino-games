@@ -19,24 +19,34 @@ export function InventoryItemPanel(props: PanelProps) {
   const { data } = props;
 
   return (
-    <div
-      className={twJoin(
-        "rounded-xl h-40 w-40 md:h-60 md:w-60 overflow-hidden mx-2 my-2",
-        data.dsData.inRotation ? "" : "grayscale"
-      )}
-    >
+    <div className="rounded-xl h-40 w-40 md:h-60 md:w-60 overflow-hidden mx-2 my-2">
       <div>
-        <div className="flex justify-center h-full absolute">
+        <div
+          className={twJoin(
+            "flex justify-center h-full absolute ",
+            data.dsData.inRotation ? "" : "grayscale"
+          )}
+        >
           <GameCardImage src={data.bggData.thumb} alt={data.name} />
         </div>
       </div>
-      <div className="absolute h-40 w-40 md:h-60 md:w-60 text-white">
+      <div
+        className={twJoin(
+          "absolute h-40 w-40 md:h-60 md:w-60 text-white",
+          data.dsData.inRotation ? "" : "grayscale"
+        )}
+      >
         <GameCardData data={data} />
       </div>
-      <div className="absolute h-40 w-40 md:h-60 md:w-60 text-white">
+      <div className="absolute h-40 w-40 md:h-60 md:w-60 text-white filter-none">
         <GameCardActions data={data} />
       </div>
-      <div className="absolute h-15 w-40 md:w-60 md:h-20 text-white">
+      <div
+        className={twJoin(
+          "absolute h-15 w-40 md:w-60 md:h-20 text-white",
+          data.dsData.inRotation ? "" : "grayscale"
+        )}
+      >
         <GameTitle id={data.id} name={data.name} />
       </div>
     </div>
