@@ -12,13 +12,13 @@ export default function AddNewGame() {
 
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSearching(true);
 
     const formData = new FormData(event.currentTarget);
     const searchTerm = formData.get("searchTerm") as string;
     if (!searchTerm) {
       return;
     }
+    setSearching(true);
 
     const searchResults = await fetch(ApiRoutes.SearchNewGame(searchTerm), {
       method: "GET",
