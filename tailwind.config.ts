@@ -32,6 +32,9 @@ const config: Config = {
         "game-cards-sm": "repeat(auto-fit, minmax(180px, 1fr))",
         "game-cards-md": "repeat(auto-fit, minmax(250px, 1fr))",
       },
+      fontSize: {
+        xxs: "0.5rem",
+      },
     },
     colors: {
       ...colours,

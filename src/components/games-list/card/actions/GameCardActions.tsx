@@ -1,77 +1,24 @@
-import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
-import {
-  faHandPointUp,
-  faPenToSquare,
-  faSquareCheck,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { ApplicationRoutes } from "@/constants/routes";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { GamesListContext } from "../../GamesListContext";
 import { GameCardActionButton } from "./GameCardActionButton";
 import { PanelProps } from "../InventoryItemPanel";
 import Link from "next/link";
-import { useToast } from "@/components/shadcn/use-toast";
+import { GameRotationButton } from "./GameRotationButton";
+import { ToggleRequestButton } from "./ToggleRequestButton";
 
 export function GameCardActions(props: PanelProps) {
   const { data } = props;
-  const { inventoryData, setInventoryData, actions } =
-    useContext(GamesListContext);
-  const { toast } = useToast();
-  async function changeRotationStatus() {
-    try {
-      const gameId = data.id;
-      const newStatus = !data.dsData.inRotation;
+  const { actions } = useContext(GamesListContext);
 
-      const res = await fetch(ApiRoutes.ChangeRotationStatus, {
-        method: "POST",
-        body: JSON.stringify({
-          id: gameId,
-          newStatus: newStatus,
-        }),
-      });
-      if (!res.ok) {
-        // TODO some error handling
-      }
-      setInventoryData(
-        inventoryData.map((v) => {
-          if (v.id !== gameId) {
-            return v;
-          }
-          return {
-            ...v,
-            dsData: {
-              ...v.dsData,
-              inRotation: newStatus,
-            },
-          };
-        })
-      );
-      toast({
-        type: "background",
-        title: newStatus
-          ? "Game added to rotation"
-          : "Game removed from rotation",
-      });
-    } catch (error: any) {
-      //
-    }
-  }
   return (
     <div className="absolute bottom-0 right-0 rounded-lg p-2 text-sm">
       <ul className="flex flex-col space-y-1">
         {actions.includes("ToggleRotation") && (
           <li>
-            <GameCardActionButton
-              body={
-                data.dsData.inRotation ? (
-                  <FontAwesomeIcon icon={faSquareCheck} />
-                ) : (
-                  <FontAwesomeIcon icon={faSquareXmark} />
-                )
-              }
-              onClick={changeRotationStatus}
-            />
+            <GameRotationButton data={data} />
           </li>
         )}
         {actions.includes("Edit") && (
@@ -87,9 +34,7 @@ export function GameCardActions(props: PanelProps) {
         )}
         {actions.includes("ToggleRequest") && (
           <li>
-            <GameCardActionButton
-              body={<FontAwesomeIcon icon={faHandPointUp} />}
-            />
+            <ToggleRequestButton gameId={data.id} />
           </li>
         )}
       </ul>

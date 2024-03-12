@@ -1,5 +1,5 @@
 import { InventoryItem } from "@/database/types";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { FilterBubbleData } from "../../input/FilterBubbleBucket";
 import { BubbleFilterInput } from "./controls/BubbleFilterInput";
 import { ControlsKey, FilterState, FilterType } from "./types";
@@ -159,14 +159,26 @@ export function GamesListFilterControls() {
     },
   ];
   items = items.filter((it) => controlsKeys.includes(it.key));
+  const appliedFilterCount = useMemo(() => {
+    return Object.values(filterState)
+      .map((v) => Object.values(v).filter((v) => v.filterOn).length)
+      .reduce((a, b) => a + b, 0);
+  }, [filterState]);
 
   return (
     <GamesFilterContext.Provider value={{ filterState, setFilterState }}>
       <LeftSheet
         head={
-          <h2 className="text-xl rounded p-1 border-2 border-black">
-            Filters...
-          </h2>
+          <div className="relative">
+            <h2 className="text-xl rounded p-1 border-2 border-black">
+              Filters...
+            </h2>
+            {appliedFilterCount > 0 && (
+              <div className="absolute -top-1 -right-2  px-1 rounded-full bg-teal-200 text-sm align-baseline text-teal-800">
+                {appliedFilterCount}
+              </div>
+            )}
+          </div>
         }
         content={
           <div className="h-full w-full overflow-y-auto">

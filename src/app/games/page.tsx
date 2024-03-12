@@ -10,6 +10,7 @@ import {
   GameDataFields,
 } from "@/components/games-list/card/InventoryItemPanel";
 import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
+import { getGamesRequests } from "@/database/game-requests/getGamesRequests";
 
 export default async function ListGames() {
   const inventoryData = await listInventory();
@@ -38,6 +39,8 @@ export default async function ListGames() {
       ? ["ToggleRequest"]
       : [];
 
+  const gameRequests = await getGamesRequests();
+
   return (
     <>
       <h1 className="text-4xl py-2">All Games</h1>
@@ -46,6 +49,7 @@ export default async function ListGames() {
         controlsKeys={controlKeys}
         details={details}
         actions={actions}
+        gameRequestData={gameRequests}
       ></GamesList>
     </>
   );
