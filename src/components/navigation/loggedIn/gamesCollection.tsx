@@ -4,9 +4,9 @@ import { listHolders } from "@/database/holders/listHolders";
 import { ApplicationRoutes } from "@/constants/routes";
 
 export async function gamesCollection(): Promise<DropDownGroup> {
-  const holders = (await listHolders()).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+  const holders = (await listHolders())
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .filter((h) => h.heldGames.length > 0);
 
   const head = <div>Games Collection</div>;
   const items = [
