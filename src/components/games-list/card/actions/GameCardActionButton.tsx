@@ -23,7 +23,7 @@ export function GameCardActionButton(props: GameCardActionProps) {
   return (
     <>
       <div className="flex flex-row justify-end">
-        <div className="relative bg-teal-400 rounded-lg text-xs md:text-sm  w-6 h-6">
+        <div className="relative bg-teal-400 rounded-lg text-sm  w-6 h-6">
           <button onClick={props.onClick} className="w-full h-full">
             {props.body}
           </button>
