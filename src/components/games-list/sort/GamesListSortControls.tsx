@@ -16,57 +16,69 @@ type GamesListSortingControlsProps = {
 export type SortType = "random" | "name" | "min-duration" | "min-player-count";
 export function GamesListSortControls(props: GamesListSortingControlsProps) {
   const { setSortingMethod } = useContext(GamesListContext);
-
+  const [reversed, setReversed] = useState<boolean>(false);
   const [currentSort, setCurrentSort] = useState<SortType>(props.defaultSort);
   const sortBy = (type: SortType) => {
+    let reverse = false;
+    if (type === currentSort) {
+      reverse = !reversed;
+    }
+    setReversed(reverse);
     const newSalt = Math.random().toString();
-    const newSortMethod = sort(type, newSalt);
+    let newSortMethod = sort(type, newSalt, reverse);
     setSortingMethod(() => newSortMethod);
   };
 
   const sort =
-    (type: SortType, salt: string) => (gamesList: InventoryItem[]) => {
+    (type: SortType, salt: string, reverse: boolean) =>
+    (gamesList: InventoryItem[]) => {
       if (!gamesList) {
         return gamesList;
       }
+      const dirMultiplier = reverse ? -1 : 1;
 
       let sorted = [...gamesList];
       switch (type) {
         case "name": {
-          sorted.sort((a, b) => a.name.localeCompare(b.name));
+          sorted.sort((a, b) => dirMultiplier * a.name.localeCompare(b.name));
           break;
         }
         case "random": {
           let pairs = sorted.map((v) => [v, syncHash(v.name + salt)]);
-          pairs.sort((a, b) => (a[1] as string).localeCompare(b[1] as string));
+          pairs.sort(
+            (a, b) =>
+              dirMultiplier * (a[1] as string).localeCompare(b[1] as string)
+          );
           sorted = pairs.map((p) => p[0] as InventoryItem);
           break;
         }
         case "min-duration": {
           sorted.sort(
             (a, b) =>
-              average([
+              dirMultiplier *
+              (average([
                 a.bggData.specs.minPlayTime,
                 a.bggData.specs.maxPlayTime,
               ]) -
-              average([
-                b.bggData.specs.minPlayTime,
-                b.bggData.specs.maxPlayTime,
-              ])
+                average([
+                  b.bggData.specs.minPlayTime,
+                  b.bggData.specs.maxPlayTime,
+                ]))
           );
           break;
         }
         case "min-player-count": {
           sorted.sort(
             (a, b) =>
-              average([
+              dirMultiplier *
+              (average([
                 a.bggData.specs.minPlayerCount,
                 a.bggData.specs.maxPlayerCount,
               ]) -
-              average([
-                b.bggData.specs.minPlayerCount,
-                b.bggData.specs.maxPlayerCount,
-              ])
+                average([
+                  b.bggData.specs.minPlayerCount,
+                  b.bggData.specs.maxPlayerCount,
+                ]))
           );
         }
       }
