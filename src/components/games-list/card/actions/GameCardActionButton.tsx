@@ -23,8 +23,10 @@ export function GameCardActionButton(props: GameCardActionProps) {
   return (
     <>
       <div className="flex flex-row justify-end">
-        <div className="relative bg-teal-400 p-1 rounded-lg text-xs md:text-sm">
-          <button onClick={props.onClick}>{props.body}</button>
+        <div className="relative bg-teal-400 rounded-lg text-xs md:text-sm  w-6 h-6">
+          <button onClick={props.onClick} className="w-full h-full">
+            {props.body}
+          </button>
           {true ? (
             props.hatReveal ? (
               <CustomPopover head={hat} content={props.hatReveal} />
