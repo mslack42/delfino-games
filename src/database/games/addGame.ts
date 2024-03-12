@@ -32,33 +32,28 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
   try {
     let game: Prisma.BoardGameCreateInput = {
       bggData: {
-        connectOrCreate: {
-          where: {
-            bggId: newData.bggData.bggId,
-          },
-          create: {
-            bggId: newData.bggData.bggId,
-            image: newData.bggData.image ?? "",
-            thumb: newData.bggData.thumb ?? "",
-            description: newData.bggData.description ?? "",
-            specs: {
-              create: {
-                maxplaytime_minutes:
-                  newData.bggData.boardGameBggDataStats.maxplaytime_minutes!,
-                minplaytime_minutes:
-                  newData.bggData.boardGameBggDataStats.minplaytime_minutes!,
-                maxplayers: newData.bggData.boardGameBggDataStats.maxplayers!,
-                minplayers: newData.bggData.boardGameBggDataStats.minplayers!,
-                externalDataId: newData.bggData.bggId,
-                tags: newData.bggData.boardGameBggDataStats.tags,
-              },
+        create: {
+          bggId: newData.bggData.bggId,
+          image: newData.bggData.image ?? "",
+          thumb: newData.bggData.thumb ?? "",
+          description: newData.bggData.description ?? "",
+          specs: {
+            create: {
+              maxplaytime_minutes:
+                newData.bggData.boardGameBggDataStats.maxplaytime_minutes!,
+              minplaytime_minutes:
+                newData.bggData.boardGameBggDataStats.minplaytime_minutes!,
+              maxplayers: newData.bggData.boardGameBggDataStats.maxplayers!,
+              minplayers: newData.bggData.boardGameBggDataStats.minplayers!,
+              externalDataId: newData.bggData.bggId,
+              tags: newData.bggData.boardGameBggDataStats.tags,
             },
-            stats: {
-              create: {
-                bggAverageScore: newData.bggData.boardGameDataSpecs.score,
-                bggRank: newData.bggData.boardGameDataSpecs.rank,
-                bggId: newData.bggData.bggId,
-              },
+          },
+          stats: {
+            create: {
+              bggAverageScore: newData.bggData.boardGameDataSpecs.score,
+              bggRank: newData.bggData.boardGameDataSpecs.rank,
+              bggId: newData.bggData.bggId,
             },
           },
         },

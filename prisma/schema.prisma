@@ -13,7 +13,7 @@ datasource db {
 model BoardGame {
   id          Int                    @id @default(autoincrement())
   name        String
-  bggData     BoardGameBggData?      @relation("bggData", fields: [bggDataId], references: [id], map: "bgg")
+  bggData     BoardGameBggData?      @relation("bggData", fields: [bggDataId], references: [id], map: "bgg", onDelete: Cascade)
   dsData      BoardGameInternalData? @relation("dsData", fields: [dsDataId], references: [id], map: "ds", onDelete: Cascade)
   bggDataId   Int
   dsDataId    Int
@@ -27,8 +27,8 @@ model BoardGameBggData {
   thumb                   String
   image                   String
   description             String
-  specs                   BoardGameDataSpecs    @relation(fields: [boardGameDataSpecsId], references: [id])
-  stats                   BoardGameBggDataStats @relation(fields: [boardGameBggDataStatsId], references: [id])
+  specs                   BoardGameDataSpecs    @relation(fields: [boardGameDataSpecsId], references: [id], onDelete: Cascade)
+  stats                   BoardGameBggDataStats @relation(fields: [boardGameBggDataStatsId], references: [id], onDelete: Cascade)
   boardGameDataSpecsId    Int
   boardGameBggDataStatsId Int
   lastUpdate              DateTime              @updatedAt
@@ -80,14 +80,14 @@ model Person {
 model CustomTag {
   id                      Int                    @id @default(autoincrement())
   tag                     String
-  BoardGameInternalData   BoardGameInternalData? @relation(fields: [boardGameInternalDataId], references: [id])
+  BoardGameInternalData   BoardGameInternalData? @relation(fields: [boardGameInternalDataId], references: [id], onDelete: Cascade)
   boardGameInternalDataId Int?
 }
 
 model GameRequest {
   id          Int       @id @default(autoincrement())
-  boardGame   BoardGame @relation(fields: [boardGameId], references: [id])
-  user        User      @relation(fields: [userId], references: [id])
+  boardGame   BoardGame @relation(fields: [boardGameId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   boardGameId Int
   userId      String
 }
