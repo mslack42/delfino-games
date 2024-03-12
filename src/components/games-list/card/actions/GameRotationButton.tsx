@@ -3,12 +3,12 @@ import {
   faSquareCheck,
   faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { GamesListContext } from "../../GamesListContext";
 import { GameCardActionButton } from "./GameCardActionButton";
 import { useToast } from "@/components/shadcn/use-toast";
 import { InventoryItem } from "@/database/types";
+import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 
 type GameRotationButtonProps = {
   data: InventoryItem;
@@ -61,9 +61,9 @@ export function GameRotationButton(props: GameRotationButtonProps) {
       <GameCardActionButton
         body={
           data.dsData.inRotation ? (
-            <FontAwesomeIcon icon={faSquareCheck} />
+            <CustomFontAwesomeIcon icon={faSquareCheck} />
           ) : (
-            <FontAwesomeIcon icon={faSquareXmark} />
+            <CustomFontAwesomeIcon icon={faSquareXmark} />
           )
         }
         onClick={changeRotationStatus}

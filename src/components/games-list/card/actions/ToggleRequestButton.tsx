@@ -1,5 +1,4 @@
 import { faStar as fullStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useMemo } from "react";
 import { GameCardActionButton } from "./GameCardActionButton";
 import { GameRequestsContext } from "@/components/game-requests/GameRequestContext";
@@ -7,6 +6,7 @@ import { useUserData } from "@/util/auth/client/useUserData";
 import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
 import { ApiRoutes } from "@/constants/routes";
 import { useToast } from "@/components/shadcn/use-toast";
+import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 
 type RequestGameButtonProps = {
   gameId: number;
@@ -79,7 +79,7 @@ export function ToggleRequestButton(props: RequestGameButtonProps) {
   return (
     <>
       <GameCardActionButton
-        body={<FontAwesomeIcon icon={icon} />}
+        body={<CustomFontAwesomeIcon icon={icon} />}
         hatCount={totalRequests}
         onClick={toggleGameRequest}
         hatReveal={

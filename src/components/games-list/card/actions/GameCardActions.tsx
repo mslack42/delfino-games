@@ -1,6 +1,5 @@
 import { ApplicationRoutes } from "@/constants/routes";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { GamesListContext } from "../../GamesListContext";
 import { GameCardActionButton } from "./GameCardActionButton";
@@ -8,6 +7,7 @@ import { PanelProps } from "../InventoryItemPanel";
 import Link from "next/link";
 import { GameRotationButton } from "./GameRotationButton";
 import { ToggleRequestButton } from "./ToggleRequestButton";
+import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 
 export function GameCardActions(props: PanelProps) {
   const { data } = props;
@@ -26,7 +26,7 @@ export function GameCardActions(props: PanelProps) {
             <GameCardActionButton
               body={
                 <Link href={ApplicationRoutes.EditGame(data.id)}>
-                  <FontAwesomeIcon icon={faPenToSquare} />
+                  <CustomFontAwesomeIcon icon={faPenToSquare} />
                 </Link>
               }
             />
