@@ -7,6 +7,7 @@ import {
 import { ControlsKey } from "@/components/games-list/filter/types";
 import { isRole } from "@/util/auth/server/isRole";
 import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
+import { getGamesRequests } from "@/database/game-requests/getGamesRequests";
 
 type Props = {
   params: {
@@ -35,6 +36,8 @@ export default async function ListGames(props: Props) {
       ? ["ToggleRequest"]
       : [];
 
+  const gameRequests = await getGamesRequests();
+
   return (
     <>
       <h1 className="text-4xl py-2">{title}</h1>
@@ -43,6 +46,7 @@ export default async function ListGames(props: Props) {
         controlsKeys={controlKeys}
         details={details}
         actions={actions}
+        gameRequestData={gameRequests}
       ></GamesList>
     </>
   );
