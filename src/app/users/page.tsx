@@ -11,7 +11,7 @@ export default async function Users() {
       <p>Below is a list of all site users.</p>
       <br />
       <UserTable users={users} />
-      <Referral code={process.env.INVITATION_CODE} />
+      <Referral code={process.env.INVITATION_CODE!} />
     </div>
   );
 }
