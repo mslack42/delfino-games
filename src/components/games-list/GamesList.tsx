@@ -25,6 +25,7 @@ type Props = {
   details: GameDataFields[];
   actions: GameActions[];
   gameRequestData?: GameRequest[];
+  noSorting?: boolean;
 };
 
 export function GamesList(props: Props) {
@@ -82,9 +83,11 @@ export function GamesList(props: Props) {
                 <GamesListFilterControls />
               </div>
             )}
-            <div>
-              <GamesListSortControls defaultSort="name" />
-            </div>
+            {!props.noSorting && (
+              <div>
+                <GamesListSortControls defaultSort="name" />
+              </div>
+            )}
           </div>
           <div className="flex max-w-full flex-row flex-wrap justify-center">
             <Suspense fallback={<LoadingIdler />}>

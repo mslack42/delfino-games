@@ -66,7 +66,8 @@ const routeChecks: RouteCheck[] = [
   },
   { pathMatch: "/api/request", requiredRoles: atLeast("Verified") },
   { pathMatch: "/requests", requiredRoles: atLeast("Verified") },
-  { pathMatch: "/games/holder", requiredRoles: atLeast("Unverified") },
+  { pathMatch: "/games/holder", requiredRoles: atLeast("Verified") },
+  { pathMatch: "/games/gameholders", requiredRoles: atLeast("Verified") },
   { pathMatch: "/profile", requiredRoles: atLeast("Unverified") },
   { pathMatch: "/api/profile", requiredRoles: atLeast("Unverified") },
 ];

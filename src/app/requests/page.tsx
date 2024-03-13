@@ -23,7 +23,7 @@ export default async function ListGameRequests() {
   const gameRequests = await getGamesRequests();
 
   return (
-    <>
+    <div>
       <h1 className="text-4xl py-2">Open Game Requests</h1>
       <GamesList
         inventoryData={requestedGames}
@@ -32,6 +32,6 @@ export default async function ListGameRequests() {
         actions={actions}
         gameRequestData={gameRequests}
       ></GamesList>
-    </>
+    </div>
   );
 }

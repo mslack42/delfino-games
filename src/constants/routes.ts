@@ -21,6 +21,7 @@ export const ApiRoutes = {
 
 export const ApplicationRoutes = {
   Games: "/games",
+  GamesByGamesHolders: "/games/gameholders",
   GameRequests: "/requests",
   AddGame: (bggId: number) => `/add-game/${bggId}`,
   People: "/people",
