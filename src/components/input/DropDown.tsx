@@ -21,6 +21,7 @@ export type DropDownGroupCollection = {
 type DropDownProps = {
   head: React.ReactNode;
   className?: string;
+  name: string;
 } & (
   | {
       type: "Single";
@@ -86,7 +87,10 @@ export function DropDown(props: DropDownProps) {
     <>
       {props.items.length > 0 ? (
         <DropdownMenu open={open}>
-          <DropdownMenuTrigger onPointerDown={() => setOpen(true)}>
+          <DropdownMenuTrigger
+            onPointerDown={() => setOpen(true)}
+            name={props.name}
+          >
             {props.head}
           </DropdownMenuTrigger>
           <DropdownMenuContent

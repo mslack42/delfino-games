@@ -21,8 +21,8 @@ export const NavigationBar = async () => {
     profile: await profileControls(logoutAction),
   };
   return (
-    <div className="w-full h-16 bg-teal-600 sticky top-0  z-[500]">
-      <div className="bg-teal-600 h-full">
+    <div className="w-full h-16 bg-teal-700 sticky top-0  z-[500]">
+      <div className="bg-teal-700 h-full">
         <div className="container mx-auto px-4 h-full">
           <div className="flex justify-between items-center h-full align-middle">
             <Logo />
@@ -32,19 +32,31 @@ export const NavigationBar = async () => {
                   content={
                     <>
                       <li className="px-2">
-                        <DropDown type="Single" {...menu["game"]} />
+                        <DropDown
+                          type="Single"
+                          {...menu["game"]}
+                          name="Games Collection Menu"
+                        />
                       </li>
                       <RoleCheck
                         type="oneOf"
                         roles={["Admin"]}
                         content={
                           <li className="px-2">
-                            <DropDown type="Single" {...menu["admin"]} />
+                            <DropDown
+                              type="Single"
+                              {...menu["admin"]}
+                              name="Admin Menu"
+                            />
                           </li>
                         }
                       ></RoleCheck>
                       <li className="px-2">
-                        <DropDown type="Single" {...menu["profile"]} />
+                        <DropDown
+                          type="Single"
+                          {...menu["profile"]}
+                          name="Profile Menu"
+                        />
                       </li>
                     </>
                   }
@@ -67,6 +79,7 @@ export const NavigationBar = async () => {
                 content={
                   <DropDown
                     type="Multi"
+                    name="Menu"
                     head={<BurgerButton />}
                     items={[menu["game"], menu["admin"], menu["profile"]]}
                   />
@@ -76,6 +89,7 @@ export const NavigationBar = async () => {
                 content={
                   <DropDown
                     type="Single"
+                    name="Menu"
                     head={<BurgerButton />}
                     items={loggedOutMenuItems()}
                   />
