@@ -10,9 +10,10 @@ export type BubbleFilterInput = {
   filterName: string;
   filterKey: string;
   allOptions: FilterBubbleData[];
+  noSelectAllNone?: boolean;
 };
 export function BubbleFilterInput(props: BubbleFilterInput) {
-  const { filterName, filterKey, allOptions } = props;
+  const { filterKey, allOptions } = props;
   const { filterState, setFilterState } = useContext(GamesFilterContext);
 
   const filterBubbleToggle = (key: string) => {
@@ -48,6 +49,28 @@ export function BubbleFilterInput(props: BubbleFilterInput) {
     };
   };
 
+  const toggleAll = (key: string) => {
+    return (newValue: boolean) => {
+      let thisBubbleTypeFilter = {
+        ...filterState.bubbleTypeFilters[key],
+      } as BubbleTypeFilter;
+      if (newValue) {
+        thisBubbleTypeFilter.values = allOptions.map((ao) => ao.data);
+      } else {
+        thisBubbleTypeFilter.values = [];
+      }
+      setFilterState({
+        ...filterState,
+        bubbleTypeFilters: {
+          ...filterState.bubbleTypeFilters,
+          [key]: {
+            ...thisBubbleTypeFilter,
+          },
+        },
+      });
+    };
+  };
+
   return (
     <div>
       <FilterBubbleBucket
@@ -55,6 +78,7 @@ export function BubbleFilterInput(props: BubbleFilterInput) {
         selectedValues={filterState.bubbleTypeFilters[filterKey].values}
         enabled={filterState.bubbleTypeFilters[filterKey].filterOn}
         toggleFn={filterBubbleToggle(filterKey)}
+        toggleAllFn={!props.noSelectAllNone ? toggleAll(filterKey) : undefined}
       />
     </div>
   );

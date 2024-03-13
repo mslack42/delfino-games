@@ -2,19 +2,45 @@ import { twJoin } from "tailwind-merge";
 
 export type FilterBubbleData = {
   name: string;
-  data: number | string;
+  data: string;
 };
 type FilterBubbleBucketProps = {
   allValues: FilterBubbleData[];
-  selectedValues: (number | string)[];
+  selectedValues: string[];
   enabled: boolean;
   toggleFn: (toggledValue: any) => void;
+  toggleAllFn?: (toggledValue: any) => void;
   scrollable?: boolean;
 };
 export function FilterBubbleBucket(props: FilterBubbleBucketProps) {
   return (
     <div className="max-h-40 m-w-full overflow-hidden hover:overflow-y-auto p-4">
-      <div className="flex flex-row flex-wrap justify-around space-x-1 space-y-1">
+      {props.allValues.length > 0 && props.toggleAllFn && (
+        <>
+          <div className="flex flex-row flex-wrap justify-around gap-1 pb-2">
+            <>
+              <FilterBubble
+                name={"Select All"}
+                inputEnabled={props.enabled}
+                isActive={props.selectedValues.length >= props.allValues.length}
+                onToggle={() => {
+                  props.toggleAllFn!(true);
+                }}
+              />
+              <FilterBubble
+                name={"Select None"}
+                inputEnabled={props.enabled}
+                isActive={props.selectedValues.length == 0}
+                onToggle={() => {
+                  props.toggleAllFn!(false);
+                }}
+              />
+            </>
+          </div>
+          <hr></hr>
+        </>
+      )}
+      <div className="flex flex-row flex-wrap justify-around gap-1 pt-2">
         {props.allValues.map((v) => (
           <FilterBubble
             key={v.data}

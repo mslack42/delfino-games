@@ -81,6 +81,7 @@ export function GamesListFilterControls() {
           filterName="Filter by office?"
           filterKey="office"
           allOptions={offices}
+          noSelectAllNone
         />
       ),
       ...getAccordionOpeningMechanism(
