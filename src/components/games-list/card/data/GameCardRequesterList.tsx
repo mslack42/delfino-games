@@ -7,6 +7,7 @@ import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon
 import { useLoggedInInspection } from "@/util/auth/client/useLoggedInInspection";
 import { ApiRoutes } from "@/constants/routes";
 import { useToast } from "@/components/shadcn/use-toast";
+import { useUserRoleInspection } from "@/util/auth/client/useUserRoleInspection";
 
 export function GameCardRequesterList(props: PanelProps) {
   const { data } = props;
@@ -16,6 +17,7 @@ export function GameCardRequesterList(props: PanelProps) {
   const requesters = allRequests.filter((r) => r.game.id === data.id);
 
   const { isLoggedOut } = useLoggedInInspection();
+  const { isRole } = useUserRoleInspection();
   if (isLoggedOut()) {
     return (
       <div className="w-full flex flex-row justify-start text-left px-2">
@@ -54,6 +56,8 @@ export function GameCardRequesterList(props: PanelProps) {
     }
   }
 
+  const canCancelOtherRequests = isRole("Admin", "Holder");
+
   return (
     <>
       <div className="w-full flex flex-row justify-start text-left text-xxs md:text-xs max-h-24 overflow-hidden hover:overflow-y-scroll z-1000">
@@ -64,12 +68,14 @@ export function GameCardRequesterList(props: PanelProps) {
                 tag={
                   <div className="flex flex-row">
                     <div>{r.user.name}</div>
-                    <button
-                      className="rounded-full bg-sky-100 ml-1 px-1"
-                      onClick={() => deleteRequest(r.user.id)}
-                    >
-                      <CustomFontAwesomeIcon icon={faTimes} />
-                    </button>
+                    {canCancelOtherRequests && (
+                      <button
+                        className="rounded-full bg-sky-100 ml-1 px-1"
+                        onClick={() => deleteRequest(r.user.id)}
+                      >
+                        <CustomFontAwesomeIcon icon={faTimes} />
+                      </button>
+                    )}
                   </div>
                 }
                 className="p-0 px-1"
