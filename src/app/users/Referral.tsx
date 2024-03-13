@@ -5,19 +5,22 @@ import { faCopy } from "@fortawesome/free-regular-svg-icons";
 
 export function Referral({ code }: { code: string }) {
   const copyReferralLink = () => {
-    const url = window.location.host + `/register?invite=${code}`;
+    const url =
+      window.location.host + `/register?invite=${encodeURIComponent(code)}`;
     navigator.clipboard.writeText(url);
   };
   return (
     <>
       <div className="py-4 text-xs flex flex-row justify-center space-x-2">
         <p>Want to invite new users with a nice convenient link?</p>
-        <button onClick={copyReferralLink}>
-          <CustomPopover
-            head={<CustomFontAwesomeIcon icon={faCopy} />}
-            content="Copied!"
-          />
-        </button>
+        <CustomPopover
+          head={
+            <button onClick={copyReferralLink}>
+              <CustomFontAwesomeIcon icon={faCopy} />
+            </button>
+          }
+          content="Copied!"
+        />
       </div>
     </>
   );
