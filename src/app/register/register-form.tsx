@@ -7,12 +7,19 @@ import { signIn } from "next-auth/react";
 import { CreateUserInput, createUserSchema } from "@/lib/user-schema";
 import { ApiRoutes } from "@/constants/routes";
 import { CustomButton } from "@/components/input/CustomButton";
+import { useSearchParams } from "next/navigation";
 
 export const RegisterForm = () => {
   const [submitting, setSubmitting] = useState(false);
+  const query = useSearchParams();
+
+  const suppliedInviteCode: string | null = query.get("invite");
 
   const methods = useForm<CreateUserInput>({
     resolver: zodResolver(createUserSchema),
+    defaultValues: {
+      invitationCode: suppliedInviteCode ? suppliedInviteCode : "",
+    },
   });
 
   const {
