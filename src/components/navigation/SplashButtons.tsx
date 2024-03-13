@@ -27,14 +27,14 @@ export function SplashButtons() {
         <SplashButton
           href={ApplicationRoutes.Profile}
           text="Your Profile"
-          className="bg-yellow-300 hover:bg-yellow-200"
+          className="bg-purple-300 hover:bg-purple-200"
         />
       )}
       {isRole("Admin", "Holder") && (
         <SplashButton
           href={ApplicationRoutes.FindAndAddGame}
           text="Add A New Game"
-          className="hover:bg-purple-200 bg-purple-300"
+          className="hover:bg-yellow-200 bg-yellow-300"
         />
       )}
       {isRole("Admin") && (
