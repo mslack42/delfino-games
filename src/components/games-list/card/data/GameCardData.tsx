@@ -1,5 +1,6 @@
 import { playerCount, playTime } from "@/util/text-formatting";
 import {
+  faCross,
   faHourglass,
   faUser,
   faUsers,
@@ -10,13 +11,15 @@ import { useContext } from "react";
 import { GamesListContext } from "../../GamesListContext";
 import { GameCardDataRow } from "./GameCardDataRow";
 import { PanelProps } from "../InventoryItemPanel";
+import { GameCardRequesterList } from "./GameCardRequesterList";
 
 export function GameCardData(props: PanelProps) {
   const { data } = props;
   const { details } = useContext(GamesListContext);
+
   return (
     <div className="absolute w-40 md:w-60 text-xs md:text-sm bottom-0 left-0  bg-gradient-to-t from-teal-600 via-teal-600 to-transparent pt-8 rounded-lg">
-      <div className="absoulte w-2/3 bottom-0 left-0 ">
+      <div className="absoulte w-32 md:w-52 bottom-0 left-0 ">
         <div className="flex justify items-center text-center flex-col pb-1">
           {details.includes("PlayerCount") && (
             <GameCardDataRow
@@ -47,6 +50,9 @@ export function GameCardData(props: PanelProps) {
               keyPart={<FontAwesomeIcon icon={faUser} />}
               valuePart={<div>{data.dsData.holder}</div>}
             />
+          )}
+          {details.includes("Requesters") && (
+            <GameCardRequesterList {...props} />
           )}
         </div>
       </div>

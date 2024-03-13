@@ -16,10 +16,12 @@ export const ApiRoutes = {
   DeleteGame: (gameId: string) => `/api/game?id=${gameId}`,
   EditGame: (gameId: string) => `/api/game?id=${gameId}`,
   ToggleGameRequest: "/api/request",
+  ClearGameRequests: "/api/request/clearAll",
 };
 
 export const ApplicationRoutes = {
   Games: "/games",
+  GameRequests: "/requests",
   AddGame: (bggId: number) => `/add-game/${bggId}`,
   People: "/people",
   PersonsGames: (name: string) => `/games/holder/${name}`,

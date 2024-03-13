@@ -36,7 +36,11 @@ export function GamesList(props: Props) {
   >(() => defaultSort);
   const [filterMethod, setFilterMethod] = useState<
     (list: InventoryItem[]) => InventoryItem[]
-  >(() => defaultFilter);
+  >(
+    props.controlsKeys.includes("inrotation")
+      ? () => defaultFilter
+      : () => (x: InventoryItem[]) => x
+  );
 
   const gamesListContext: GamesListContextType = {
     ...defaultGamesListContext,
@@ -73,9 +77,11 @@ export function GamesList(props: Props) {
       >
         <div className="h-full w-full">
           <div className="w-full flex flex-row justify-center text-center items-center flex-wrap space-x-10">
-            <div>
-              <GamesListFilterControls />
-            </div>
+            {props.controlsKeys.length > 0 && (
+              <div>
+                <GamesListFilterControls />
+              </div>
+            )}
             <div>
               <GamesListSortControls defaultSort="name" />
             </div>

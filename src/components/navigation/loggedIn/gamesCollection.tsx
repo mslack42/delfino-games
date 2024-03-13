@@ -13,6 +13,13 @@ export async function gamesCollection(): Promise<DropDownGroup> {
     <Link key={-1} href={ApplicationRoutes.Games} className="h-full w-full">
       <b>All Games</b>
     </Link>,
+    <Link
+      key={-2}
+      href={ApplicationRoutes.GameRequests}
+      className="h-full w-full"
+    >
+      <b>Requested Games</b>
+    </Link>,
     ...holders.map((h) => (
       <Link
         key={h.id}

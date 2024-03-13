@@ -16,7 +16,7 @@ type CustomModalProps = {
   content: React.ReactNode;
   footer?: React.ReactNode;
   isOpen?: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 };
 export function CustomModal(props: CustomModalProps) {
   return (
@@ -24,7 +24,7 @@ export function CustomModal(props: CustomModalProps) {
       <Dialog
         open={props.isOpen}
         onOpenChange={(isOpen) => {
-          !isOpen ? props.onClose() : null;
+          !isOpen && props.onClose ? props.onClose() : null;
         }}
       >
         {props.head ? <DialogTrigger>{props.head}</DialogTrigger> : undefined}

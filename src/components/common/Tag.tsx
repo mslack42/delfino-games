@@ -1,8 +1,19 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 type TagProps = {
-  tag: string;
+  tag: string | React.ReactNode;
+  className?: string;
 };
 export function Tag(props: TagProps) {
-  return <div className="bg-tag text-teal-900 p-1 rounded-lg">{props.tag}</div>;
+  return (
+    <div
+      className={twMerge(
+        "bg-tag text-teal-900 p-1 rounded-lg",
+        props.className
+      )}
+    >
+      {props.tag}
+    </div>
+  );
 }
