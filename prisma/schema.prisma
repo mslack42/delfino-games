@@ -23,7 +23,7 @@ model BoardGame {
 model BoardGameBggData {
   id                      Int                   @id @default(autoincrement())
   boardGame               BoardGame[]           @relation("bggData")
-  bggId                   Int                   @unique
+  bggId                   Int                   
   thumb                   String
   image                   String
   description             String
@@ -48,7 +48,7 @@ model BoardGameDataSpecs {
 
 model BoardGameBggDataStats {
   id               Int                @id @default(autoincrement())
-  bggId            Int                @unique
+  bggId            Int                
   bggRank          Int?
   bggAverageScore  Float?
   BoardGameBggData BoardGameBggData[]
