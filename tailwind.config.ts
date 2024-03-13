@@ -53,6 +53,7 @@ const config: Config = {
       tag: colours.sky[300],
       headbar: colours.teal[600],
       warning: colours.red[500],
+      destructive: colours.red[300],
     },
   },
 };

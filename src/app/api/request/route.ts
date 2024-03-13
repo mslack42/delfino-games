@@ -1,3 +1,4 @@
+import { getUserGameRequests } from "@/database/game-requests/getUserGameRequests";
 import { toggleGameRequest } from "@/database/game-requests/toggleGameRequest";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,6 +15,18 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    if (newStatus) {
+      const userRequests = await getUserGameRequests(userId);
+      if (userRequests.length >= 3) {
+        return NextResponse.json(
+          {
+            reason: "TooManyGameRequests",
+          },
+          { status: 400 }
+        );
+      }
+    }
+
     await toggleGameRequest(gameId, userId, newStatus);
 
     return NextResponse.json({

@@ -43,11 +43,25 @@ export function ToggleRequestButton(props: RequestGameButtonProps) {
       });
       if (!res.ok) {
         // TODO some error handling
-        toast({
-          type: "background",
-          variant: "destructive",
-          title: "Action failed",
-        });
+        const body = await res.json();
+        if (
+          res.status === 400 &&
+          body["reason"] &&
+          body["reason"] === "TooManyGameRequests"
+        ) {
+          toast({
+            type: "background",
+            variant: "destructive",
+            title: "You cannot request more than 3 games at once",
+          });
+        } else {
+          toast({
+            type: "background",
+            variant: "destructive",
+            title: "Action failed",
+          });
+        }
+
         return;
       }
 
