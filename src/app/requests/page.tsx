@@ -31,6 +31,7 @@ export default async function ListGameRequests() {
         details={details}
         actions={actions}
         gameRequestData={gameRequests}
+        cacheKey={`requests${loggedIn ? "loggedIn" : "notloggedin"}`}
       ></GamesList>
     </>
   );

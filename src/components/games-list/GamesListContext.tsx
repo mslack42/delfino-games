@@ -17,6 +17,8 @@ export type GamesListContextType = {
   controlsKeys: ControlsKey[];
   details: GameDataFields[];
   actions: GameActions[];
+  filtersReady: boolean;
+  setFiltersReady: Dispatch<SetStateAction<boolean>>;
 };
 
 export const defaultSort = (gamelist: InventoryItem[]) => {
@@ -45,6 +47,8 @@ export const defaultGamesListContext: GamesListContextType = {
   setFilterMethod: function (
     _: SetStateAction<(gamelist: InventoryItem[]) => InventoryItem[]>
   ): void {},
+  filtersReady: false,
+  setFiltersReady: function (_: SetStateAction<boolean>): void {},
 };
 
 export const GamesListContext = createContext<GamesListContextType>(

@@ -41,6 +41,7 @@ export async function ProfileGameRequests() {
         actions={actions}
         gameRequestData={gameRequests}
         noSorting
+        cacheKey={`profile${loggedIn ? "loggedIn" : "notloggedin"}`}
       ></GamesList>
     </div>
   );

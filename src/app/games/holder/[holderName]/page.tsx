@@ -47,6 +47,7 @@ export default async function ListGames(props: Props) {
         details={details}
         actions={actions}
         gameRequestData={gameRequests}
+        cacheKey={`holder${holderName}${loggedIn ? "loggedIn" : "notloggedin"}`}
       ></GamesList>
     </>
   );

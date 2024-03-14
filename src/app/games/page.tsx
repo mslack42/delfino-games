@@ -50,6 +50,7 @@ export default async function ListGames() {
         details={details}
         actions={actions}
         gameRequestData={gameRequests}
+        cacheKey={`allGames${loggedIn ? "loggedIn" : "notloggedin"}`}
       ></GamesList>
     </>
   );

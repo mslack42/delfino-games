@@ -26,6 +26,7 @@ type Props = {
   actions: GameActions[];
   gameRequestData?: GameRequest[];
   noSorting?: boolean;
+  cacheKey: string;
 };
 
 export function GamesList(props: Props) {
@@ -42,6 +43,7 @@ export function GamesList(props: Props) {
       ? () => defaultFilter
       : () => (x: InventoryItem[]) => x
   );
+  const [filtersReady, setFiltersReady] = useState(false);
 
   const gamesListContext: GamesListContextType = {
     ...defaultGamesListContext,
@@ -54,6 +56,8 @@ export function GamesList(props: Props) {
     setSortingMethod,
     filterMethod,
     setFilterMethod,
+    filtersReady,
+    setFiltersReady,
   };
 
   const appliedSort = useCallback(sortingMethod, [sortingMethod]);
@@ -80,7 +84,7 @@ export function GamesList(props: Props) {
           <div className="w-full flex flex-row justify-center text-center items-center flex-wrap space-x-10">
             {props.controlsKeys.length > 0 && (
               <div>
-                <GamesListFilterControls />
+                <GamesListFilterControls cacheKey={props.cacheKey} />
               </div>
             )}
             {!props.noSorting && (
@@ -91,7 +95,9 @@ export function GamesList(props: Props) {
           </div>
           <div className="flex max-w-full flex-row flex-wrap justify-center">
             <Suspense fallback={<LoadingIdler />}>
-              {displayedInventory.length ? (
+              {!filtersReady ? (
+                <LoadingIdler className="py-10" />
+              ) : displayedInventory.length ? (
                 <div className="grid columns-auto w-full row-auto grid-cols-game-cards-sm md:grid-cols-game-cards-md gap-4 ">
                   {displayedInventory.map((id) => (
                     <span key={id.id} className="flex justify-center">
