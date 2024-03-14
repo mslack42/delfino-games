@@ -14,8 +14,8 @@ export function CustomRangeSlider(props: Props) {
   const max = useMemo(() => Math.max(...props.fullRange), [props.fullRange]);
   const onSliderChange = (value: number | number[]) => {
     const range = value as number[];
-    setLower(Math.max(Math.min(...range), min));
-    setUpper(Math.min(Math.max(...range), max));
+    setLower(Math.min(Math.max(Math.min(...range), min), max));
+    setUpper(Math.max(Math.min(Math.max(...range), max), min));
     props.onChange ? props.onChange(range) : null;
   };
   const [lower, setLower] = useState(Math.max(props.defaultRange[0], min));
@@ -31,18 +31,18 @@ export function CustomRangeSlider(props: Props) {
 
   function trySetSlider(textInput: string) {
     const content = textInput.trim();
-    const singleNumberRegex = new RegExp(`^\\d+$`);
-    const rangeNumberRegex = new RegExp(`^(\\d+)\\s*\\-\\s*(\\d+)$`);
-
-    if (singleNumberRegex.test(content)) {
-      const range = [tryParseInt(content)!];
-      onSliderChange(range);
-      return;
-    }
+    const singleNumberRegex = new RegExp(`^\\d+`);
+    const rangeNumberRegex = new RegExp(`^(\\d+)\\s*\\-\\s*(\\d+)`);
 
     if (rangeNumberRegex.test(content)) {
       const matches = content.match(rangeNumberRegex);
       const range = [tryParseInt(matches![1])!, tryParseInt(matches![2])!];
+      onSliderChange(range);
+      return;
+    }
+
+    if (singleNumberRegex.test(content)) {
+      const range = [tryParseInt(content)!, tryParseInt(content)!];
       onSliderChange(range);
       return;
     }
@@ -60,9 +60,8 @@ export function CustomRangeSlider(props: Props) {
           minStepsBetweenThumbs={0}
           value={[lower, upper]}
           onValueChange={onSliderChange}
-          className="py-2 w-4/5"
+          className="py-2 w-3/5"
         ></Slider>
-
         <input
           className="w-2/5"
           type="text"
