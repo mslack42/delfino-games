@@ -77,12 +77,32 @@ export const NavigationBar = async () => {
             <div className="flex md:hidden justify-end flex-col h-full pb-3 z-[501]">
               <LoggedInOnly
                 content={
-                  <DropDown
-                    type="Multi"
-                    name="Menu"
-                    head={<BurgerButton />}
-                    items={[menu["game"], menu["admin"], menu["profile"]]}
-                  />
+                  <>
+                    <RoleCheck
+                      type="oneOf"
+                      roles={["Admin"]}
+                      content={
+                        <DropDown
+                          type="Multi"
+                          name="Menu"
+                          head={<BurgerButton />}
+                          items={[menu["game"], menu["admin"], menu["profile"]]}
+                        />
+                      }
+                    />{" "}
+                    <RoleCheck
+                      type="noneOf"
+                      roles={["Admin"]}
+                      content={
+                        <DropDown
+                          type="Multi"
+                          name="Menu"
+                          head={<BurgerButton />}
+                          items={[menu["game"], menu["profile"]]}
+                        />
+                      }
+                    />
+                  </>
                 }
               />
               <LoggedOutOnly
