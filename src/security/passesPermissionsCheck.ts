@@ -1,4 +1,5 @@
 import { UserRole } from "@prisma/client";
+import { rolesAndAbove } from "./rolesAndAbove";
 
 export function passesPermissionsCheck(
   path: string,
@@ -29,45 +30,28 @@ type RouteCheck = {
   requiredRoles: UserRole[];
 };
 
-function atLeast(role: UserRole): UserRole[] {
-  switch (role) {
-    case "Admin": {
-      return ["Admin"];
-    }
-    case "Holder": {
-      return ["Holder", ...atLeast("Admin")];
-    }
-    case "Verified": {
-      return ["Verified", ...atLeast("Holder")];
-    }
-    case "Unverified": {
-      return ["Unverified", ...atLeast("Verified")];
-    }
-  }
-}
-
 const routeChecks: RouteCheck[] = [
-  { pathMatch: "/people", requiredRoles: atLeast("Admin") },
-  { pathMatch: "/api/people", requiredRoles: atLeast("Admin") },
-  { pathMatch: "/users", requiredRoles: atLeast("Admin") },
-  { pathMatch: "/api/user", requiredRoles: atLeast("Admin") },
-  { pathMatch: "/add-game", requiredRoles: atLeast("Holder") },
-  { pathMatch: "/api/games", requiredRoles: atLeast("Holder") },
-  { pathMatch: "/api/game", requiredRoles: atLeast("Holder") },
-  { pathMatch: "/api/game", requiredRoles: atLeast("Holder") },
-  { pathMatch: "/api/add-game", requiredRoles: atLeast("Holder") },
+  { pathMatch: "/people", requiredRoles: rolesAndAbove("Admin") },
+  { pathMatch: "/api/people", requiredRoles: rolesAndAbove("Admin") },
+  { pathMatch: "/users", requiredRoles: rolesAndAbove("Admin") },
+  { pathMatch: "/api/user", requiredRoles: rolesAndAbove("Admin") },
+  { pathMatch: "/add-game", requiredRoles: rolesAndAbove("Holder") },
+  { pathMatch: "/api/games", requiredRoles: rolesAndAbove("Holder") },
+  { pathMatch: "/api/game", requiredRoles: rolesAndAbove("Holder") },
+  { pathMatch: "/api/game", requiredRoles: rolesAndAbove("Holder") },
+  { pathMatch: "/api/add-game", requiredRoles: rolesAndAbove("Holder") },
   {
     pathMatch: "/games/game/[id]/edit",
-    requiredRoles: atLeast("Holder"),
+    requiredRoles: rolesAndAbove("Holder"),
     pathMatchOverride: (p: string) => {
       const regex = new RegExp(`\/games\/game\/\d+\/edit`);
       return regex.test(p);
     },
   },
-  { pathMatch: "/api/request", requiredRoles: atLeast("Verified") },
-  { pathMatch: "/requests", requiredRoles: atLeast("Verified") },
-  { pathMatch: "/games/holder", requiredRoles: atLeast("Verified") },
-  { pathMatch: "/games/gameholders", requiredRoles: atLeast("Verified") },
-  { pathMatch: "/profile", requiredRoles: atLeast("Unverified") },
-  { pathMatch: "/api/profile", requiredRoles: atLeast("Unverified") },
+  { pathMatch: "/api/request", requiredRoles: rolesAndAbove("Verified") },
+  { pathMatch: "/requests", requiredRoles: rolesAndAbove("Verified") },
+  { pathMatch: "/games/holder", requiredRoles: rolesAndAbove("Verified") },
+  { pathMatch: "/games/gameholders", requiredRoles: rolesAndAbove("Verified") },
+  { pathMatch: "/profile", requiredRoles: rolesAndAbove("Unverified") },
+  { pathMatch: "/api/profile", requiredRoles: rolesAndAbove("Unverified") },
 ];
