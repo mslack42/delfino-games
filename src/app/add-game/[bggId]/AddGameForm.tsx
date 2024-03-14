@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AddGameInput, addGameSchema } from "@/lib/game-schema";
 import { BggSummaryData } from "@/bgg/types";
 import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
+import { useLocalStorageState } from "@/util/useLocalStorageState";
 
 type AddGameFormProps = {
   holders: { id: number; name: string; location: Location }[];
@@ -30,13 +31,18 @@ export function AddGameForm(props: AddGameFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
-  const methods = useForm<AddGameInput>({
-    resolver: zodResolver(addGameSchema),
-    defaultValues: {
+  const [cachedFormInput, setCachedFormInput] = useLocalStorageState(
+    "addgameform",
+    {
       ownership: "Personal",
       ownerId: "-2",
       holderId: "-2",
-    },
+    }
+  );
+
+  const methods = useForm<AddGameInput>({
+    resolver: zodResolver(addGameSchema),
+    defaultValues: cachedFormInput,
   });
 
   const {
@@ -49,6 +55,7 @@ export function AddGameForm(props: AddGameFormProps) {
   const onSubmitHandler: SubmitHandler<AddGameInput> = async (values) => {
     try {
       setSubmitting(true);
+      setCachedFormInput(values);
       const res = await fetch(ApiRoutes.AddGame, {
         method: "POST",
         body: JSON.stringify({ formData: values, bggData: props.bggData }),
