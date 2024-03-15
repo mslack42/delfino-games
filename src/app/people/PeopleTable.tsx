@@ -56,14 +56,18 @@ export function PeopleTable({ holders }: Props) {
                         <CustomFontAwesomeIcon icon={faDice} className="h-5" />
                       </Link>
                     </li>
-                    <li onClick={() => setEditHolder(holder)}>
-                      <CustomFontAwesomeIcon
-                        icon={faPenToSquare}
-                        className="h-5"
-                      />
+                    <li>
+                      <button onClick={() => setEditHolder(holder)}>
+                        <CustomFontAwesomeIcon
+                          icon={faPenToSquare}
+                          className="h-5"
+                        />
+                      </button>
                     </li>
-                    <li onClick={() => setDeleteHolder(holder)}>
-                      <CustomFontAwesomeIcon icon={faTrash} className="h-5" />
+                    <li>
+                      <button onClick={() => setDeleteHolder(holder)}>
+                        <CustomFontAwesomeIcon icon={faTrash} className="h-5" />
+                      </button>
                     </li>
                   </ul>
                 </TableCell>

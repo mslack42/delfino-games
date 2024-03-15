@@ -15,9 +15,9 @@ export function Referral({ code }: { code: string }) {
         <p>Want to invite new users with a nice convenient link?</p>
         <CustomPopover
           head={
-            <button onClick={copyReferralLink}>
+            <div onClick={copyReferralLink}>
               <CustomFontAwesomeIcon icon={faCopy} />
-            </button>
+            </div>
           }
           content="Copied!"
         />

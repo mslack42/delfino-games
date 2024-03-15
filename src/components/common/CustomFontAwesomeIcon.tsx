@@ -5,7 +5,9 @@ import {
 } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-export function CustomFontAwesomeIcon(props: FontAwesomeIconProps) {
+type Props = FontAwesomeIconProps & { className?: string };
+
+export function CustomFontAwesomeIcon(props: Props) {
   const [mounted, setMounted] = useState(false);
 
   // Check for mount before loading fa icons, else they go bug-eyed
@@ -17,5 +19,10 @@ export function CustomFontAwesomeIcon(props: FontAwesomeIconProps) {
     };
   }, []);
 
-  return <>{mounted && <FontAwesomeIcon {...props} />}</>;
+  return (
+    <>
+      {mounted && <FontAwesomeIcon {...props} />}
+      {!mounted && <div className={props.className}></div>}
+    </>
+  );
 }

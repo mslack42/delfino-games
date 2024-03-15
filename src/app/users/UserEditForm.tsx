@@ -4,19 +4,20 @@ import { CustomButton } from "@/components/input/CustomButton";
 import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import { EditUserInput, editUserSchema } from "@/lib/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Account, User, UserRole } from "@prisma/client";
+import { UserRole } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { UserType } from "./UserTable";
 
 type EditProps = {
-  user: User & { accounts: Account[] };
+  user: UserType;
+  onSubmitComplete?: () => void;
 };
 
-export function UserEditForm({ user }: EditProps) {
+export function UserEditForm({ user, onSubmitComplete }: EditProps) {
   const [submitting, setSubmitting] = useState(false);
 
-  const router = useRouter();
   const methods = useForm<EditUserInput>({
     resolver: zodResolver(editUserSchema),
     defaultValues: {
@@ -49,8 +50,7 @@ export function UserEditForm({ user }: EditProps) {
         return;
       }
 
-      router.push(ApplicationRoutes.Users);
-      router.refresh();
+      onSubmitComplete && onSubmitComplete();
     } catch (error: any) {
       //   toast.error(error.message);
     } finally {
@@ -60,7 +60,6 @@ export function UserEditForm({ user }: EditProps) {
 
   return (
     <div className="p-4">
-      <h1 className="text-4xl">Edit User</h1>
       <form onSubmit={handleSubmit(onSubmitHandler)} id="editUser">
         <div className="p-2 flex flex-col">
           <KeyValue
