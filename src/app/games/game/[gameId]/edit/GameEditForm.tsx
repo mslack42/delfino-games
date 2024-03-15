@@ -13,6 +13,7 @@ import { Location, Ownership } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Conditional } from "@/components/common/Conditional";
 
 type GameEditFormProps = {
   holders: { id: number; name: string; location: Location }[];
@@ -123,11 +124,11 @@ export function GameEditForm(props: GameEditFormProps) {
                           </option>
                         ))}
                       </select>
-                      {errors["ownership"] && (
+                      <Conditional when={!!errors["ownership"]}>
                         <span className="text-warning text-xs pt-1 block">
                           {errors["ownership"]?.message as string}
                         </span>
-                      )}
+                      </Conditional>
                     </>
                   }
                 ></DataSummaryKeyValuePair>
@@ -149,15 +150,15 @@ export function GameEditForm(props: GameEditFormProps) {
                           </option>
                         ))}
                       </select>
-                      {errors["location"] && (
+                      <Conditional when={!!errors["location"]}>
                         <span className="text-warning text-xs pt-1 block">
                           {errors["location"]?.message as string}
                         </span>
-                      )}
+                      </Conditional>
                     </>
                   }
                 ></DataSummaryKeyValuePair>
-                {currOwnership === "Personal" && (
+                <Conditional when={currOwnership === "Personal"}>
                   <DataSummaryKeyValuePair
                     dataKey="Owner"
                     dataValue={
@@ -182,20 +183,20 @@ export function GameEditForm(props: GameEditFormProps) {
                           }}
                           className="text-right grow flex-nowrap"
                         ></SelectOrNew>
-                        {errors["ownerId"] && (
+                        <Conditional when={!!errors["ownerId"]}>
                           <span className="text-warning text-xs pt-1 block">
                             {errors["ownerId"]?.message as string}
                           </span>
-                        )}
-                        {errors["newOwner"] && (
+                        </Conditional>
+                        <Conditional when={!!errors["newOwner"]}>
                           <span className="text-warning text-xs pt-1 block">
                             {errors["newOwner"]?.message as string}
                           </span>
-                        )}
+                        </Conditional>
                       </>
                     }
                   ></DataSummaryKeyValuePair>
-                )}
+                </Conditional>
                 <DataSummaryKeyValuePair
                   dataKey="Holder"
                   dataValue={
@@ -222,16 +223,16 @@ export function GameEditForm(props: GameEditFormProps) {
                         }}
                         className="text-right grow flex-nowrap"
                       ></SelectOrNew>
-                      {errors["holderId"] && (
+                      <Conditional when={!!errors["holderId"]}>
                         <span className="text-warning text-xs pt-1 block">
                           {errors["holderId"]?.message as string}
                         </span>
-                      )}
-                      {errors["newHolder"] && (
+                      </Conditional>
+                      <Conditional when={!!errors["newHolder"]}>
                         <span className="text-warning text-xs pt-1 block">
                           {errors["newHolder"]?.message as string}
                         </span>
-                      )}
+                      </Conditional>
                     </>
                   }
                 ></DataSummaryKeyValuePair>
@@ -242,7 +243,7 @@ export function GameEditForm(props: GameEditFormProps) {
                       <input type="checkbox" {...register("isInRotation")} />
                     </>
                   }
-                />{" "}
+                />
                 <CustomButton
                   type="submit"
                   innerText={submitting ? "loading..." : "Save"}

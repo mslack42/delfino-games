@@ -5,6 +5,7 @@ import { SearchResults } from "./searchResults";
 import { CustomButton } from "../../components/input/CustomButton";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { LoadingIdler } from "@/components/common/LoadingIdler";
+import { Conditional } from "@/components/common/Conditional";
 
 export default function AddNewGame() {
   const [searchResults, setSearchResults] = useState<BggSummaryData[]>([]);
@@ -62,12 +63,12 @@ export default function AddNewGame() {
           </div>
         </div>
         <br></br>
-        {!searching && (
+        <Conditional when={!searching}>
           <Suspense fallback={idler}>
             <SearchResults results={searchResults}></SearchResults>
           </Suspense>
-        )}
-        {searching && <>{idler}</>}
+        </Conditional>
+        <Conditional when={searching}>{idler}</Conditional>
       </div>
     </>
   );

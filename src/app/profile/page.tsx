@@ -5,6 +5,7 @@ import { ProfileView } from "./ProfileView";
 import { ProfileActions } from "./ProfileActions";
 import { ProfileGameRequests } from "./ProfileGameRequests";
 import { isNotRole } from "@/util/auth/server/isNotRole";
+import { Conditional } from "@/components/common/Conditional";
 
 export default async function Profile() {
   const session = await auth();
@@ -27,7 +28,9 @@ export default async function Profile() {
       <div className="w-full max-w-lg">
         <ProfileView user={user} />
         <ProfileActions />
-        {canRequestGames && <ProfileGameRequests />}
+        <Conditional when={canRequestGames}>
+          <ProfileGameRequests />
+        </Conditional>
       </div>
     </>
   );

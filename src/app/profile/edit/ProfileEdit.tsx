@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Conditional } from "@/components/common/Conditional";
 
 type EditProps = {
   user: User & { accounts: Account[] };
@@ -74,11 +75,11 @@ export function ProfileEdit({ user }: EditProps) {
             dataValue={
               <>
                 <input {...register("name")} placeholder={user.name} />
-                {errors["name"] && (
+                <Conditional when={!!errors["name"]}>
                   <span className="text-red-500 text-xs pt-1 block">
                     {errors["name"]?.message as string}
                   </span>
-                )}
+                </Conditional>
               </>
             }
             className="flex flex-row space-x-2 justify-between"
@@ -88,11 +89,11 @@ export function ProfileEdit({ user }: EditProps) {
             dataValue={
               <>
                 <input {...register("email")} placeholder={user.email ?? ""} />
-                {errors["email"] && (
+                <Conditional when={!!errors["email"]}>
                   <span className="text-red-500 text-xs pt-1 block">
                     {errors["email"]?.message as string}
                   </span>
-                )}
+                </Conditional>
               </>
             }
             className="flex flex-row space-x-2 justify-between"

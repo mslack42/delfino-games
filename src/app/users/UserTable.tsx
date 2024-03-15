@@ -20,6 +20,7 @@ import { Account, User } from "@prisma/client";
 import { UserEditForm } from "./UserEditForm";
 import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 import { useRouter } from "next/navigation";
+import { Conditional } from "@/components/common/Conditional";
 
 type Props = {
   users: UserType[];
@@ -128,7 +129,9 @@ function EditUserModal({ user, setUser }: UserModalProps) {
           setUser(null);
         }}
       >
-        {user && <UserEditForm user={user} onSubmitComplete={changeMade} />}
+        <Conditional when={!!user}>
+          <UserEditForm user={user!} onSubmitComplete={changeMade} />
+        </Conditional>
       </CustomModal>
     </>
   );

@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { LoginUserInput, loginUserSchema } from "@/lib/user-schema";
 import { CustomButton } from "@/components/input/CustomButton";
+import { Conditional } from "@/components/common/Conditional";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -60,18 +61,20 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
-      {error && <p className="text-center bg-red-300">{error}</p>}
+      <Conditional when={!!error}>
+        <p className="text-center bg-red-300">{error}</p>
+      </Conditional>
       <div className="mb-6">
         <input
           type="email"
           {...register("email")}
           placeholder="Email address"
         />
-        {errors["email"] && (
+        <Conditional when={!!errors["email"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["email"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <div className="mb-6">
         <input
@@ -79,11 +82,11 @@ export const LoginForm = () => {
           {...register("password")}
           placeholder="Password"
         />
-        {errors["password"] && (
+        <Conditional when={!!errors["password"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["password"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <CustomButton
         type={"submit"}

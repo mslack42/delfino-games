@@ -4,6 +4,7 @@ import Link from "next/link";
 import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
 import { getRole } from "@/util/auth/server/getRole";
 import { isAtLeast } from "@/security/isAtLeast";
+import { Conditional } from "../common/Conditional";
 
 export async function SplashButtons() {
   const loggedIn = await isLoggedIn();
@@ -16,34 +17,34 @@ export async function SplashButtons() {
         text="Games"
         className="bg-green-300 hover:bg-green-200"
       />
-      {loggedIn && isAtLeast(role, "Verified") && (
+      <Conditional when={loggedIn && isAtLeast(role, "Verified")}>
         <SplashButton
           href={ApplicationRoutes.GameRequests}
           text="Open Game Requests"
           className="bg-blue-300 hover:bg-blue-200"
         />
-      )}
-      {loggedIn && (
+      </Conditional>
+      <Conditional when={loggedIn}>
         <SplashButton
           href={ApplicationRoutes.Profile}
           text="Your Profile"
           className="bg-purple-300 hover:bg-purple-200"
         />
-      )}
-      {loggedIn && isAtLeast(role, "Holder") && (
+      </Conditional>
+      <Conditional when={loggedIn && isAtLeast(role, "Holder")}>
         <SplashButton
           href={ApplicationRoutes.FindAndAddGame}
           text="Add A New Game"
           className="hover:bg-yellow-200 bg-yellow-300"
         />
-      )}
-      {loggedIn && isAtLeast(role, "Admin") && (
+      </Conditional>
+      <Conditional when={loggedIn && isAtLeast(role, "Admin")}>
         <SplashButton
           href={ApplicationRoutes.Users}
           text="Manage Users"
           className="hover:bg-red-200 bg-red-300"
         />
-      )}
+      </Conditional>
     </div>
   );
 }

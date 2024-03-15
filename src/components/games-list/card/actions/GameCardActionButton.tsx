@@ -1,3 +1,4 @@
+import { Conditional } from "@/components/common/Conditional";
 import { CustomPopover } from "@/components/common/CustomPopover";
 import { MouseEventHandler } from "react";
 
@@ -27,13 +28,10 @@ export function GameCardActionButton(props: GameCardActionProps) {
           <button onClick={props.onClick} className="w-full h-full">
             {props.body}
           </button>
-          {true ? (
-            props.hatReveal ? (
-              <CustomPopover head={hat}>{props.hatReveal}</CustomPopover>
-            ) : (
-              hat
-            )
-          ) : undefined}
+          <Conditional when={!!props.hatReveal}>
+            <CustomPopover head={hat}>{props.hatReveal}</CustomPopover>
+          </Conditional>
+          <Conditional when={!!!props.hatReveal}>{hat}</Conditional>
         </div>
       </div>
     </>

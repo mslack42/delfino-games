@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Conditional } from "@/components/common/Conditional";
 
 export function ChangePasswordForm() {
   const [submitting, setSubmitting] = useState(false);
@@ -80,11 +81,11 @@ export function ChangePasswordForm() {
                   type="password"
                   placeholder="Current Password"
                 />
-                {errors["currentPassword"] && (
+                <Conditional when={!!errors["currentPassword"]}>
                   <span className="text-red-500 text-xs pt-1 block">
                     {errors["currentPassword"]?.message as string}
                   </span>
-                )}
+                </Conditional>
               </>
             }
             className="flex flex-row space-x-2 justify-between"
@@ -98,11 +99,11 @@ export function ChangePasswordForm() {
                   type="password"
                   placeholder="New Password"
                 />
-                {errors["password"] && (
+                <Conditional when={!!errors["password"]}>
                   <span className="text-red-500 text-xs pt-1 block">
                     {errors["password"]?.message as string}
                   </span>
-                )}
+                </Conditional>
               </>
             }
             className="flex flex-row space-x-2 justify-between"
@@ -116,11 +117,11 @@ export function ChangePasswordForm() {
                   type="password"
                   placeholder="Confirm Password"
                 />
-                {errors["passwordConfirm"] && (
+                <Conditional when={!!errors["passwordConfirm"]}>
                   <span className="text-red-500 text-xs pt-1 block">
                     {errors["passwordConfirm"]?.message as string}
                   </span>
-                )}
+                </Conditional>
               </>
             }
             className="flex flex-row space-x-2 justify-between"

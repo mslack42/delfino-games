@@ -1,4 +1,5 @@
 import { twJoin } from "tailwind-merge";
+import { Conditional } from "../common/Conditional";
 
 export type FilterBubbleData = {
   name: string;
@@ -15,31 +16,29 @@ type FilterBubbleBucketProps = {
 export function FilterBubbleBucket(props: FilterBubbleBucketProps) {
   return (
     <div className="max-h-40 m-w-full overflow-hidden hover:overflow-y-auto p-4">
-      {props.allValues.length > 0 && props.toggleAllFn && (
-        <>
-          <div className="flex flex-row flex-wrap justify-around gap-1 pb-2">
-            <>
-              <FilterBubble
-                name={"Select All"}
-                inputEnabled={props.enabled}
-                isActive={props.selectedValues.length >= props.allValues.length}
-                onToggle={() => {
-                  props.toggleAllFn!(true);
-                }}
-              />
-              <FilterBubble
-                name={"Select None"}
-                inputEnabled={props.enabled}
-                isActive={props.selectedValues.length == 0}
-                onToggle={() => {
-                  props.toggleAllFn!(false);
-                }}
-              />
-            </>
-          </div>
-          <hr></hr>
-        </>
-      )}
+      <Conditional when={props.allValues.length > 0 && !!props.toggleAllFn}>
+        <div className="flex flex-row flex-wrap justify-around gap-1 pb-2">
+          <>
+            <FilterBubble
+              name={"Select All"}
+              inputEnabled={props.enabled}
+              isActive={props.selectedValues.length >= props.allValues.length}
+              onToggle={() => {
+                props.toggleAllFn!(true);
+              }}
+            />
+            <FilterBubble
+              name={"Select None"}
+              inputEnabled={props.enabled}
+              isActive={props.selectedValues.length == 0}
+              onToggle={() => {
+                props.toggleAllFn!(false);
+              }}
+            />
+          </>
+        </div>
+        <hr></hr>
+      </Conditional>
       <div className="flex flex-row flex-wrap justify-around gap-1 pt-2">
         {props.allValues.map((v) => (
           <FilterBubble

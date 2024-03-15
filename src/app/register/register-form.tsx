@@ -8,6 +8,7 @@ import { CreateUserInput, createUserSchema } from "@/lib/user-schema";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { CustomButton } from "@/components/input/CustomButton";
 import { useSearchParams } from "next/navigation";
+import { Conditional } from "@/components/common/Conditional";
 
 export const RegisterForm = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -70,11 +71,11 @@ export const RegisterForm = () => {
     <form onSubmit={handleSubmit(onSubmitHandler)}>
       <div className="mb-6">
         <input {...register("name")} placeholder="Name" maxLength={20} />
-        {errors["name"] && (
+        <Conditional when={!!errors["name"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["name"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <div className="mb-6">
         <input
@@ -82,11 +83,11 @@ export const RegisterForm = () => {
           {...register("email")}
           placeholder="Email address"
         />
-        {errors["email"] && (
+        <Conditional when={!!errors["email"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["email"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <div className="mb-6">
         <input
@@ -94,11 +95,11 @@ export const RegisterForm = () => {
           {...register("password")}
           placeholder="Password"
         />
-        {errors["password"] && (
+        <Conditional when={!!errors["password"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["password"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <div className="mb-6">
         <input
@@ -106,11 +107,11 @@ export const RegisterForm = () => {
           {...register("passwordConfirm")}
           placeholder="Confirm Password"
         />
-        {errors["passwordConfirm"] && (
+        <Conditional when={!!errors["passwordConfirm"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["passwordConfirm"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <div className="mb-6">
         <input
@@ -118,11 +119,11 @@ export const RegisterForm = () => {
           {...register("invitationCode")}
           placeholder="Invitation Code"
         />
-        {errors["invitationCode"] && (
+        <Conditional when={!!errors["invitationCode"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["invitationCode"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <CustomButton
         type="submit"

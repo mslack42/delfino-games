@@ -18,6 +18,7 @@ import {
   GameRequest,
   GameRequestsContext,
 } from "../game-requests/GameRequestContext";
+import { Conditional } from "../common/Conditional";
 
 type Props = {
   inventoryData: InventoryItem[];
@@ -82,37 +83,41 @@ export function GamesList(props: Props) {
       >
         <div className="h-full w-full">
           <div className="w-full flex flex-row justify-center text-center items-center flex-wrap space-x-10">
-            {props.controlsKeys.length > 0 && (
+            <Conditional when={props.controlsKeys.length > 0}>
               <div>
                 <GamesListFilterControls cacheKey={props.cacheKey} />
               </div>
-            )}
-            {!props.noSorting && (
+            </Conditional>
+            <Conditional when={!props.noSorting}>
               <div>
                 <GamesListSortControls defaultSort="name" />
               </div>
-            )}
+            </Conditional>
           </div>
           <div className="flex max-w-full flex-row flex-wrap justify-center">
             <Suspense fallback={<LoadingIdler />}>
-              {!filtersReady ? (
+              <Conditional when={filtersReady}>
+                <Conditional when={!!displayedInventory.length}>
+                  <div className="grid columns-auto w-full row-auto grid-cols-game-cards-sm md:grid-cols-game-cards-md gap-4 ">
+                    {displayedInventory.map((id) => (
+                      <span key={id.id} className="flex justify-center">
+                        <InventoryItemPanel
+                          key={id.id}
+                          data={id}
+                        ></InventoryItemPanel>
+                      </span>
+                    ))}
+                  </div>
+                </Conditional>
+                <Conditional when={!displayedInventory.length}>
+                  <div className="text-lg h-60 flex flex-col justify-center align-middle">
+                    <p>Nothing to see here 😢</p>
+                  </div>
+                </Conditional>
+              </Conditional>
+              <Conditional when={!filtersReady}>
                 <LoadingIdler className="py-10" />
-              ) : displayedInventory.length ? (
-                <div className="grid columns-auto w-full row-auto grid-cols-game-cards-sm md:grid-cols-game-cards-md gap-4 ">
-                  {displayedInventory.map((id) => (
-                    <span key={id.id} className="flex justify-center">
-                      <InventoryItemPanel
-                        key={id.id}
-                        data={id}
-                      ></InventoryItemPanel>
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-lg h-60 flex flex-col justify-center align-middle">
-                  <p>Nothing to see here 😢</p>
-                </div>
-              )}
+              </Conditional>
             </Suspense>
           </div>
         </div>

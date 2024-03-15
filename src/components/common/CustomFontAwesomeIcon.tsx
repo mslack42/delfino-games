@@ -4,6 +4,7 @@ import {
   FontAwesomeIconProps,
 } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { Conditional } from "./Conditional";
 
 type Props = FontAwesomeIconProps & { className?: string };
 
@@ -19,5 +20,9 @@ export function CustomFontAwesomeIcon(props: Props) {
     };
   }, []);
 
-  return <>{mounted && <FontAwesomeIcon {...props} />}</>;
+  return (
+    <Conditional when={mounted}>
+      <FontAwesomeIcon {...props} />
+    </Conditional>
+  );
 }

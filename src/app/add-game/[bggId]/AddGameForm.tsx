@@ -12,6 +12,7 @@ import { BggSummaryData } from "@/bgg/types";
 import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { useLocalStorageState } from "@/util/useLocalStorageState";
+import { Conditional } from "@/components/common/Conditional";
 
 type AddGameFormProps = {
   holders: { id: number; name: string; location: Location }[];
@@ -104,11 +105,11 @@ export function AddGameForm(props: AddGameFormProps) {
                   </option>
                 ))}
               </select>
-              {errors["ownership"] && (
+              <Conditional when={!!errors["ownership"]}>
                 <span className="text-warning text-xs pt-1 block">
                   {errors["ownership"]?.message as string}
                 </span>
-              )}
+              </Conditional>
             </>
           }
         ></DataSummaryKeyValuePair>
@@ -130,15 +131,15 @@ export function AddGameForm(props: AddGameFormProps) {
                   </option>
                 ))}
               </select>
-              {errors["location"] && (
+              <Conditional when={!!errors["location"]}>
                 <span className="text-warning text-xs pt-1 block">
                   {errors["location"]?.message as string}
                 </span>
-              )}
+              </Conditional>
             </>
           }
         ></DataSummaryKeyValuePair>
-        {currOwnership === "Personal" && (
+        <Conditional when={currOwnership === "Personal"}>
           <DataSummaryKeyValuePair
             dataKey="Owner"
             dataValue={
@@ -163,20 +164,20 @@ export function AddGameForm(props: AddGameFormProps) {
                   }}
                   className="text-right grow flex-nowrap"
                 ></SelectOrNew>
-                {errors["ownerId"] && (
+                <Conditional when={!!errors["ownerId"]}>
                   <span className="text-warning text-xs pt-1 block">
                     {errors["ownerId"]?.message as string}
                   </span>
-                )}
-                {errors["newOwner"] && (
+                </Conditional>
+                <Conditional when={!!errors["newOwner"]}>
                   <span className="text-warning text-xs pt-1 block">
                     {errors["newOwner"]?.message as string}
                   </span>
-                )}
+                </Conditional>
               </>
             }
           ></DataSummaryKeyValuePair>
-        )}
+        </Conditional>
         <DataSummaryKeyValuePair
           dataKey="Holder"
           dataValue={
@@ -203,16 +204,16 @@ export function AddGameForm(props: AddGameFormProps) {
                 }}
                 className="text-right grow flex-nowrap"
               ></SelectOrNew>
-              {errors["holderId"] && (
+              <Conditional when={!!errors["holderId"]}>
                 <span className="text-warning text-xs pt-1 block">
                   {errors["holderId"]?.message as string}
                 </span>
-              )}
-              {errors["newHolder"] && (
+              </Conditional>
+              <Conditional when={!!errors["newHolder"]}>
                 <span className="text-warning text-xs pt-1 block">
                   {errors["newHolder"]?.message as string}
                 </span>
-              )}
+              </Conditional>
             </>
           }
         ></DataSummaryKeyValuePair>

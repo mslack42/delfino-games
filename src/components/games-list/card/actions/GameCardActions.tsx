@@ -10,6 +10,7 @@ import { ToggleRequestButton } from "./ToggleRequestButton";
 import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 import { ClearAllRequestsButton } from "./ClearAllRequestsButton";
 import { GameRequestsContext } from "@/components/game-requests/GameRequestContext";
+import { Conditional } from "@/components/common/Conditional";
 
 export function GameCardActions(props: PanelProps) {
   const { data } = props;
@@ -23,18 +24,21 @@ export function GameCardActions(props: PanelProps) {
   return (
     <div className="absolute bottom-0 right-0 rounded-lg pr-2 pb-2 text-sm pointer-events-none">
       <ul className="flex flex-col space-y-1">
-        {actions.includes("ClearAllRequests") &&
-          relevantRequests.length > 2 && (
-            <li>
-              <ClearAllRequestsButton gameId={data.id} gameName={data.name} />
-            </li>
-          )}
-        {actions.includes("ToggleRotation") && (
+        <Conditional
+          when={
+            actions.includes("ClearAllRequests") && relevantRequests.length > 2
+          }
+        >
+          <li>
+            <ClearAllRequestsButton gameId={data.id} gameName={data.name} />
+          </li>
+        </Conditional>
+        <Conditional when={actions.includes("ToggleRotation")}>
           <li>
             <GameRotationButton data={data} />
           </li>
-        )}
-        {actions.includes("Edit") && (
+        </Conditional>
+        <Conditional when={actions.includes("Edit")}>
           <li>
             <GameCardActionButton
               body={
@@ -44,12 +48,12 @@ export function GameCardActions(props: PanelProps) {
               }
             />
           </li>
-        )}
-        {actions.includes("ToggleRequest") && (
+        </Conditional>
+        <Conditional when={actions.includes("ToggleRequest")}>
           <li>
             <ToggleRequestButton gameId={data.id} />
           </li>
-        )}
+        </Conditional>
       </ul>
     </div>
   );

@@ -1,4 +1,5 @@
 "use client";
+import { Conditional } from "@/components/common/Conditional";
 import { useLoggedInInspection } from "@/util/auth/client/useLoggedInInspection";
 
 type LoggedInOnlyProps = {
@@ -6,5 +7,5 @@ type LoggedInOnlyProps = {
 };
 export function LoggedInOnly(props: LoggedInOnlyProps) {
   const { isLoggedIn } = useLoggedInInspection();
-  return <>{isLoggedIn() && props.content}</>;
+  return <Conditional when={isLoggedIn()}>{props.content}</Conditional>;
 }

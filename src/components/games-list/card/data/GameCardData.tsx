@@ -12,6 +12,7 @@ import { GamesListContext } from "../../GamesListContext";
 import { GameCardDataRow } from "./GameCardDataRow";
 import { PanelProps } from "../InventoryItemPanel";
 import { GameCardRequesterList } from "./GameCardRequesterList";
+import { Conditional } from "@/components/common/Conditional";
 
 export function GameCardData(props: PanelProps) {
   const { data } = props;
@@ -21,7 +22,7 @@ export function GameCardData(props: PanelProps) {
     <div className="absolute w-40 md:w-60 text-xs md:text-sm bottom-0 left-0  bg-gradient-to-t from-teal-600 via-teal-600 to-transparent pt-8 rounded-lg">
       <div className="absoulte w-32 md:w-52 bottom-0 left-0 ">
         <div className="flex justify items-center text-center flex-col pb-1">
-          {details.includes("PlayerCount") && (
+          <Conditional when={details.includes("PlayerCount")}>
             <GameCardDataRow
               keyPart={<FontAwesomeIcon icon={faUsers} />}
               valuePart={playerCount(
@@ -29,8 +30,8 @@ export function GameCardData(props: PanelProps) {
                 data.bggData.specs.minPlayerCount
               )}
             />
-          )}
-          {details.includes("Duration") && (
+          </Conditional>
+          <Conditional when={details.includes("Duration")}>
             <GameCardDataRow
               keyPart={<FontAwesomeIcon icon={faHourglass} />}
               valuePart={playTime(
@@ -38,22 +39,22 @@ export function GameCardData(props: PanelProps) {
                 data.bggData.specs.minPlayTime
               )}
             />
-          )}
-          {details.includes("Office") && (
+          </Conditional>
+          <Conditional when={details.includes("Office")}>
             <GameCardDataRow
               keyPart={<FontAwesomeIcon icon={faEmptyUser} />}
               valuePart={<div>{data.dsData.location}</div>}
             />
-          )}
-          {details.includes("Holder") && (
+          </Conditional>
+          <Conditional when={details.includes("Holder")}>
             <GameCardDataRow
               keyPart={<FontAwesomeIcon icon={faUser} />}
               valuePart={<div>{data.dsData.holder}</div>}
             />
-          )}
-          {details.includes("Requesters") && (
+          </Conditional>
+          <Conditional when={details.includes("Requesters")}>
             <GameCardRequesterList {...props} />
-          )}
+          </Conditional>
         </div>
       </div>
     </div>

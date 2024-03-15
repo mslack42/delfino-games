@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { isRole } from "@/util/auth/server/isRole";
 import { isNotRole } from "@/util/auth/server/isNotRole";
 import { UserRole } from "@prisma/client";
+import { Conditional } from "@/components/common/Conditional";
 
 type RoleCheckProps = {
   type: "oneOf" | "noneOf";
@@ -21,5 +22,5 @@ export async function RoleCheck(
 
   const display = user && passesCheck;
 
-  return <>{display && props.children}</>;
+  return <Conditional when={!!display}>{props.children}</Conditional>;
 }

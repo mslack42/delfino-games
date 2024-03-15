@@ -8,6 +8,7 @@ import { useLoggedInInspection } from "@/util/auth/client/useLoggedInInspection"
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { useToast } from "@/components/shadcn/use-toast";
 import { useUserRoleInspection } from "@/util/auth/client/useUserRoleInspection";
+import { Conditional } from "@/components/common/Conditional";
 
 export function GameCardRequesterList(props: PanelProps) {
   const { data } = props;
@@ -68,14 +69,14 @@ export function GameCardRequesterList(props: PanelProps) {
                 tag={
                   <div className="flex flex-row">
                     <div>{r.user.name}</div>
-                    {canCancelOtherRequests && (
+                    <Conditional when={canCancelOtherRequests}>
                       <button
                         className="rounded-full bg-sky-100 ml-1 px-1"
                         onClick={() => deleteRequest(r.user.id)}
                       >
                         <CustomFontAwesomeIcon icon={faTimes} />
                       </button>
-                    )}
+                    </Conditional>
                   </div>
                 }
                 className="p-0 px-1"

@@ -1,4 +1,5 @@
 "use client";
+import { Conditional } from "@/components/common/Conditional";
 import { CustomButton } from "@/components/input/CustomButton";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { EditHolderInput, editHolderSchema } from "@/lib/holder-schema";
@@ -57,11 +58,11 @@ export function EditHolderForm({ holder, onSubmitComplete }: Props) {
           <b>Name: </b>
         </label>
         <input {...register("name")} placeholder={holder.name} />
-        {errors["name"] && (
+        <Conditional when={!!errors["name"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["name"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <div>
         <label>
@@ -76,11 +77,11 @@ export function EditHolderForm({ holder, onSubmitComplete }: Props) {
             );
           })}
         </select>
-        {errors["office"] && (
+        <Conditional when={!!errors["office"]}>
           <span className="text-red-500 text-xs pt-1 block">
             {errors["office"]?.message as string}
           </span>
-        )}
+        </Conditional>
       </div>
       <input {...register("id")} type="hidden"></input>
       <div className="flex flex-row justify-end w-full px-4">
