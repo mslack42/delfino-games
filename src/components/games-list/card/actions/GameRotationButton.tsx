@@ -67,6 +67,9 @@ export function GameRotationButton(props: GameRotationButtonProps) {
           )
         }
         onClick={changeRotationStatus}
+        aria-label={
+          data.dsData.inRotation ? "Remove from rotation" : "Add to rotation"
+        }
       />
     </>
   );

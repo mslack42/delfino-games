@@ -55,6 +55,7 @@ export function ClearAllRequestsButton(props: ClearAllRequestsButtonProps) {
       <GameCardActionButton
         body={<CustomFontAwesomeIcon icon={faTrash} />}
         onClick={() => setOpenModal(true)}
+        aria-label="Clear all requests"
       />
       <CustomModal
         isOpen={openModal}

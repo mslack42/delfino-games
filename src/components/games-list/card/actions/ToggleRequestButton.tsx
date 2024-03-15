@@ -96,6 +96,7 @@ export function ToggleRequestButton(props: RequestGameButtonProps) {
         body={<CustomFontAwesomeIcon icon={icon} />}
         hatCount={totalRequests}
         onClick={toggleGameRequest}
+        aria-label={userRequested ? "Unrequest game" : "Request game"}
         hatReveal={
           <div>
             <div>Requested by: </div>

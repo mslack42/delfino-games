@@ -21,6 +21,7 @@ export function SortButton(props: SortButtonProps) {
           "w-7 h-7 rounded-lg",
           isActive ? "bg-teal-600" : "bg-slate-300"
         )}
+        aria-label={`Sort by ${type}`}
       >
         <CustomFontAwesomeIcon icon={icon} />
       </button>

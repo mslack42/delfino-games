@@ -40,13 +40,15 @@ export function GameCardActions(props: PanelProps) {
         </Conditional>
         <Conditional when={actions.includes("Edit")}>
           <li>
-            <GameCardActionButton
-              body={
-                <Link href={ApplicationRoutes.EditGame(data.id)}>
-                  <CustomFontAwesomeIcon icon={faPenToSquare} />
-                </Link>
-              }
-            />
+            <Link
+              href={ApplicationRoutes.EditGame(data.id)}
+              aria-label="Edit game"
+            >
+              <GameCardActionButton
+                body={<CustomFontAwesomeIcon icon={faPenToSquare} />}
+                aria-label="Edit game"
+              />
+            </Link>
           </li>
         </Conditional>
         <Conditional when={actions.includes("ToggleRequest")}>

@@ -37,7 +37,7 @@ export function BubbleAccordion(props: BubbleAccordionProps) {
               }}
               className={twJoin(
                 "rounded-lg text-center flex justify-center my-1 text-white w-full",
-                v.open ? "bg-teal-500" : "bg-slate-400"
+                v.open ? "bg-teal-500" : "bg-slate-600"
               )}
             >
               {v.head}

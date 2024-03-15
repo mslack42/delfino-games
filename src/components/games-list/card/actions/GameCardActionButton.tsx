@@ -7,6 +7,7 @@ type GameCardActionProps = {
   hatReveal?: React.ReactNode;
   body: React.ReactNode | string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  ["aria-label"]?: string;
 };
 export function GameCardActionButton(props: GameCardActionProps) {
   const displayHat = props.hatCount && props.hatCount >= 0;
@@ -25,13 +26,21 @@ export function GameCardActionButton(props: GameCardActionProps) {
     <>
       <div className="flex flex-row justify-end pointer-events-auto">
         <div className="relative bg-teal-400 rounded-lg text-sm  w-6 h-6">
-          <button onClick={props.onClick} className="w-full h-full">
+          <button
+            onClick={props.onClick}
+            className="w-full h-full"
+            aria-label={props["aria-label"]}
+          >
             {props.body}
           </button>
-          <Conditional when={!!props.hatReveal}>
-            <CustomPopover head={hat}>{props.hatReveal}</CustomPopover>
+          <Conditional when={!!displayHat}>
+            <Conditional when={!!props.hatReveal}>
+              <CustomPopover head={hat} name="See requesters">
+                {props.hatReveal}
+              </CustomPopover>
+            </Conditional>
+            <Conditional when={!!!props.hatReveal}>{hat}</Conditional>
           </Conditional>
-          <Conditional when={!!!props.hatReveal}>{hat}</Conditional>
         </div>
       </div>
     </>
