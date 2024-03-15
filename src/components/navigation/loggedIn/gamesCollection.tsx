@@ -32,5 +32,6 @@ export async function gamesCollection(): Promise<DropDownGroup> {
   return {
     head,
     items,
+    name: "Games Collection Menu",
   };
 }

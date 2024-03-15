@@ -14,6 +14,7 @@ import { Conditional } from "../common/Conditional";
 export type DropDownGroup = {
   head: React.ReactNode;
   items: React.ReactNode[];
+  name?: string;
 };
 export type DropDownGroupCollection = {
   [key: string]: DropDownGroup;

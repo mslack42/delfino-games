@@ -6,7 +6,7 @@ import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon
 export function ProfileActions() {
   return (
     <div className="text-black w-full flex justify-end px-6 py-2">
-      <Link href={ApplicationRoutes.EditProfile}>
+      <Link href={ApplicationRoutes.EditProfile} aria-label="Edit">
         <CustomFontAwesomeIcon icon={faPenToSquare} className="h-6" />
       </Link>
     </div>

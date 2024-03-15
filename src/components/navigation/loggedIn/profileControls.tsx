@@ -38,5 +38,6 @@ export async function profileControls(
   return {
     head,
     items,
+    name: "Profile Menu",
   };
 }

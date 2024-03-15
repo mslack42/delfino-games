@@ -23,5 +23,6 @@ export async function adminControls(): Promise<DropDownGroup> {
   return {
     head,
     items,
+    name: "Admin Menu",
   };
 }

@@ -9,17 +9,25 @@ import { profileControls } from "./loggedIn/profileControls";
 import { BurgerButton } from "./BurgerButton";
 import { loggedOutMenuItems } from "./loggedOut/loggedOutMenuItems";
 import { signOut } from "@/auth";
+import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
+import { isRole } from "@/util/auth/server/isRole";
 
 export const NavigationBar = async () => {
   const logoutAction = async () => {
     "use server";
     await signOut();
   };
-  const menu: DropDownGroupCollection = {
+  const loggedIn = await isLoggedIn();
+  const isAdmin = await isRole("Admin");
+  let menu: DropDownGroupCollection = {
     game: await gamesCollection(),
-    admin: await adminControls(),
     profile: await profileControls(logoutAction),
   };
+  let menuList = [menu["game"], menu["profile"]];
+  if (loggedIn && isAdmin) {
+    menu["admin"] = await adminControls();
+    menuList = [menu["game"], menu["admin"], menu["profile"]];
+  }
   return (
     <div className="w-full h-16 bg-teal-700 sticky top-0  z-[500]">
       <div className="bg-teal-700 h-full">
@@ -29,29 +37,11 @@ export const NavigationBar = async () => {
             <div className="hidden md:flex justify-end flex-col h-full pb-3 z-[501]">
               <ul className="flex text-white divide-solid divide-x-2">
                 <LoggedInOnly>
-                  <li className="px-2">
-                    <DropDown
-                      type="Single"
-                      {...menu["game"]}
-                      name="Games Collection Menu"
-                    />
-                  </li>
-                  <RoleCheck type="oneOf" roles={["Admin"]}>
-                    <li className="px-2">
-                      <DropDown
-                        type="Single"
-                        {...menu["admin"]}
-                        name="Admin Menu"
-                      />
+                  {menuList.map((ml, mlk) => (
+                    <li className="px-2" key={mlk}>
+                      <DropDown type="Single" {...ml} name={ml.name} />
                     </li>
-                  </RoleCheck>
-                  <li className="px-2">
-                    <DropDown
-                      type="Single"
-                      {...menu["profile"]}
-                      name="Profile Menu"
-                    />
-                  </li>
+                  ))}
                 </LoggedInOnly>
                 <LoggedOutOnly>
                   {loggedOutMenuItems().map((it, i) => (
@@ -64,22 +54,12 @@ export const NavigationBar = async () => {
             </div>
             <div className="flex md:hidden justify-end flex-col h-full pb-3 z-[501]">
               <LoggedInOnly>
-                <RoleCheck type="oneOf" roles={["Admin"]}>
-                  <DropDown
-                    type="Multi"
-                    name="Menu"
-                    head={<BurgerButton />}
-                    items={[menu["game"], menu["admin"], menu["profile"]]}
-                  />
-                </RoleCheck>
-                <RoleCheck type="noneOf" roles={["Admin"]}>
-                  <DropDown
-                    type="Multi"
-                    name="Menu"
-                    head={<BurgerButton />}
-                    items={[menu["game"], menu["profile"]]}
-                  />
-                </RoleCheck>
+                <DropDown
+                  type="Multi"
+                  name="Menu"
+                  head={<BurgerButton />}
+                  items={menuList}
+                />
               </LoggedInOnly>
               <LoggedOutOnly>
                 <DropDown

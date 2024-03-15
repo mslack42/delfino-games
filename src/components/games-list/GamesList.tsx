@@ -115,7 +115,9 @@ export function GamesList(props: Props) {
                   </div>
                 </Conditional>
               </Conditional>
-              <Conditional when={!filtersReady}>
+              <Conditional
+                when={props.controlsKeys.length > 0 && !filtersReady}
+              >
                 <LoadingIdler className="py-10" />
               </Conditional>
             </Suspense>
