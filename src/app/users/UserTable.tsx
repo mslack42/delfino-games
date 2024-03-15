@@ -124,13 +124,12 @@ function EditUserModal({ user, setUser }: UserModalProps) {
       <CustomModal
         isOpen={!!user}
         title={<b>Edit {user?.name}</b>}
-        content={
-          user && <UserEditForm user={user} onSubmitComplete={changeMade} />
-        }
         onClose={() => {
           setUser(null);
         }}
-      ></CustomModal>
+      >
+        {user && <UserEditForm user={user} onSubmitComplete={changeMade} />}
+      </CustomModal>
     </>
   );
 }

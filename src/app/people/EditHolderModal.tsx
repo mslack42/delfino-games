@@ -22,13 +22,12 @@ export function EditHolderModal(props: EditHolderProps) {
       <CustomModal
         isOpen={!!holder}
         title={<b>Edit {holder?.name}</b>}
-        content={
-          holder && (
-            <EditHolderForm holder={holder} onSubmitComplete={changeMade} />
-          )
-        }
         onClose={() => onClose()}
-      ></CustomModal>
+      >
+        {holder && (
+          <EditHolderForm holder={holder} onSubmitComplete={changeMade} />
+        )}
+      </CustomModal>
     </>
   );
 }

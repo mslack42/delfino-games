@@ -29,7 +29,7 @@ export function GameCardActionButton(props: GameCardActionProps) {
           </button>
           {true ? (
             props.hatReveal ? (
-              <CustomPopover head={hat} content={props.hatReveal} />
+              <CustomPopover head={hat}>{props.hatReveal}</CustomPopover>
             ) : (
               hat
             )

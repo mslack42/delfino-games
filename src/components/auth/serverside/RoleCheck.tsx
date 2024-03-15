@@ -5,12 +5,12 @@ import { UserRole } from "@prisma/client";
 
 type RoleCheckProps = {
   type: "oneOf" | "noneOf";
-  content: React.ReactNode;
-  elseContent?: React.ReactNode;
   roles: UserRole[];
 };
 
-export async function RoleCheck(props: RoleCheckProps) {
+export async function RoleCheck(
+  props: React.PropsWithChildren<RoleCheckProps>
+) {
   const session = await auth();
   const user = session?.user;
 
@@ -21,10 +21,5 @@ export async function RoleCheck(props: RoleCheckProps) {
 
   const display = user && passesCheck;
 
-  return (
-    <>
-      {display && props.content}
-      {!display && props.elseContent}
-    </>
-  );
+  return <>{display && props.children}</>;
 }

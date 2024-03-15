@@ -64,27 +64,26 @@ export function ClearAllRequestsButton(props: ClearAllRequestsButtonProps) {
             <i>{props.gameName}</i>?
           </b>
         }
-        content={
-          <div>
-            <div className="flex flex-row justify-end w-full space-x-2">
-              <CustomButton
-                type="button"
-                innerText={"Yes"}
-                className="rounded p-2"
-                onClick={() => clearAllRequests()}
-              />
-              <CustomButton
-                type="button"
-                innerText={"No"}
-                className="rounded p-2"
-                actionType="cancel"
-                onClick={() => setOpenModal(false)}
-              />
-            </div>
-          </div>
-        }
         onClose={() => setOpenModal(false)}
-      />
+      >
+        <div>
+          <div className="flex flex-row justify-end w-full space-x-2">
+            <CustomButton
+              type="button"
+              innerText={"Yes"}
+              className="rounded p-2"
+              onClick={() => clearAllRequests()}
+            />
+            <CustomButton
+              type="button"
+              innerText={"No"}
+              className="rounded p-2"
+              actionType="cancel"
+              onClick={() => setOpenModal(false)}
+            />
+          </div>
+        </div>
+      </CustomModal>
     </>
   );
 }

@@ -28,93 +28,67 @@ export const NavigationBar = async () => {
             <Logo />
             <div className="hidden md:flex justify-end flex-col h-full pb-3 z-[501]">
               <ul className="flex text-white divide-solid divide-x-2">
-                <LoggedInOnly
-                  content={
-                    <>
-                      <li className="px-2">
-                        <DropDown
-                          type="Single"
-                          {...menu["game"]}
-                          name="Games Collection Menu"
-                        />
-                      </li>
-                      <RoleCheck
-                        type="oneOf"
-                        roles={["Admin"]}
-                        content={
-                          <li className="px-2">
-                            <DropDown
-                              type="Single"
-                              {...menu["admin"]}
-                              name="Admin Menu"
-                            />
-                          </li>
-                        }
-                      ></RoleCheck>
-                      <li className="px-2">
-                        <DropDown
-                          type="Single"
-                          {...menu["profile"]}
-                          name="Profile Menu"
-                        />
-                      </li>
-                    </>
-                  }
-                />
-                <LoggedOutOnly
-                  content={
-                    <>
-                      {loggedOutMenuItems().map((it, i) => (
-                        <div className="px-2" key={i}>
-                          {it}
-                        </div>
-                      ))}
-                    </>
-                  }
-                />
+                <LoggedInOnly>
+                  <li className="px-2">
+                    <DropDown
+                      type="Single"
+                      {...menu["game"]}
+                      name="Games Collection Menu"
+                    />
+                  </li>
+                  <RoleCheck type="oneOf" roles={["Admin"]}>
+                    <li className="px-2">
+                      <DropDown
+                        type="Single"
+                        {...menu["admin"]}
+                        name="Admin Menu"
+                      />
+                    </li>
+                  </RoleCheck>
+                  <li className="px-2">
+                    <DropDown
+                      type="Single"
+                      {...menu["profile"]}
+                      name="Profile Menu"
+                    />
+                  </li>
+                </LoggedInOnly>
+                <LoggedOutOnly>
+                  {loggedOutMenuItems().map((it, i) => (
+                    <div className="px-2" key={i}>
+                      {it}
+                    </div>
+                  ))}
+                </LoggedOutOnly>
               </ul>
             </div>
             <div className="flex md:hidden justify-end flex-col h-full pb-3 z-[501]">
-              <LoggedInOnly
-                content={
-                  <>
-                    <RoleCheck
-                      type="oneOf"
-                      roles={["Admin"]}
-                      content={
-                        <DropDown
-                          type="Multi"
-                          name="Menu"
-                          head={<BurgerButton />}
-                          items={[menu["game"], menu["admin"], menu["profile"]]}
-                        />
-                      }
-                    />{" "}
-                    <RoleCheck
-                      type="noneOf"
-                      roles={["Admin"]}
-                      content={
-                        <DropDown
-                          type="Multi"
-                          name="Menu"
-                          head={<BurgerButton />}
-                          items={[menu["game"], menu["profile"]]}
-                        />
-                      }
-                    />
-                  </>
-                }
-              />
-              <LoggedOutOnly
-                content={
+              <LoggedInOnly>
+                <RoleCheck type="oneOf" roles={["Admin"]}>
                   <DropDown
-                    type="Single"
+                    type="Multi"
                     name="Menu"
                     head={<BurgerButton />}
-                    items={loggedOutMenuItems()}
+                    items={[menu["game"], menu["admin"], menu["profile"]]}
                   />
-                }
-              />
+                </RoleCheck>
+                <RoleCheck type="noneOf" roles={["Admin"]}>
+                  <DropDown
+                    type="Multi"
+                    name="Menu"
+                    head={<BurgerButton />}
+                    items={[menu["game"], menu["profile"]]}
+                  />
+                </RoleCheck>
+              </LoggedInOnly>
+              <LoggedOutOnly>
+                <DropDown
+                  type="Single"
+                  name="Menu"
+                  head={<BurgerButton />}
+                  items={loggedOutMenuItems()}
+                />
+              </LoggedOutOnly>
             </div>
           </div>
         </div>

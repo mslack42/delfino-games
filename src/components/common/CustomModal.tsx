@@ -13,12 +13,11 @@ type CustomModalProps = {
   head?: React.ReactNode;
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
-  content: React.ReactNode;
   footer?: React.ReactNode;
   isOpen?: boolean;
   onClose?: () => void;
 };
-export function CustomModal(props: CustomModalProps) {
+export function CustomModal(props: React.PropsWithChildren<CustomModalProps>) {
   return (
     <>
       <Dialog
@@ -35,7 +34,7 @@ export function CustomModal(props: CustomModalProps) {
               <DialogDescription>{props.subtitle}</DialogDescription>
             ) : undefined}
           </DialogHeader>
-          {props.content}
+          {props.children}
           {props.footer ? (
             <DialogFooter>{props.footer}</DialogFooter>
           ) : undefined}

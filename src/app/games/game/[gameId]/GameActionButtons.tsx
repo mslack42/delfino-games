@@ -50,43 +50,42 @@ export function GameActionButtons(props: { id: number }) {
         isOpen={!!deleteId}
         title={<b>Are you sure you want to delete this game?</b>}
         subtitle={<p>This action is permanent.</p>}
-        content={
-          <div>
-            <div className="flex flex-row justify-evenly space-x-2">
-              <input
-                type="text"
-                placeholder="type 'confirm delete'"
-                onChange={(evt) => {
-                  setDeleteConfirmed(
-                    evt.currentTarget.value === "confirm delete"
-                  );
-                }}
-                className="px-2"
-              ></input>
-              <div className="flex flex-row justify-end w-full space-x-2">
-                <CustomButton
-                  type="button"
-                  innerText={"Yes"}
-                  className="rounded p-2"
-                  onClick={() => deleteHandler(deleteId)}
-                  disabled={!deleteConfirmed}
-                />
-                <CustomButton
-                  type="button"
-                  innerText={"No"}
-                  className="rounded p-2"
-                  actionType="cancel"
-                  onClick={() => setDeleteId(null)}
-                />
-              </div>
-            </div>
-          </div>
-        }
         onClose={() => {
           setDeleteId(null);
           setDeleteConfirmed(false);
         }}
-      ></CustomModal>
+      >
+        <div>
+          <div className="flex flex-row justify-evenly space-x-2">
+            <input
+              type="text"
+              placeholder="type 'confirm delete'"
+              onChange={(evt) => {
+                setDeleteConfirmed(
+                  evt.currentTarget.value === "confirm delete"
+                );
+              }}
+              className="px-2"
+            ></input>
+            <div className="flex flex-row justify-end w-full space-x-2">
+              <CustomButton
+                type="button"
+                innerText={"Yes"}
+                className="rounded p-2"
+                onClick={() => deleteHandler(deleteId)}
+                disabled={!deleteConfirmed}
+              />
+              <CustomButton
+                type="button"
+                innerText={"No"}
+                className="rounded p-2"
+                actionType="cancel"
+                onClick={() => setDeleteId(null)}
+              />
+            </div>
+          </div>
+        </div>
+      </CustomModal>
     </>
   );
 }

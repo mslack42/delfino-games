@@ -19,8 +19,9 @@ export function Referral({ code }: { code: string }) {
               <CustomFontAwesomeIcon icon={faCopy} />
             </div>
           }
-          content="Copied!"
-        />
+        >
+          Copied!
+        </CustomPopover>
       </div>
     </>
   );

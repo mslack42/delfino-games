@@ -34,15 +34,11 @@ export default async function GamePage(props: Props) {
               fullDetails={loggedIn}
             ></DsDataSummary>
           </div>
-          <RoleCheck
-            type={"oneOf"}
-            content={
-              <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
-                <GameActionButtons id={data.id} />
-              </div>
-            }
-            roles={["Admin", "Holder"]}
-          />
+          <RoleCheck type={"oneOf"} roles={["Admin", "Holder"]}>
+            <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
+              <GameActionButtons id={data.id} />
+            </div>
+          </RoleCheck>
         </div>
       </div>
     </div>

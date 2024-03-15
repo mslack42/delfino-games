@@ -13,12 +13,11 @@ type LeftSheetProps = {
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
   footer?: React.ReactNode;
-  content: React.ReactNode;
   isOpen?: boolean;
   onClose?: () => void;
 };
 
-export function LeftSheet(props: LeftSheetProps) {
+export function LeftSheet(props: React.PropsWithChildren<LeftSheetProps>) {
   return (
     <Sheet
       open={props.isOpen}
@@ -34,7 +33,7 @@ export function LeftSheet(props: LeftSheetProps) {
             <SheetDescription>{props.subtitle}</SheetDescription>
           ) : undefined}
         </SheetHeader>
-        {props.content}
+        {props.children}
         {props.footer ? <SheetFooter>{props.footer}</SheetFooter> : undefined}
       </SheetContent>
     </Sheet>

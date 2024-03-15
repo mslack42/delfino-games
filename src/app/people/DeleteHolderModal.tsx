@@ -28,46 +28,45 @@ export function DeleteHolderModal(props: DeleteModalProps) {
         isOpen={!!deleteHolder}
         title={<b>Are you sure you want to delete {deleteHolder?.name}?</b>}
         subtitle={<p>This action is permanent.</p>}
-        content={
-          <div>
-            <div className="flex flex-row justify-evenly space-x-2">
-              <input
-                type="text"
-                placeholder="type 'confirm delete'"
-                onChange={(evt) => {
-                  setDeleteConfirmed(
-                    evt.currentTarget.value === "confirm delete"
-                  );
-                }}
-                className="px-2"
-              ></input>
-              <div className="flex flex-row justify-end w-full space-x-2">
-                <CustomButton
-                  type="button"
-                  innerText={"Yes"}
-                  className="rounded p-2"
-                  onClick={() => deleteHandler(deleteHolder?.id)}
-                  disabled={!deleteConfirmed}
-                />
-                <CustomButton
-                  type="button"
-                  innerText={"No"}
-                  className="rounded p-2"
-                  actionType="cancel"
-                  onClick={() => {
-                    setDeleteConfirmed(false);
-                    onClose();
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        }
         onClose={() => {
           setDeleteConfirmed(false);
           onClose();
         }}
-      ></CustomModal>
+      >
+        <div>
+          <div className="flex flex-row justify-evenly space-x-2">
+            <input
+              type="text"
+              placeholder="type 'confirm delete'"
+              onChange={(evt) => {
+                setDeleteConfirmed(
+                  evt.currentTarget.value === "confirm delete"
+                );
+              }}
+              className="px-2"
+            ></input>
+            <div className="flex flex-row justify-end w-full space-x-2">
+              <CustomButton
+                type="button"
+                innerText={"Yes"}
+                className="rounded p-2"
+                onClick={() => deleteHandler(deleteHolder?.id)}
+                disabled={!deleteConfirmed}
+              />
+              <CustomButton
+                type="button"
+                innerText={"No"}
+                className="rounded p-2"
+                actionType="cancel"
+                onClick={() => {
+                  setDeleteConfirmed(false);
+                  onClose();
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </CustomModal>
     </>
   );
 }

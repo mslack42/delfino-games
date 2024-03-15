@@ -1,9 +1,6 @@
 import { isLoggedOut } from "@/util/auth/server/isLoggedOut";
 
-type LoggedOutOnlyProps = {
-  content: React.ReactNode;
-};
-export async function LoggedOutOnly(props: LoggedOutOnlyProps) {
+export async function LoggedOutOnly(props: React.PropsWithChildren<{}>) {
   const loggedOut = await isLoggedOut();
-  return <>{loggedOut && props.content}</>;
+  return <>{loggedOut && props.children}</>;
 }

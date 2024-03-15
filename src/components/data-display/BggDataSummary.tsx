@@ -56,25 +56,21 @@ export function BggDataSummary(props: Props) {
         <DataSummaryKeyValuePair
           dataKey={"Description"}
           dataValue={
-            <ScrollBox
-              content={
-                <div
-                  dangerouslySetInnerHTML={{ __html: data.description! }}
-                  className="w-full"
-                ></div>
-              }
-            ></ScrollBox>
+            <ScrollBox>
+              <div
+                dangerouslySetInnerHTML={{ __html: data.description! }}
+                className="w-full"
+              ></div>
+            </ScrollBox>
           }
           isMultiline
         ></DataSummaryKeyValuePair>
         <DataSummaryKeyValuePair
           dataKey={"Tags"}
           dataValue={
-            <ScrollBox
-              content={
-                <TagBucket tags={data.boardGameBggDataStats.tags}></TagBucket>
-              }
-            ></ScrollBox>
+            <ScrollBox>
+              <TagBucket tags={data.boardGameBggDataStats.tags}></TagBucket>
+            </ScrollBox>
           }
           isMultiline
         ></DataSummaryKeyValuePair>

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Popover,
   PopoverContent,
@@ -6,15 +7,14 @@ import {
 
 type Props = {
   head: string | React.ReactNode;
-  content: string | React.ReactNode;
 };
 
-export function CustomPopover(props: Props) {
+export function CustomPopover(props: React.PropsWithChildren<Props>) {
   return (
     <>
       <Popover>
         <PopoverTrigger>{props.head}</PopoverTrigger>
-        <PopoverContent>{props.content}</PopoverContent>
+        <PopoverContent>{props.children}</PopoverContent>
       </Popover>
     </>
   );
