@@ -19,10 +19,5 @@ export function CustomFontAwesomeIcon(props: Props) {
     };
   }, []);
 
-  return (
-    <>
-      {mounted && <FontAwesomeIcon {...props} />}
-      {!mounted && <div className={props.className}></div>}
-    </>
-  );
+  return <>{mounted && <FontAwesomeIcon {...props} />}</>;
 }
