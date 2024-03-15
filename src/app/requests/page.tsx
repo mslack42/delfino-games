@@ -12,7 +12,7 @@ import { isRole } from "@/util/auth/server/isRole";
 export default async function ListGameRequests() {
   const requestedGames = await listInventoryWithOpenRequests();
   const loggedIn = await isLoggedIn();
-  const controlKeys: ControlsKey[] = ["office"];
+  const controlKeys: ControlsKey[] = ["office", "holders"];
   const details: GameDataFields[] = ["Requesters"];
   const actions: GameActions[] = (await isRole("Admin", "Holder"))
     ? ["ToggleRequest", "ToggleRotation", "ClearAllRequests"]
