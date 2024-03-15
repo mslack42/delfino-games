@@ -11,11 +11,12 @@ export function Referral({ code }: { code: string }) {
   };
   return (
     <>
-      <div className="py-4 text-xs flex flex-row justify-center space-x-2">
-        <p>Want to invite new users with a nice convenient link?</p>
+      <div className="py-4 text-xs flex flex-row justify-center space-x-1">
+        <p>Want to invite new users with a nice convenient</p>
         <CustomPopover
           head={
-            <div onClick={copyReferralLink}>
+            <div onClick={copyReferralLink} className="flex flex-row space-x-1">
+              <div className="text-teal-800">link?</div>
               <CustomFontAwesomeIcon icon={faCopy} />
             </div>
           }

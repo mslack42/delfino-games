@@ -51,22 +51,31 @@ export function PeopleTable({ holders }: Props) {
                     <li>
                       <Link
                         href={ApplicationRoutes.PersonsGames(holder.name!)}
-                        className="text-center"
+                        className="text-center flex flex-wrap space-x-1"
                       >
                         <CustomFontAwesomeIcon icon={faDice} className="h-5" />
+                        <div>Games</div>
                       </Link>
                     </li>
                     <li>
-                      <button onClick={() => setEditHolder(holder)}>
+                      <button
+                        onClick={() => setEditHolder(holder)}
+                        className="text-center flex flex-wrap space-x-1"
+                      >
                         <CustomFontAwesomeIcon
                           icon={faPenToSquare}
                           className="h-5"
                         />
+                        <div>Edit</div>
                       </button>
                     </li>
                     <li>
-                      <button onClick={() => setDeleteHolder(holder)}>
+                      <button
+                        onClick={() => setDeleteHolder(holder)}
+                        className="text-center flex flex-wrap space-x-1"
+                      >
                         <CustomFontAwesomeIcon icon={faTrash} className="h-5" />
+                        <div>Delete</div>
                       </button>
                     </li>
                   </ul>

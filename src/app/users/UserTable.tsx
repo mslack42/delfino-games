@@ -63,36 +63,53 @@ export function UserTable({ users }: Props) {
                 <TableCell className="p-2">{user.accounts[0].role}</TableCell>
                 <TableCell className="p-2">
                   <ul className="flex space-x-2 justify-end">
-                    {user.accounts[0].role === "Unverified" ? (
+                    <Conditional when={user.accounts[0].role === "Unverified"}>
                       <li onClick={() => setVerifyUser(user)}>
-                        <button onClick={() => setVerifyUser(user)}>
+                        <button
+                          onClick={() => setVerifyUser(user)}
+                          className="flex space-x-1 justify-center"
+                        >
                           <CustomFontAwesomeIcon
                             icon={faCheck}
                             className="h-5"
                           />
+                          <div>Verify</div>
                         </button>
                       </li>
-                    ) : (
+                    </Conditional>
+                    <Conditional when={user.accounts[0].role !== "Unverified"}>
                       <li>
-                        <button onClick={() => setEditUser(user)}>
+                        <button
+                          onClick={() => setEditUser(user)}
+                          className="flex  space-x-1 justify-center"
+                        >
                           <CustomFontAwesomeIcon
                             icon={faPenToSquare}
                             className="h-5"
                           />
+                          <div>Edit</div>
                         </button>
                       </li>
-                    )}
+                    </Conditional>
                     <li>
-                      <button onClick={() => setDeleteUser(user)}>
+                      <button
+                        onClick={() => setDeleteUser(user)}
+                        className="flex space-x-1 justify-center"
+                      >
                         <CustomFontAwesomeIcon icon={faTrash} className="h-5" />
+                        <div>Delete</div>
                       </button>
                     </li>
                     <li>
-                      <button onClick={() => setResetPasswordUser(user)}>
+                      <button
+                        onClick={() => setResetPasswordUser(user)}
+                        className="flex space-x-1 justify-center"
+                      >
                         <CustomFontAwesomeIcon
                           icon={faUnlock}
                           className="h-5"
                         />
+                        <div>Reset Password</div>
                       </button>
                     </li>
                   </ul>

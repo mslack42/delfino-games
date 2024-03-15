@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../shadcn/ShadcnDropDown";
+import { Conditional } from "../common/Conditional";
 
 export type DropDownGroup = {
   head: React.ReactNode;
@@ -85,11 +86,13 @@ export function DropDown(props: DropDownProps) {
 
   return (
     <>
-      {props.items.length > 0 ? (
+      <Conditional when={props.items.length === 0}>{props.head}</Conditional>
+      <Conditional when={props.items.length > 0}>
         <DropdownMenu open={open}>
           <DropdownMenuTrigger
             onPointerDown={() => setOpen(true)}
             name={props.name}
+            aria-label={props.name}
           >
             {props.head}
           </DropdownMenuTrigger>
@@ -104,9 +107,7 @@ export function DropDown(props: DropDownProps) {
             {content}
           </DropdownMenuContent>
         </DropdownMenu>
-      ) : (
-        props.head
-      )}
+      </Conditional>
     </>
   );
 }
