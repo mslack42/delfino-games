@@ -73,6 +73,8 @@ export function GameCardRequesterList(props: PanelProps) {
                       <button
                         className="rounded-full bg-sky-100 ml-1 px-1"
                         onClick={() => deleteRequest(r.user.id)}
+                        name={`Delete request from ${r.user.name}`}
+                        aria-label={`Delete request from ${r.user.name}`}
                       >
                         <CustomFontAwesomeIcon icon={faTimes} />
                       </button>
