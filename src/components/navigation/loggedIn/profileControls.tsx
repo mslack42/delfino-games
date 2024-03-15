@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { DropDownGroup } from "../../input/DropDown";
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 
 export async function profileControls(
   logoutAction: () => Promise<void>

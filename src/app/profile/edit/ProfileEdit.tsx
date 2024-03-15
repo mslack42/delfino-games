@@ -1,7 +1,8 @@
 "use client";
 import { KeyValue } from "@/components/common/KeyValue";
 import { CustomButton } from "@/components/input/CustomButton";
-import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { EditProfileInput, editProfileSchema } from "@/lib/profile-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Account, User } from "@prisma/client";

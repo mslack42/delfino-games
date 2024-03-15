@@ -4,7 +4,7 @@ import { GameCardActionButton } from "./GameCardActionButton";
 import { GameRequestsContext } from "@/components/game-requests/GameRequestContext";
 import { useUserData } from "@/util/auth/client/useUserData";
 import { faStar as emptyStar } from "@fortawesome/free-regular-svg-icons";
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { useToast } from "@/components/shadcn/use-toast";
 import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 

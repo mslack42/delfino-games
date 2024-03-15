@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 
 export function ProfileActions() {

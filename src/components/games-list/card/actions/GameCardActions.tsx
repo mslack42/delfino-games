@@ -1,4 +1,4 @@
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useMemo } from "react";
 import { GamesListContext } from "../../GamesListContext";

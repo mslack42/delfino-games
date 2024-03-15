@@ -1,4 +1,4 @@
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import Link from "next/link";
 
 export function GameTitle(props: { id: number; name: string }) {

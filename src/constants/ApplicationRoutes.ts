@@ -1,0 +1,18 @@
+export const ApplicationRoutes = {
+  Games: "/games",
+  GamesByGamesHolders: "/games/gameholders",
+  GameRequests: "/requests",
+  AddGame: (bggId: number) => `/add-game/${bggId}`,
+  People: "/people",
+  PersonsGames: (name: string) => `/games/holder/${name}`,
+  Register: "/register",
+  EditProfile: "/profile/edit",
+  Game: (id: number) => `/games/game/${id}`,
+  Home: "/",
+  LogIn: "/login",
+  Profile: "/profile",
+  ChangePassword: "/profile/changePassword",
+  FindAndAddGame: "/add-game",
+  Users: "/users",
+  EditGame: (id: number) => `/games/game/${id}/edit`,
+};

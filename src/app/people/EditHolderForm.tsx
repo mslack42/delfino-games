@@ -1,6 +1,6 @@
 "use client";
 import { CustomButton } from "@/components/input/CustomButton";
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { EditHolderInput, editHolderSchema } from "@/lib/holder-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Location, Person } from "@prisma/client";

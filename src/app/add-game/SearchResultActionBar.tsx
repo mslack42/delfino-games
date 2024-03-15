@@ -1,4 +1,4 @@
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ActionBarButton } from "./ActionBarButton";
 import Link from "next/link";

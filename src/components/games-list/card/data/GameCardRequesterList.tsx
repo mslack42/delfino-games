@@ -5,7 +5,7 @@ import { GameRequestsContext } from "@/components/game-requests/GameRequestConte
 import { Tag } from "@/components/common/Tag";
 import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 import { useLoggedInInspection } from "@/util/auth/client/useLoggedInInspection";
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { useToast } from "@/components/shadcn/use-toast";
 import { useUserRoleInspection } from "@/util/auth/client/useUserRoleInspection";
 

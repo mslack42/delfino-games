@@ -1,4 +1,4 @@
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
 import { isLoggedIn } from "@/util/auth/server/isLoggedIn";

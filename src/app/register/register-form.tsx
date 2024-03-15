@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { CreateUserInput, createUserSchema } from "@/lib/user-schema";
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { CustomButton } from "@/components/input/CustomButton";
 import { useSearchParams } from "next/navigation";
 

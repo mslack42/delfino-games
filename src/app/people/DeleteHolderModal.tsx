@@ -1,7 +1,7 @@
 "use client";
 import { CustomModal } from "@/components/common/CustomModal";
 import { CustomButton } from "@/components/input/CustomButton";
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { Person } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

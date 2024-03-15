@@ -3,7 +3,7 @@ import { CustomModal } from "@/components/common/CustomModal";
 import { CustomButton } from "@/components/input/CustomButton";
 import { UserModalProps, UserType } from "./UserTable";
 import { useRouter } from "next/navigation";
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 
 export function VerifyUserModal({ user, setUser }: UserModalProps) {
   const router = useRouter();

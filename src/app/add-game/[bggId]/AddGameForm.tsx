@@ -9,7 +9,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddGameInput, addGameSchema } from "@/lib/game-schema";
 import { BggSummaryData } from "@/bgg/types";
-import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { useLocalStorageState } from "@/util/useLocalStorageState";
 
 type AddGameFormProps = {

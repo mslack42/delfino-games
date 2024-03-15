@@ -4,7 +4,7 @@ import { CustomButton } from "@/components/input/CustomButton";
 import { useState } from "react";
 import { UserModalProps, UserType } from "./UserTable";
 import { useRouter } from "next/navigation";
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 
 export function DeleteUserModal({ user, setUser }: UserModalProps) {
   const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);

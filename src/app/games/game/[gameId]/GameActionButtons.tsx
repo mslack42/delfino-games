@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

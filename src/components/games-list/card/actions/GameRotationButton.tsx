@@ -1,4 +1,4 @@
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import {
   faSquareCheck,
   faSquareXmark,

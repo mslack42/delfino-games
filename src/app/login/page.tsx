@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LoginForm } from "./login-form";
 import { Suspense } from "react";
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { CustomButton } from "@/components/input/CustomButton";
 
 export default async function LoginPage() {

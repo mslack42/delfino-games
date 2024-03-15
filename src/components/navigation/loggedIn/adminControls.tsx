@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { DropDownGroup } from "../../input/DropDown";
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 
 export async function adminControls(): Promise<DropDownGroup> {
   const items = [

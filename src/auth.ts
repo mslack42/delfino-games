@@ -4,7 +4,8 @@ import prisma from "@/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { passesPermissionsCheck } from "./security/passesPermissionsCheck";
-import { ApiRoutes, ApplicationRoutes } from "./constants/routes";
+import { ApplicationRoutes } from "./constants/ApplicationRoutes";
+import { ApiRoutes } from "./constants/ApiRoutes";
 
 export type CustomUser = User & { id: string; role: string };
 

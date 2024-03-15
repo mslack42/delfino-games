@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/shadcn/ShadcnAccordion";
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { Location } from "@prisma/client";
 import Link from "next/link";
 import { useState } from "react";

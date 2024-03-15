@@ -3,7 +3,7 @@ import { BggSummaryData } from "@/bgg/types";
 import { FormEvent, Suspense, useState } from "react";
 import { SearchResults } from "./searchResults";
 import { CustomButton } from "../../components/input/CustomButton";
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { LoadingIdler } from "@/components/common/LoadingIdler";
 
 export default function AddNewGame() {

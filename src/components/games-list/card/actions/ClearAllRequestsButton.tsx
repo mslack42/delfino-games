@@ -1,4 +1,4 @@
-import { ApiRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/ApiRoutes";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import { GameCardActionButton } from "./GameCardActionButton";

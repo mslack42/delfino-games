@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ApplicationRoutes } from "@/constants/routes";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 
 export function loggedOutMenuItems(): React.ReactNode[] {
   return [
