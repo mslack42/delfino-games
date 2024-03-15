@@ -26,6 +26,7 @@ export default async function ListGames() {
         "duration",
         "name",
         "inrotation",
+        "requested",
       ]
     : ["office", "tags", "playercount", "duration", "name", "inrotation"];
 

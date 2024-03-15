@@ -64,23 +64,6 @@ export function FilterPanel() {
       ),
     },
     {
-      key: "tags",
-      head: "BGG Tags",
-      body: (
-        <BubbleFilterInput
-          filterName="Filter by BGG tags?"
-          filterKey="tags"
-          allOptions={dataLimits.tags}
-        />
-      ),
-      ...getAccordionOpeningMechanism(
-        filterState,
-        setFilterState,
-        "bubbleTypeFilters",
-        "tags"
-      ),
-    },
-    {
       key: "playercount",
       head: "Number Of Players",
       body: (
@@ -117,6 +100,35 @@ export function FilterPanel() {
         setFilterState,
         "textTypeFilters",
         "name"
+      ),
+    },
+    {
+      key: "requested",
+      head: "Show only requested games?",
+      body: null,
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "booleanTypeFilters",
+        "requested"
+      ),
+      trayless: true,
+    },
+    {
+      key: "tags",
+      head: "BGG Tags",
+      body: (
+        <BubbleFilterInput
+          filterName="Filter by BGG tags?"
+          filterKey="tags"
+          allOptions={dataLimits.tags}
+        />
+      ),
+      ...getAccordionOpeningMechanism(
+        filterState,
+        setFilterState,
+        "bubbleTypeFilters",
+        "tags"
       ),
     },
   ];

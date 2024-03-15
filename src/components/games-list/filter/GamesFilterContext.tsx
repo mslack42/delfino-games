@@ -18,6 +18,7 @@ import { GamesListContext } from "../GamesListContext";
 import { initialFilterState } from "./util/initialFilterState";
 import { useLocalStorageState } from "../../../util/useLocalStorageState";
 import { getCachedFilterState } from "./util/getCachedFilterState";
+import { GameRequestsContext } from "@/components/game-requests/GameRequestContext";
 
 type FilterContext = {
   filterState: FilterState;
@@ -63,6 +64,8 @@ export function FilterContextProvider({
 }: PropsWithChildren<Props>) {
   const { inventoryData, controlsKeys, setFilterMethod, setFiltersReady } =
     useContext(GamesListContext);
+  const { allRequests } = useContext(GameRequestsContext);
+  const requestedGameIds = [...new Set(allRequests.map((r) => r.game.id))];
   const offices: FilterBubbleData[] = extractOffices(inventoryData);
   const holders: FilterBubbleData[] = extractHolders(inventoryData);
   const tags: FilterBubbleData[] = extractTags(inventoryData);
@@ -97,7 +100,7 @@ export function FilterContextProvider({
     _setFilterState(newState);
     setFilterMethod(() => (lst: InventoryItem[]) => {
       if (!!lst) {
-        return filterData(newState, controlsKeys)(lst);
+        return filterData(newState, controlsKeys, requestedGameIds)(lst);
       } else {
         return lst;
       }

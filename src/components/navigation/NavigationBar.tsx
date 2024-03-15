@@ -39,7 +39,7 @@ export const NavigationBar = async () => {
                 <LoggedInOnly>
                   {menuList.map((ml, mlk) => (
                     <li className="px-2" key={mlk}>
-                      <DropDown type="Single" {...ml} name={ml.name} />
+                      <DropDown type="Single" {...ml} name={ml.name!} />
                     </li>
                   ))}
                 </LoggedInOnly>

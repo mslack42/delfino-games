@@ -4,7 +4,8 @@ import { applyBubbleTypeFilter } from "./applyBubbleTypeFilter";
 
 export const filterData = (
   filterState: FilterState,
-  controlsKeys: ControlsKey[]
+  controlsKeys: ControlsKey[],
+  requestedGameIds: number[]
 ) => {
   return (data: InventoryItem[]) =>
     data
@@ -60,5 +61,11 @@ export const filterData = (
               .toLowerCase()
               .includes(filterState.textTypeFilters["name"].text.toLowerCase())
           : g
+      )
+      .filter(
+        (g) =>
+          !controlsKeys.includes("requested") ||
+          !filterState.booleanTypeFilters["requested"].filterOn ||
+          requestedGameIds.includes(g.id)
       );
 };

@@ -28,6 +28,7 @@ export default async function ListGames(props: Props) {
     "duration",
     "name",
     "inrotation",
+    "requested",
   ];
   const details: GameDataFields[] = ["PlayerCount", "Duration"];
   const actions: GameActions[] = (await isRole("Admin", "Holder"))

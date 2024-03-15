@@ -9,7 +9,7 @@ export const SliderTypeFilterKeys = ["playercount", "duration"] as const;
 export type SliderTypeFilterKey = (typeof SliderTypeFilterKeys)[number];
 export const TextTypeFilterKeys = ["name"] as const;
 export type TextTypeFilterKey = (typeof TextTypeFilterKeys)[number];
-export const BooleanTypeFilterKeys = ["inrotation"] as const;
+export const BooleanTypeFilterKeys = ["inrotation", "requested"] as const;
 export type BooleanTypeFilterKey = (typeof BooleanTypeFilterKeys)[number];
 
 export type BubbleTypeFilter = {
