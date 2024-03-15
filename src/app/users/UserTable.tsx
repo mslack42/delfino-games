@@ -68,12 +68,12 @@ export function UserTable({ users }: Props) {
                         <button
                           onClick={() => setVerifyUser(user)}
                           className="flex space-x-1 justify-center"
+                          aria-label="Verify"
                         >
                           <CustomFontAwesomeIcon
                             icon={faCheck}
                             className="h-5"
                           />
-                          <div>Verify</div>
                         </button>
                       </li>
                     </Conditional>
@@ -82,12 +82,12 @@ export function UserTable({ users }: Props) {
                         <button
                           onClick={() => setEditUser(user)}
                           className="flex  space-x-1 justify-center"
+                          aria-label="Edit"
                         >
                           <CustomFontAwesomeIcon
                             icon={faPenToSquare}
                             className="h-5"
                           />
-                          <div>Edit</div>
                         </button>
                       </li>
                     </Conditional>
@@ -95,21 +95,21 @@ export function UserTable({ users }: Props) {
                       <button
                         onClick={() => setDeleteUser(user)}
                         className="flex space-x-1 justify-center"
+                        aria-label="Delete"
                       >
                         <CustomFontAwesomeIcon icon={faTrash} className="h-5" />
-                        <div>Delete</div>
                       </button>
                     </li>
                     <li>
                       <button
                         onClick={() => setResetPasswordUser(user)}
                         className="flex space-x-1 justify-center"
+                        aria-label="Reset Password"
                       >
                         <CustomFontAwesomeIcon
                           icon={faUnlock}
                           className="h-5"
                         />
-                        <div>Reset Password</div>
                       </button>
                     </li>
                   </ul>
