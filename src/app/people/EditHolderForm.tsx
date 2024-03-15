@@ -1,21 +1,20 @@
 "use client";
 import { CustomButton } from "@/components/input/CustomButton";
-import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
+import { ApiRoutes } from "@/constants/routes";
 import { EditHolderInput, editHolderSchema } from "@/lib/holder-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Location, Person } from "@prisma/client";
-import { useRouter } from "next/navigation";
+
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Props = {
   holder: Person;
+  onSubmitComplete?: () => void;
 };
 
-export function EditHolderForm({ holder }: Props) {
+export function EditHolderForm({ holder, onSubmitComplete }: Props) {
   const [submitting, setSubmitting] = useState(false);
-
-  const router = useRouter();
 
   const methods = useForm<EditHolderInput>({
     resolver: zodResolver(editHolderSchema),
@@ -43,7 +42,7 @@ export function EditHolderForm({ holder }: Props) {
         },
       });
 
-      router.push(ApplicationRoutes.People);
+      onSubmitComplete && onSubmitComplete();
     } catch (error: any) {
       //   toast.error(error.message);
     } finally {

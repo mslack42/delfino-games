@@ -26,7 +26,6 @@ export const ApplicationRoutes = {
   AddGame: (bggId: number) => `/add-game/${bggId}`,
   People: "/people",
   PersonsGames: (name: string) => `/games/holder/${name}`,
-  EditPerson: (id: number) => `/people/${id}`,
   Register: "/register",
   EditProfile: "/profile/edit",
   Game: (id: number) => `/games/game/${id}`,

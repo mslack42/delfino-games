@@ -1,6 +1,4 @@
 "use client";
-import { CustomModal } from "@/components/common/CustomModal";
-import { CustomButton } from "@/components/input/CustomButton";
 import {
   Table,
   TableBody,
@@ -9,36 +7,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/ShadcnTable";
-import { ApiRoutes, ApplicationRoutes } from "@/constants/routes";
 import { faDice } from "@fortawesome/free-solid-svg-icons/faDice";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Location } from "@prisma/client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { DeleteHolderModal } from "./DeleteHolderModal";
+import { ApplicationRoutes } from "@/constants/routes";
 import { useState } from "react";
+import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
+import { EditHolderModal } from "./EditHolderModal";
+import { Person } from "@prisma/client";
 
-type HolderType = {
-  id: number;
-  name: string | null;
-  location: Location;
-};
 type Props = {
-  holders: HolderType[];
+  holders: Person[];
 };
 export function PeopleTable({ holders }: Props) {
-  const [deleteHolder, setDeleteHolder] = useState<HolderType | null>(null);
-  const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);
-  const router = useRouter();
-
-  const deleteHandler = async (holderId: number | undefined | null) => {
-    if (holderId) {
-      await fetch(ApiRoutes.DeletePerson(holderId!), { method: "DELETE" });
-      setDeleteHolder(null);
-      router.refresh();
-    }
-  };
+  const [deleteHolder, setDeleteHolder] = useState<Person | null>(null);
+  const [editHolder, setEditHolder] = useState<Person | null>(null);
 
   return (
     <>
@@ -68,16 +53,17 @@ export function PeopleTable({ holders }: Props) {
                         href={ApplicationRoutes.PersonsGames(holder.name!)}
                         className="text-center"
                       >
-                        <FontAwesomeIcon icon={faDice} className="h-5" />
+                        <CustomFontAwesomeIcon icon={faDice} className="h-5" />
                       </Link>
                     </li>
-                    <li>
-                      <Link href={ApplicationRoutes.EditPerson(holder.id)}>
-                        <FontAwesomeIcon icon={faPenToSquare} className="h-5" />
-                      </Link>
+                    <li onClick={() => setEditHolder(holder)}>
+                      <CustomFontAwesomeIcon
+                        icon={faPenToSquare}
+                        className="h-5"
+                      />
                     </li>
                     <li onClick={() => setDeleteHolder(holder)}>
-                      <FontAwesomeIcon icon={faTrash} className="h-5" />
+                      <CustomFontAwesomeIcon icon={faTrash} className="h-5" />
                     </li>
                   </ul>
                 </TableCell>
@@ -86,47 +72,14 @@ export function PeopleTable({ holders }: Props) {
           </TableBody>
         </Table>
       </div>
-      <CustomModal
-        isOpen={!!deleteHolder}
-        title={<b>Are you sure you want to delete {deleteHolder?.name}?</b>}
-        subtitle={<p>This action is permanent.</p>}
-        content={
-          <div>
-            <div className="flex flex-row justify-evenly space-x-2">
-              <input
-                type="text"
-                placeholder="type 'confirm delete'"
-                onChange={(evt) => {
-                  setDeleteConfirmed(
-                    evt.currentTarget.value === "confirm delete"
-                  );
-                }}
-                className="px-2"
-              ></input>
-              <div className="flex flex-row justify-end w-full space-x-2">
-                <CustomButton
-                  type="button"
-                  innerText={"Yes"}
-                  className="rounded p-2"
-                  onClick={() => deleteHandler(deleteHolder?.id)}
-                  disabled={!deleteConfirmed}
-                />
-                <CustomButton
-                  type="button"
-                  innerText={"No"}
-                  className="rounded p-2"
-                  actionType="cancel"
-                  onClick={() => setDeleteHolder(null)}
-                />
-              </div>
-            </div>
-          </div>
-        }
-        onClose={() => {
-          setDeleteHolder(null);
-          setDeleteConfirmed(false);
-        }}
-      ></CustomModal>
+      <DeleteHolderModal
+        holder={deleteHolder}
+        onClose={() => setDeleteHolder(null)}
+      />
+      <EditHolderModal
+        holder={editHolder}
+        onClose={() => setEditHolder(null)}
+      />
     </>
   );
 }
