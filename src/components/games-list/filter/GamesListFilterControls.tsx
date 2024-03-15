@@ -14,12 +14,13 @@ export function GamesListFilterControls({ cacheKey }: { cacheKey: string }) {
             <FilterPanelHead />
           </Suspense>
         }
-      />
-      <Suspense>
-        <div className="h-full w-full overflow-y-auto">
-          <FilterPanel />
-        </div>
-      </Suspense>
+      >
+        <Suspense>
+          <div className="h-full w-full overflow-y-auto">
+            <FilterPanel />
+          </div>
+        </Suspense>
+      </LeftSheet>
     </FilterContextProvider>
   );
 }
