@@ -18,9 +18,9 @@ export default async function LoginPage() {
           <div className="md:w-8/12  bg-white px-8 py-10">
             <Link href={ApplicationRoutes.Register}>
               <CustomButton
-                type="button"
+                type="notabutton"
                 innerText={"Don't have an account?"}
-                className="p-2 rounded-lg"
+                className="p-2 rounded-lg w-max"
               />
             </Link>
           </div>
