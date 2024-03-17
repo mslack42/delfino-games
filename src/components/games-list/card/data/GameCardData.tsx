@@ -13,13 +13,22 @@ import { GameCardDataRow } from "./GameCardDataRow";
 import { PanelProps } from "../InventoryItemPanel";
 import { GameCardRequesterList } from "./GameCardRequesterList";
 import { Conditional } from "@/components/common/Conditional";
+import { twJoin } from "tailwind-merge";
 
 export function GameCardData(props: PanelProps) {
   const { data } = props;
   const { details } = useContext(GamesListContext);
+  const isInRotation = data.dsData.inRotation;
 
   return (
-    <div className="absolute w-40 md:w-60 text-xs md:text-sm bottom-0 left-0  bg-gradient-to-t from-teal-600 via-teal-600 to-transparent pt-8 rounded-lg">
+    <div
+      className={twJoin(
+        "absolute w-40 text-xs bottom-0 left-0 pt-8 rounded-lg",
+        "md:w-60 md:text-sm",
+        "bg-gradient-to-t from-teal-600 via-teal-600 to-transparent",
+        isInRotation ? "" : "grayscale"
+      )}
+    >
       <div className="absoulte w-32 md:w-52 bottom-0 left-0 ">
         <div className="flex justify items-center text-center flex-col pb-1">
           <Conditional when={details.includes("PlayerCount")}>

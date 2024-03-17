@@ -58,34 +58,40 @@ export function GameCardRequesterList(props: PanelProps) {
   }
 
   const canCancelOtherRequests = isRole("Admin", "Holder");
+  const canSeeRequests = isRole("Admin", "Holder", "Verified");
 
   return (
     <>
       <div className="w-full flex flex-row justify-start text-left text-xxs md:text-xs max-h-24 overflow-hidden hover:overflow-y-scroll z-1000">
-        <ul className="flex flex-wrap text-left justify-items-start justify-start gap-1">
-          {requesters.map((r, i) => (
-            <li key={i}>
-              <Tag
-                tag={
-                  <div className="flex flex-row">
-                    <div>{r.user.name}</div>
-                    <Conditional when={canCancelOtherRequests}>
-                      <button
-                        className="rounded-full bg-sky-100 ml-1 px-1"
-                        onClick={() => deleteRequest(r.user.id)}
-                        name={`Delete request from ${r.user.name}`}
-                        aria-label={`Delete request from ${r.user.name}`}
-                      >
-                        <CustomFontAwesomeIcon icon={faTimes} />
-                      </button>
-                    </Conditional>
-                  </div>
-                }
-                className="p-0 px-1"
-              />
-            </li>
-          ))}
-        </ul>
+        <Conditional when={canSeeRequests}>
+          <ul className="flex flex-wrap text-left justify-items-start justify-start gap-1">
+            {requesters.map((r, i) => (
+              <li key={i}>
+                <Tag
+                  tag={
+                    <div className="flex flex-row">
+                      <div>{r.user.name}</div>
+                      <Conditional when={canCancelOtherRequests}>
+                        <button
+                          className="rounded-full bg-sky-100 ml-1 px-1"
+                          onClick={() => deleteRequest(r.user.id)}
+                          name={`Delete request from ${r.user.name}`}
+                          aria-label={`Delete request from ${r.user.name}`}
+                        >
+                          <CustomFontAwesomeIcon icon={faTimes} />
+                        </button>
+                      </Conditional>
+                    </div>
+                  }
+                  className="p-0 px-1"
+                />
+              </li>
+            ))}
+          </ul>
+        </Conditional>
+        <Conditional when={!canSeeRequests}>
+          <div className="p-2 text-xs md:text-sm">{`${requesters.length} request${requesters.length > 1 ? "s" : ""}`}</div>
+        </Conditional>
       </div>
     </>
   );
