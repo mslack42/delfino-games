@@ -51,6 +51,7 @@ const config: Config = {
       card: colours.teal[200],
       cardScroller: colours.teal[100],
       tag: colours.sky[300],
+      hovertag: colours.sky[200],
       headbar: colours.teal[700],
       warning: colours.red[500],
       destructive: colours.red[300],

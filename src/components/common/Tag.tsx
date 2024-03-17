@@ -9,7 +9,7 @@ export function Tag(props: TagProps) {
   return (
     <div
       className={twMerge(
-        "bg-tag text-teal-900 p-1 rounded-lg",
+        "bg-tag text-teal-900 p-1 rounded-lg hover:bg-hovertag",
         props.className
       )}
     >

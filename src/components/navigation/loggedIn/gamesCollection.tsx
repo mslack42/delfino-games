@@ -24,7 +24,7 @@ export async function gamesCollection(): Promise<DropDownGroup> {
         href={ApplicationRoutes.GamesByGamesHolders}
         className="h-full w-full"
       >
-        By Games Holder
+        By Person
       </Link>
     ) : null,
   ].filter((jsx) => jsx !== null);

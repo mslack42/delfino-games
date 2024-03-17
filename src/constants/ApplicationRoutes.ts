@@ -15,4 +15,5 @@ export const ApplicationRoutes = {
   FindAndAddGame: "/add-game",
   Users: "/users",
   EditGame: (id: number) => `/games/game/${id}/edit`,
+  CompanyGames: "/games/company",
 };

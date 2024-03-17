@@ -1,11 +1,10 @@
 import { playerCount, playTime } from "@/util/text-formatting";
 import {
-  faCross,
   faHourglass,
   faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-import { faUser as faEmptyUser } from "@fortawesome/free-regular-svg-icons";
+import { faMap } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { GamesListContext } from "../../GamesListContext";
@@ -51,7 +50,7 @@ export function GameCardData(props: PanelProps) {
           </Conditional>
           <Conditional when={details.includes("Office")}>
             <GameCardDataRow
-              keyPart={<FontAwesomeIcon icon={faEmptyUser} />}
+              keyPart={<FontAwesomeIcon icon={faMap} />}
               valuePart={<div>{data.dsData.location}</div>}
             />
           </Conditional>

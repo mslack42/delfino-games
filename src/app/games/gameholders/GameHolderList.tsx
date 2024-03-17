@@ -52,19 +52,17 @@ export function GameHolderList(props: GameHolderListProps) {
                   {props.holders
                     .filter((h) => h.location === v)
                     .map((h, k) => (
-                      <>
-                        <Tag
-                          className="rounded-full"
-                          key={k}
-                          tag={
-                            <Link href={ApplicationRoutes.PersonsGames(h.name)}>
-                              <div className="text-2xl p-2 w-min whitespace-nowrap">
-                                {h.name}
-                              </div>
-                            </Link>
-                          }
-                        ></Tag>
-                      </>
+                      <Tag
+                        className="rounded-full my-1"
+                        key={k}
+                        tag={
+                          <Link href={ApplicationRoutes.PersonsGames(h.name)}>
+                            <div className="text-2xl p-2 w-min whitespace-nowrap">
+                              {h.name}
+                            </div>
+                          </Link>
+                        }
+                      ></Tag>
                     ))}
                 </div>
               </AccordionContent>
