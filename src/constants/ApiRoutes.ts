@@ -6,6 +6,7 @@ export const ApiRoutes = {
   DeletePerson: (holderId: number) => `/api/people?id=${holderId}`,
   ChangePassword: "/api/profile/changePassword",
   EditProfile: "/api/profile",
+  DeleteProfile: "/api/profile",
   Register: "/api/register",
   DeleteUser: (userId: string) => `/api/user?id=${userId}`,
   ResetUserPassword: (userId: string) => `/api/user/passwordReset?id=${userId}`,

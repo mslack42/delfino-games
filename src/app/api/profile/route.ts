@@ -1,8 +1,9 @@
 import { editProfileSchema } from "@/lib/profile-schema";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import { updateUser } from "@/database/users/updateUser";
+import { deleteUser } from "@/database/users/deleteUser";
 
 export async function POST(req: NextRequest) {
   try {
@@ -37,6 +38,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    return NextResponse.json(
+      {
+        status: "error",
+        message: error.message || "Internal Server Error",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const sessionId = (await auth())?.user?.id;
+
+    await deleteUser(sessionId!);
+    await signOut();
+  } catch (error: any) {
     return NextResponse.json(
       {
         status: "error",

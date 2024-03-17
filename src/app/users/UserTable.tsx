@@ -15,12 +15,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/shadcn/ShadcnTable";
-import { CustomModal } from "@/components/common/CustomModal";
 import { Account, User } from "@prisma/client";
-import { UserEditForm } from "./UserEditForm";
 import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
-import { useRouter } from "next/navigation";
 import { Conditional } from "@/components/common/Conditional";
+import { EditUserModal } from "./EditUserModal";
 
 type Props = {
   users: UserType[];
@@ -126,30 +124,6 @@ export function UserTable({ users }: Props) {
       />
       <VerifyUserModal user={verifyUser} setUser={setVerifyUser} />
       <EditUserModal user={editUser} setUser={setEditUser} />
-    </>
-  );
-}
-
-function EditUserModal({ user, setUser }: UserModalProps) {
-  const router = useRouter();
-
-  const changeMade = () => {
-    setUser(null);
-    router.refresh();
-  };
-  return (
-    <>
-      <CustomModal
-        isOpen={!!user}
-        title={<b>Edit {user?.name}</b>}
-        onClose={() => {
-          setUser(null);
-        }}
-      >
-        <Conditional when={!!user}>
-          <UserEditForm user={user!} onSubmitComplete={changeMade} />
-        </Conditional>
-      </CustomModal>
     </>
   );
 }
