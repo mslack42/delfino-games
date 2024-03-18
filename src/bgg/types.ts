@@ -15,4 +15,13 @@ export type BggSummaryData = {
     maxplaytime_minutes: number | undefined;
     tags: string[];
   };
+  expansions?: BggExpansionSummaryData[];
+};
+
+export type BggExpansionSummaryData = {
+  name: string;
+  bggId: number;
+  thumb: string | undefined;
+  image: string | undefined;
+  description: string | undefined;
 };

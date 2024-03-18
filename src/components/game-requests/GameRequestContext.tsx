@@ -17,5 +17,5 @@ export type GameRequestsContextType = {
 
 export const GameRequestsContext = createContext<GameRequestsContextType>({
   allRequests: [],
-  setAllRequests: function (v: SetStateAction<GameRequest[]>): void {},
+  setAllRequests: function (_: SetStateAction<GameRequest[]>): void {},
 });

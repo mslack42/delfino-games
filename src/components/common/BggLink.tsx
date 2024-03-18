@@ -2,7 +2,7 @@
 
 import { bggUrl } from "@/util/text-formatting";
 import { faLink } from "@fortawesome/free-solid-svg-icons/faLink";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CustomFontAwesomeIcon } from "./CustomFontAwesomeIcon";
 
 type BggLinkProps = {
   bggId: number;
@@ -18,7 +18,7 @@ export function BggLink(props: BggLinkProps) {
       className="cursor-pointer"
       onClick={() => openNewTab(bggUrl(props.bggId))}
     >
-      <FontAwesomeIcon icon={faLink}></FontAwesomeIcon>
+      <CustomFontAwesomeIcon icon={faLink}></CustomFontAwesomeIcon>
     </div>
   );
 }

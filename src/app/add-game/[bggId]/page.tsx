@@ -1,7 +1,6 @@
 import { fetchBggDetails } from "@/bgg/fetchBggDetails";
-import { BggDataSummary } from "@/components/data-display/BggDataSummary";
 import { listHolders } from "@/database/holders/listHolders";
-import { AddGameForm } from "./AddGameForm";
+import { AddGame } from "./AddGame";
 
 type Props = {
   params: {
@@ -9,8 +8,8 @@ type Props = {
   };
 };
 
-export default async function AddGame(props: Props) {
-  const bggData = await fetchBggDetails(props.params.bggId);
+export default async function AddGamePage(props: Props) {
+  const bggData = await fetchBggDetails(props.params.bggId, true);
   const holders = await listHolders();
 
   if (bggData.length === 0) {
@@ -19,24 +18,5 @@ export default async function AddGame(props: Props) {
 
   const data = bggData[0];
 
-  return (
-    <div className="w-full max-w-4xl">
-      <div className="flex flex-wrap justify-between">
-        <div className="w-full md:w-1/2 ">
-          <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
-            <BggDataSummary data={data}></BggDataSummary>
-          </div>
-        </div>
-        <div className="w-full md:w-1/2 ">
-          <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
-            <AddGameForm
-              holders={holders}
-              bggData={data}
-              className="flex flex-col justify-center items-center max-w-4/5"
-            ></AddGameForm>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <AddGame data={data} holders={holders} />;
 }

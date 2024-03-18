@@ -10,6 +10,7 @@ import { ZodError } from "zod";
 type PayloadDataType = {
   formData: any;
   bggData: BggSummaryData;
+  selectedExpansions: number[];
 };
 
 export async function POST(req: NextRequest) {
@@ -30,7 +31,15 @@ export async function POST(req: NextRequest) {
     const holderIdInt = tryParseInt(holderId);
 
     const newGame: NewGameData = {
-      bggData: json.bggData,
+      bggData: {
+        ...json.bggData,
+        expansions:
+          json.selectedExpansions.length > 0
+            ? json.bggData.expansions!.filter((ex) =>
+                json.selectedExpansions.includes(ex.bggId)
+              )
+            : undefined,
+      },
       ownership: ownership as Ownership,
       location: location as Location,
       ownerId: ownerIdInt,

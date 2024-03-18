@@ -3,24 +3,24 @@ import { CustomButton } from "@/components/input/CustomButton";
 import { SelectOrNew } from "@/components/input/SelectOrNew";
 import { DataSummaryKeyValuePair } from "@/components/data-display/DataSummaryKeyValuePair";
 import { Ownership, Location } from "@prisma/client";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddGameInput, addGameSchema } from "@/lib/game-schema";
-import { BggSummaryData } from "@/bgg/types";
 import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { useLocalStorageState } from "@/util/useLocalStorageState";
 import { Conditional } from "@/components/common/Conditional";
 import { useToast } from "@/components/shadcn/use-toast";
+import { AddGameContext } from "./AddGameContext";
 
 type AddGameFormProps = {
-  holders: { id: number; name: string; location: Location }[];
   className?: string;
-  bggData: BggSummaryData;
 };
 export function AddGameForm(props: AddGameFormProps) {
+  const { bggData, holders, selectedExpansionBggIds } =
+    useContext(AddGameContext);
   const [currLocation, setCurrLocation] = useState<Location>("Poole");
   const [currOwnership, setCurrOwnership] = useState<Ownership>("Personal");
   const resetPeople = () => {
@@ -28,8 +28,8 @@ export function AddGameForm(props: AddGameFormProps) {
     resetField("holderId", { defaultValue: "-2" });
   };
   const locationHolders = useMemo(
-    () => props.holders.filter((h) => h.location === currLocation),
-    [props.holders, currLocation]
+    () => holders.filter((h) => h.location === currLocation),
+    [holders, currLocation]
   );
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
@@ -62,7 +62,11 @@ export function AddGameForm(props: AddGameFormProps) {
       setCachedFormInput(values);
       const res = await fetch(ApiRoutes.AddGame, {
         method: "POST",
-        body: JSON.stringify({ formData: values, bggData: props.bggData }),
+        body: JSON.stringify({
+          formData: values,
+          bggData: bggData,
+          selectedExpansions: selectedExpansionBggIds,
+        }),
         headers: {
           "Content-Type": "application/json",
         },

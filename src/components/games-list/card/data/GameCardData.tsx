@@ -5,7 +5,6 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { faMap } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import { GamesListContext } from "../../GamesListContext";
 import { GameCardDataRow } from "./GameCardDataRow";
@@ -13,6 +12,7 @@ import { PanelProps } from "../InventoryItemPanel";
 import { GameCardRequesterList } from "./GameCardRequesterList";
 import { Conditional } from "@/components/common/Conditional";
 import { twJoin } from "tailwind-merge";
+import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 
 export function GameCardData(props: PanelProps) {
   const { data } = props;
@@ -32,7 +32,7 @@ export function GameCardData(props: PanelProps) {
         <div className="flex justify items-center text-center flex-col pb-1">
           <Conditional when={details.includes("PlayerCount")}>
             <GameCardDataRow
-              keyPart={<FontAwesomeIcon icon={faUsers} />}
+              keyPart={<CustomFontAwesomeIcon icon={faUsers} />}
               valuePart={playerCount(
                 data.bggData.specs.maxPlayerCount,
                 data.bggData.specs.minPlayerCount
@@ -41,7 +41,7 @@ export function GameCardData(props: PanelProps) {
           </Conditional>
           <Conditional when={details.includes("Duration")}>
             <GameCardDataRow
-              keyPart={<FontAwesomeIcon icon={faHourglass} />}
+              keyPart={<CustomFontAwesomeIcon icon={faHourglass} />}
               valuePart={playTime(
                 data.bggData.specs.maxPlayTime,
                 data.bggData.specs.minPlayTime
@@ -50,13 +50,13 @@ export function GameCardData(props: PanelProps) {
           </Conditional>
           <Conditional when={details.includes("Office")}>
             <GameCardDataRow
-              keyPart={<FontAwesomeIcon icon={faMap} />}
+              keyPart={<CustomFontAwesomeIcon icon={faMap} />}
               valuePart={<div>{data.dsData.location}</div>}
             />
           </Conditional>
           <Conditional when={details.includes("Holder")}>
             <GameCardDataRow
-              keyPart={<FontAwesomeIcon icon={faUser} />}
+              keyPart={<CustomFontAwesomeIcon icon={faUser} />}
               valuePart={<div>{data.dsData.holder}</div>}
             />
           </Conditional>

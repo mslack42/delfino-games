@@ -75,6 +75,19 @@ export async function addGame(newData: NewGameData): Promise<boolean> {
             : undefined,
           ownership: newData.ownership,
           inCurrentRotation: newData.isInRotation,
+          ownedExpansions: {
+            createMany: {
+              data: (newData.bggData.expansions ?? []).map((ex) => {
+                return {
+                  bggId: ex.bggId,
+                  description: ex.description!,
+                  image: ex.image!,
+                  thumb: ex.thumb!,
+                  name: ex.name,
+                };
+              }),
+            },
+          },
         },
       },
       GameRequest: undefined,

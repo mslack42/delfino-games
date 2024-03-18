@@ -23,7 +23,7 @@ model BoardGame {
 model BoardGameBggData {
   id                      Int                   @id @default(autoincrement())
   boardGame               BoardGame[]           @relation("bggData")
-  bggId                   Int                   
+  bggId                   Int
   thumb                   String
   image                   String
   description             String
@@ -32,6 +32,18 @@ model BoardGameBggData {
   boardGameDataSpecsId    Int
   boardGameBggDataStatsId Int
   lastUpdate              DateTime              @updatedAt
+}
+
+model BoardGameExpansionBggData {
+  id                      Int                    @id @default(autoincrement())
+  name                    String
+  bggId                   Int
+  thumb                   String
+  image                   String
+  description             String
+  lastUpdate              DateTime               @updatedAt
+  BoardGameInternalData   BoardGameInternalData? @relation(fields: [boardGameInternalDataId], references: [id], onDelete: Cascade)
+  boardGameInternalDataId Int?
 }
 
 model BoardGameDataSpecs {
@@ -48,25 +60,26 @@ model BoardGameDataSpecs {
 
 model BoardGameBggDataStats {
   id               Int                @id @default(autoincrement())
-  bggId            Int                
+  bggId            Int
   bggRank          Int?
   bggAverageScore  Float?
   BoardGameBggData BoardGameBggData[]
 }
 
 model BoardGameInternalData {
-  id                   Int                 @id @default(autoincrement())
-  boardGame            BoardGame[]         @relation("dsData")
-  specs                BoardGameDataSpecs? @relation(fields: [boardGameDataSpecsId], references: [id])
+  id                   Int                         @id @default(autoincrement())
+  boardGame            BoardGame[]                 @relation("dsData")
+  specs                BoardGameDataSpecs?         @relation(fields: [boardGameDataSpecsId], references: [id])
   tags                 CustomTag[]
   boardGameDataSpecsId Int?
-  lastUpdated          DateTime            @updatedAt
-  ownership            Ownership           @default(Personal)
-  holder               Person              @relation(name: "holderRel", fields: [holderId], references: [id], onDelete: Cascade)
-  owner                Person?             @relation(name: "ownerRel", fields: [ownerId], references: [id], onDelete: Cascade)
+  lastUpdated          DateTime                    @updatedAt
+  ownership            Ownership                   @default(Personal)
+  holder               Person                      @relation(name: "holderRel", fields: [holderId], references: [id], onDelete: Cascade)
+  owner                Person?                     @relation(name: "ownerRel", fields: [ownerId], references: [id], onDelete: Cascade)
   holderId             Int
   ownerId              Int?
-  inCurrentRotation    Boolean             @default(false)
+  inCurrentRotation    Boolean                     @default(false)
+  ownedExpansions      BoardGameExpansionBggData[]
 }
 
 model Person {

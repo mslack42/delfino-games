@@ -1,10 +1,11 @@
 import { tryParseFloat } from "../util/tryParseFloat";
 import { tryParseInt } from "../util/tryParseInt";
-import { BggSummaryData } from "./types";
+import { BggExpansionSummaryData, BggSummaryData } from "./types";
 import * as xml2js from "xml2js";
 
 export const fetchBggDetails = async (
-  idsString: string
+  idsString: string,
+  includeExpansions?: boolean
 ): Promise<BggSummaryData[]> => {
   const bggSuggestions = await fetch(
     `https://boardgamegeek.com/xmlapi2/thing?id=${idsString}&stats=1`
@@ -21,10 +22,68 @@ export const fetchBggDetails = async (
   if (!searchResultsData) {
     return [];
   }
-  return await parseBggDetailsIntoList(searchResultsData);
+  return await parseBggDetailsIntoList(searchResultsData, !!includeExpansions);
 };
 
-const parseBggDetailsIntoList = async (bggData: any[]) => {
+const fetchExpansionDetails = async (
+  idsString: string
+): Promise<BggExpansionSummaryData[]> => {
+  const bggData = await fetch(
+    `https://boardgamegeek.com/xmlapi2/thing?id=${idsString}&stats=1`
+  );
+  const bggXml = await bggData.text();
+  let bggJson: any;
+  xml2js.parseString(bggXml, (err, res) => {
+    if (err) {
+      return [];
+    }
+    bggJson = res;
+  });
+  const searchResultsData = bggJson?.items?.item;
+  if (!searchResultsData) {
+    return [];
+  }
+  return await parseBggExpansionDetailsIntoList(searchResultsData);
+};
+
+const parseBggExpansionDetailsIntoList = async (bggData: any[]) => {
+  let output: BggExpansionSummaryData[] = [];
+  for (var item of bggData) {
+    if (item?.$?.type === "boardgameexpansion") {
+      const res = {
+        bggId: item?.$?.id,
+        thumb:
+          item?.thumbnail && item?.thumbnail.length
+            ? item?.thumbnail[0]
+            : undefined,
+        image: item?.image && item?.image.length ? item?.image[0] : undefined,
+        name: item?.name?.filter(
+          (n: { $: { type: string } }) => n.$.type === "primary"
+        )[0].$.value,
+        description:
+          item?.description && item?.description.length
+            ? item?.description[0]
+            : undefined,
+      };
+
+      const data: BggExpansionSummaryData = {
+        name: res.name,
+        bggId: tryParseInt(res.bggId)!,
+        thumb: res.thumb,
+        image: res.image,
+        description: res.description,
+      };
+      output.push(data);
+    }
+  }
+  output.sort((a, b) => a.name.localeCompare(b.name));
+  return output;
+};
+
+const parseBggDetailsIntoList = async (
+  bggData: any[],
+  includeExpansions: boolean
+) => {
   let output: BggSummaryData[] = [];
   for (var item of bggData) {
     if (item?.$?.type === "boardgame") {
@@ -57,6 +116,20 @@ const parseBggDetailsIntoList = async (bggData: any[]) => {
           .map((l: { $: { value: any } }) => l.$.value),
       };
 
+      let expansions: BggExpansionSummaryData[] = [];
+      if (includeExpansions) {
+        const expansionIds: string[] =
+          item?.link
+            .filter(
+              (l: { $: { type: string } }) => l.$.type === "boardgameexpansion"
+            )
+            .map((l: { $: { id: any } }) => l.$.id) ?? [];
+        if (expansionIds.length > 0) {
+          const expansionIdString = expansionIds.join(",");
+          expansions = await fetchExpansionDetails(expansionIdString);
+        }
+      }
+
       const data: BggSummaryData = {
         name: res.name,
         bggId: tryParseInt(res.bggId)!,
@@ -74,6 +147,7 @@ const parseBggDetailsIntoList = async (bggData: any[]) => {
           maxplaytime_minutes: tryParseInt(res.maxPlaytime),
           tags: res.tags,
         },
+        expansions: expansions.length > 0 ? expansions : undefined,
       };
       output.push(data);
     }
