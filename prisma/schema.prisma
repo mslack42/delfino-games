@@ -103,6 +103,8 @@ model GameRequest {
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   boardGameId Int
   userId      String
+
+  @@unique([boardGameId, userId], name: "singleGameRequestsOnly")
 }
 
 enum Ownership {
