@@ -26,10 +26,10 @@ export const addGameSchema = object({
     (data) => {
       const ownerIdInt = tryParseInt(data.ownerId);
       return (
-        data.ownerId !== "Personal" ||
+        data.ownership !== "Personal" ||
         (ownerIdInt !== null &&
           ownerIdInt !== undefined &&
-          (ownerIdInt >= 0 || data.newOwner))
+          (ownerIdInt >= 0 || (data.newOwner && data.newOwner.length > 0)))
       );
     },
     {
@@ -44,7 +44,7 @@ export const addGameSchema = object({
         holderIdInt !== null &&
         holderIdInt !== undefined &&
         (holderIdInt >= 0 ||
-          (holderIdInt === -1 && data.newHolder) ||
+          (holderIdInt === -1 && data.newHolder && data.newHolder.length > 0) ||
           holderIdInt === -2)
       );
     },
@@ -87,10 +87,10 @@ export const editGameSchema = object({
     (data) => {
       const ownerIdInt = tryParseInt(data.ownerId);
       return (
-        data.ownerId !== "Personal" ||
+        data.ownership !== "Personal" ||
         (ownerIdInt !== null &&
           ownerIdInt !== undefined &&
-          (ownerIdInt >= 0 || data.newOwner))
+          (ownerIdInt >= 0 || (data.newOwner && data.newOwner.length > 0)))
       );
     },
     {
@@ -105,7 +105,7 @@ export const editGameSchema = object({
         holderIdInt !== null &&
         holderIdInt !== undefined &&
         (holderIdInt >= 0 ||
-          (holderIdInt === -1 && data.newHolder) ||
+          (holderIdInt === -1 && data.newHolder && data.newHolder.length > 0) ||
           holderIdInt === -2)
       );
     },

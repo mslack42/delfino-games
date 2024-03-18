@@ -15,6 +15,7 @@ type PayloadDataType = {
 export async function POST(req: NextRequest) {
   try {
     const json: PayloadDataType = await req.json();
+
     const {
       ownership,
       location,
@@ -66,6 +67,7 @@ export async function POST(req: NextRequest) {
         {
           status: "error",
           message: "Validation failed",
+          errors: e.errors,
         },
         { status: 400 }
       );

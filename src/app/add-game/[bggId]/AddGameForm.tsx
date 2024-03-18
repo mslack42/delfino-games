@@ -93,7 +93,7 @@ export function AddGameForm(props: AddGameFormProps) {
       router.refresh();
     } catch (error: any) {
       toast({
-        title: "Failed to add game - internal failure",
+        title: "Failed to add game",
         variant: "destructive",
         type: "background",
       });
