@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Conditional } from "@/components/common/Conditional";
+import { useToast } from "@/components/shadcn/use-toast";
 
 type GameEditFormProps = {
   holders: { id: number; name: string; location: Location }[];
@@ -55,6 +56,7 @@ export function GameEditForm(props: GameEditFormProps) {
       isInRotation: data.dsData.inRotation,
     },
   });
+  const { toast } = useToast();
 
   const {
     handleSubmit,
@@ -74,13 +76,30 @@ export function GameEditForm(props: GameEditFormProps) {
         },
       });
       if (!res.ok) {
-        // TODO some error handling
+        if (res.status === 500) {
+          toast({
+            title: "Failed to edit game - internal failure",
+            type: "background",
+            variant: "destructive",
+          });
+        }
+        if (res.status === 400) {
+          toast({
+            title: "Failed to edit game - no game specified",
+            type: "background",
+            variant: "destructive",
+          });
+        }
         return;
       }
       router.push(ApplicationRoutes.Game(data.id));
       router.refresh();
     } catch (error: any) {
-      //   toast.error(error.message);
+      toast({
+        title: "Failed to edit game",
+        type: "background",
+        variant: "destructive",
+      });
     } finally {
       setSubmitting(false);
     }

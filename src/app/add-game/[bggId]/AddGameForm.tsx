@@ -13,6 +13,7 @@ import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { useLocalStorageState } from "@/util/useLocalStorageState";
 import { Conditional } from "@/components/common/Conditional";
+import { useToast } from "@/components/shadcn/use-toast";
 
 type AddGameFormProps = {
   holders: { id: number; name: string; location: Location }[];
@@ -32,6 +33,7 @@ export function AddGameForm(props: AddGameFormProps) {
   );
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const [cachedFormInput, setCachedFormInput] = useLocalStorageState(
     "addgameform",
@@ -67,14 +69,31 @@ export function AddGameForm(props: AddGameFormProps) {
       });
 
       if (!res.ok) {
-        // TODO some error handling
+        if (res.status === 500) {
+          toast({
+            title: "Failed to add game - internal failure",
+            variant: "destructive",
+            type: "background",
+          });
+        }
+        if (res.status === 400) {
+          toast({
+            title: "Failed to add game - validation failure",
+            variant: "destructive",
+            type: "background",
+          });
+        }
         return;
       }
 
       router.push(ApplicationRoutes.Games);
       router.refresh();
     } catch (error: any) {
-      //   toast.error(error.message);
+      toast({
+        title: "Failed to add game - internal failure",
+        variant: "destructive",
+        type: "background",
+      });
     } finally {
       setSubmitting(false);
     }

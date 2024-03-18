@@ -5,6 +5,7 @@ import { addGameSchema } from "@/lib/game-schema";
 import { tryParseInt } from "@/util/tryParseInt";
 import { Ownership, Location } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 type PayloadDataType = {
   formData: any;
@@ -55,16 +56,26 @@ export async function POST(req: NextRequest) {
         {
           status: "error",
         },
-        { status: 400 }
+        { status: 500 }
       );
     }
   } catch (e) {
     console.log(e);
+    if (e instanceof ZodError) {
+      return NextResponse.json(
+        {
+          status: "error",
+          message: "Validation failed",
+        },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       {
         status: "error",
       },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }

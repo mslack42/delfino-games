@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
   if (!id || newStatus === undefined) {
     return NextResponse.json(
-      {},
+      { status: 400, message: "Validation Error" },
       {
         status: 400,
       }
@@ -20,9 +20,8 @@ export async function POST(req: NextRequest) {
       newStatus,
     });
   } catch (error: any) {
-    // TODO
     return NextResponse.json(
-      {},
+      { status: 500, message: "Internal Error" },
       {
         status: 500,
       }

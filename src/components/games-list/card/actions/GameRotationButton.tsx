@@ -30,7 +30,20 @@ export function GameRotationButton(props: GameRotationButtonProps) {
         }),
       });
       if (!res.ok) {
-        // TODO some error handling
+        if (res.status === 500) {
+          toast({
+            title: "Failed to change rotation status - internal failure",
+            type: "background",
+            variant: "destructive",
+          });
+        }
+        if (res.status === 400) {
+          toast({
+            title: "Failed to change rotation statuse - no game specified",
+            type: "background",
+            variant: "destructive",
+          });
+        }
       }
       setInventoryData(
         inventoryData.map((v) => {
@@ -53,7 +66,11 @@ export function GameRotationButton(props: GameRotationButtonProps) {
           : "Game removed from rotation",
       });
     } catch (error: any) {
-      //
+      toast({
+        title: "Failed to change rotation status",
+        type: "background",
+        variant: "destructive",
+      });
     }
   }
   return (

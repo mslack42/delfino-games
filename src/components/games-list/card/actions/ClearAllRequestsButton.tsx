@@ -25,20 +25,27 @@ export function ClearAllRequestsButton(props: ClearAllRequestsButtonProps) {
         }),
       });
       if (!res.ok) {
-        // TODO some error handling
-        toast({
-          type: "background",
-          variant: "destructive",
-          title: "Action failed",
-        });
+        if (res.status === 500) {
+          toast({
+            title: "Failed to clear requests - internal failure",
+            type: "background",
+            variant: "destructive",
+          });
+        }
+        if (res.status === 400) {
+          toast({
+            title: "Failed to clear requests - validation failed",
+            type: "background",
+            variant: "destructive",
+          });
+        }
         return;
       }
     } catch (error: any) {
-      //
       toast({
+        title: "Failed to clear requests",
         type: "background",
         variant: "destructive",
-        title: "Action failed",
       });
       return;
     }

@@ -7,14 +7,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { updateGame } from "@/database/games/updateGame";
 
 export async function DELETE(req: NextRequest) {
-  const gameId = tryParseInt(req.nextUrl.searchParams.get("id") ?? "");
+  try {
+    const gameId = tryParseInt(req.nextUrl.searchParams.get("id") ?? "");
 
-  if (!gameId) {
-    return NextResponse.json({ message: "no id provided" }, { status: 400 });
+    if (!gameId) {
+      return NextResponse.json({ message: "no id provided" }, { status: 400 });
+    }
+
+    await deleteGame(gameId);
+    return NextResponse.json({ message: "success" });
+  } catch (e) {
+    return NextResponse.json({ message: "error" }, { status: 500 });
   }
-
-  await deleteGame(gameId);
-  return NextResponse.json({ message: "success" });
 }
 
 export async function POST(req: NextRequest) {
@@ -66,7 +70,7 @@ export async function POST(req: NextRequest) {
         {
           status: "error",
         },
-        { status: 400 }
+        { status: 500 }
       );
     }
   } catch (e) {
@@ -76,7 +80,7 @@ export async function POST(req: NextRequest) {
         status: "error",
       },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

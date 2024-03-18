@@ -42,7 +42,6 @@ export function ToggleRequestButton(props: RequestGameButtonProps) {
         }),
       });
       if (!res.ok) {
-        // TODO some error handling
         const body = await res.json();
         if (
           res.status === 400 &&
@@ -86,7 +85,11 @@ export function ToggleRequestButton(props: RequestGameButtonProps) {
         title: newStatus ? "Game requested" : "Game request removed",
       });
     } catch (error: any) {
-      //
+      toast({
+        type: "background",
+        variant: "destructive",
+        title: "Action failed",
+      });
     }
   }
 

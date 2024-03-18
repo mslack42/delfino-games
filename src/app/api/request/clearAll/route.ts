@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
   if (!gameId) {
     return NextResponse.json(
-      {},
+      { status: 400, message: "Validation Error" },
       {
         status: 400,
       }
@@ -20,10 +20,9 @@ export async function POST(req: NextRequest) {
       status: true,
     });
   } catch (error: any) {
-    // TODO
     console.log(error);
     return NextResponse.json(
-      {},
+      { status: 500, message: "Internal Failure" },
       {
         status: 500,
       }
