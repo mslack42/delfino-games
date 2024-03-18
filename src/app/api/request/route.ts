@@ -35,6 +35,15 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     // TODO
     console.log(error);
+    if (error.code === "P2002") {
+      return NextResponse.json(
+        {},
+        {
+          status: 409,
+        }
+      );
+    }
+
     return NextResponse.json(
       {},
       {

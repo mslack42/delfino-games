@@ -53,6 +53,8 @@ export function ToggleRequestButton(props: RequestGameButtonProps) {
             variant: "destructive",
             title: "You cannot request more than 3 games at once",
           });
+        } else if (res.status === 409) {
+          // Do nothing - presumably spammed request
         } else {
           toast({
             type: "background",
