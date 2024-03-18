@@ -54,7 +54,7 @@ export function DeleteProfileModal({ open, setOpen }: DeleteProfileProps) {
       <CustomModal
         isOpen={!!open}
         title={<b>Are you sure you want to delete your profile?</b>}
-        subtitle={<p>This action is permanent.</p>}
+        subtitle={<>This action is permanent.</>}
         onClose={() => {
           setDeleteConfirmed(false);
           setOpen(false);

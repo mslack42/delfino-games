@@ -61,7 +61,7 @@ export function DeleteGameModal(props: DeleteGameModalProps) {
     <CustomModal
       isOpen={!!deleteId}
       title={<b>Are you sure you want to delete this game?</b>}
-      subtitle={<p>This action is permanent.</p>}
+      subtitle={<>This action is permanent.</>}
       onClose={() => {
         setDeleteId(null);
         setDeleteConfirmed(false);

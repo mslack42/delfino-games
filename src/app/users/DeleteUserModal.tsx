@@ -53,7 +53,7 @@ export function DeleteUserModal({ user, setUser }: UserModalProps) {
       <CustomModal
         isOpen={!!user}
         title={<b>Are you sure you want to delete {user?.name}?</b>}
-        subtitle={<p>This action is permanent.</p>}
+        subtitle={<>This action is permanent.</>}
         onClose={() => {
           setUser(null);
           setDeleteConfirmed(false);

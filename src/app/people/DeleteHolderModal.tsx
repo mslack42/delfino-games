@@ -57,7 +57,7 @@ export function DeleteHolderModal(props: DeleteModalProps) {
       <CustomModal
         isOpen={!!deleteHolder}
         title={<b>Are you sure you want to delete {deleteHolder?.name}?</b>}
-        subtitle={<p>This action is permanent.</p>}
+        subtitle={<>This action is permanent.</>}
         onClose={() => {
           setDeleteConfirmed(false);
           onClose();
