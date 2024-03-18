@@ -86,6 +86,9 @@ export function AddGameForm(props: AddGameFormProps) {
         return;
       }
 
+      toast({
+        title: "Game added successfully",
+      });
       router.push(ApplicationRoutes.Games);
       router.refresh();
     } catch (error: any) {

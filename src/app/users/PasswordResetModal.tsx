@@ -4,14 +4,46 @@ import { CustomButton } from "@/components/input/CustomButton";
 import { UserModalProps, UserType } from "./UserTable";
 import { useRouter } from "next/navigation";
 import { ApiRoutes } from "@/constants/ApiRoutes";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export function PasswordResetModal({ user, setUser }: UserModalProps) {
   const router = useRouter();
+  const { toast } = useToast();
   const passwordResetHandler = async (user: UserType) => {
     if (user) {
-      await fetch(ApiRoutes.ResetUserPassword(user.id), { method: "POST" });
-      setUser(null);
-      router.refresh();
+      try {
+        const res = await fetch(ApiRoutes.ResetUserPassword(user.id), {
+          method: "POST",
+        });
+        if (!res.ok) {
+          if (res.status === 500) {
+            toast({
+              title: "Failed to reset password - internal failure",
+              type: "background",
+              variant: "destructive",
+            });
+          }
+          if (res.status === 400 || res.status === 404) {
+            toast({
+              title: "Failed to reset password - validation failed",
+              type: "background",
+              variant: "destructive",
+            });
+          }
+          return;
+        }
+        setUser(null);
+        toast({
+          title: "Password reset successfully",
+        });
+        router.refresh();
+      } catch (e) {
+        toast({
+          title: "Failed to reset password",
+          type: "background",
+          variant: "destructive",
+        });
+      }
     }
   };
   return (

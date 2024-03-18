@@ -5,17 +5,46 @@ import { useState } from "react";
 import { UserModalProps, UserType } from "./UserTable";
 import { useRouter } from "next/navigation";
 import { ApiRoutes } from "@/constants/ApiRoutes";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export function DeleteUserModal({ user, setUser }: UserModalProps) {
   const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const deleteHandler = async (user: UserType) => {
     if (user && deleteConfirmed) {
-      await fetch(ApiRoutes.DeleteUser(user.id), { method: "DELETE" });
-      setUser(null);
-      setDeleteConfirmed(false);
-      router.refresh();
+      try {
+        const res = await fetch(ApiRoutes.DeleteUser(user.id), {
+          method: "DELETE",
+        });
+        if (!res.ok) {
+          if (res.status === 500) {
+            toast({
+              title: "Failed to delete user - internal failure",
+              type: "background",
+              variant: "destructive",
+            });
+          }
+          if (res.status === 400) {
+            toast({
+              title: "Failed to delete user - validation failed",
+              type: "background",
+              variant: "destructive",
+            });
+          }
+          return;
+        }
+        setUser(null);
+        setDeleteConfirmed(false);
+        router.refresh();
+      } catch (e) {
+        toast({
+          title: "Failed to delete user",
+          type: "background",
+          variant: "destructive",
+        });
+      }
     }
   };
 

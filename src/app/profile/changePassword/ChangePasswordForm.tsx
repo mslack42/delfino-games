@@ -12,9 +12,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Conditional } from "@/components/common/Conditional";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export function ChangePasswordForm() {
   const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const router = useRouter();
 
@@ -46,9 +48,6 @@ export function ChangePasswordForm() {
         const errorData = await res.json();
 
         if (Array.isArray(errorData.errors) && errorData.errors.length > 0) {
-          //   errorData.errors.forEach((error: any) => {
-          //     toast.error(error.message);
-          //   });
           if (errorData.errors[0].currentPassword) {
             setError("currentPassword", errorData.errors[0].currentPassword);
           }
@@ -56,13 +55,22 @@ export function ChangePasswordForm() {
           return;
         }
 
-        // toast.error(errorData.message);
+        toast({
+          title: "Password change failed",
+          type: "background",
+          variant: "destructive",
+        });
         return;
       }
 
+      toast({ title: "Password changed successfully" });
       router.push(ApplicationRoutes.Home);
     } catch (error: any) {
-      //   toast.error(error.message);
+      toast({
+        title: "Password change failed",
+        type: "background",
+        variant: "destructive",
+      });
     } finally {
       setSubmitting(false);
     }

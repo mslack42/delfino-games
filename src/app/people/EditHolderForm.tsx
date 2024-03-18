@@ -1,6 +1,7 @@
 "use client";
 import { Conditional } from "@/components/common/Conditional";
 import { CustomButton } from "@/components/input/CustomButton";
+import { useToast } from "@/components/shadcn/use-toast";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { EditHolderInput, editHolderSchema } from "@/lib/holder-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +17,7 @@ type Props = {
 
 export function EditHolderForm({ holder, onSubmitComplete }: Props) {
   const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const methods = useForm<EditHolderInput>({
     resolver: zodResolver(editHolderSchema),
@@ -35,7 +37,7 @@ export function EditHolderForm({ holder, onSubmitComplete }: Props) {
   const onSubmitHandler: SubmitHandler<EditHolderInput> = async (values) => {
     try {
       setSubmitting(true);
-      await fetch(ApiRoutes.EditPerson, {
+      const res = await fetch(ApiRoutes.EditPerson, {
         method: "POST",
         body: JSON.stringify(values),
         headers: {
@@ -43,9 +45,33 @@ export function EditHolderForm({ holder, onSubmitComplete }: Props) {
         },
       });
 
+      if (!res.ok) {
+        if (res.status === 500) {
+          toast({
+            title: "Failed to edit holder - internal failure",
+            type: "background",
+            variant: "destructive",
+          });
+        }
+        if (res.status === 400) {
+          toast({
+            title: "Failed to edit holder - validation failure",
+            type: "background",
+            variant: "destructive",
+          });
+        }
+        return;
+      }
+      toast({
+        title: "Holder edited successfully",
+      });
       onSubmitComplete && onSubmitComplete();
     } catch (error: any) {
-      //   toast.error(error.message);
+      toast({
+        title: "Failed to edit holder",
+        type: "background",
+        variant: "destructive",
+      });
     } finally {
       setSubmitting(false);
     }

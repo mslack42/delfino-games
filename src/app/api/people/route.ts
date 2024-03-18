@@ -7,14 +7,18 @@ import { ZodError } from "zod";
 import { updateHolder } from "@/database/holders/updateHolder";
 
 export async function DELETE(req: NextRequest) {
-  const holderId = tryParseInt(req.nextUrl.searchParams.get("id") ?? "");
+  try {
+    const holderId = tryParseInt(req.nextUrl.searchParams.get("id") ?? "");
 
-  if (!holderId) {
-    return NextResponse.json({ message: "no id provided" }, { status: 400 });
+    if (!holderId) {
+      return NextResponse.json({ message: "no id provided" }, { status: 400 });
+    }
+
+    await deleteHolderRecord(holderId);
+    return NextResponse.json({ message: "success" });
+  } catch (e) {
+    return NextResponse.json({ message: "Internal Failure" }, { status: 500 });
   }
-
-  await deleteHolderRecord(holderId);
-  return NextResponse.json({ message: "success" });
 }
 
 export async function POST(req: NextRequest) {

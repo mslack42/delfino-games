@@ -1,6 +1,7 @@
 "use client";
 import { CustomModal } from "@/components/common/CustomModal";
 import { CustomButton } from "@/components/input/CustomButton";
+import { useToast } from "@/components/shadcn/use-toast";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { Person } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -14,12 +15,41 @@ export function DeleteHolderModal(props: DeleteModalProps) {
   const { holder: deleteHolder, onClose } = props;
   const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const deleteHandler = async (holderId: number | undefined | null) => {
     if (holderId) {
-      await fetch(ApiRoutes.DeletePerson(holderId!), { method: "DELETE" });
-      onClose();
-      router.refresh();
+      try {
+        const res = await fetch(ApiRoutes.DeletePerson(holderId!), {
+          method: "DELETE",
+        });
+        if (!res.ok) {
+          if (res.status === 500) {
+            toast({
+              title: "Failed to delete holder - internal failure",
+              type: "background",
+              variant: "destructive",
+            });
+          }
+          if (res.status === 400) {
+            toast({
+              title: "Failed to delete holder - validation failure",
+              type: "background",
+              variant: "destructive",
+            });
+          }
+          return;
+        }
+
+        onClose();
+        router.refresh();
+      } catch (e) {
+        toast({
+          title: "Failed to delete holder",
+          type: "background",
+          variant: "destructive",
+        });
+      }
     }
   };
   return (

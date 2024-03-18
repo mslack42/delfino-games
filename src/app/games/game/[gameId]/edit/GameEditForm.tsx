@@ -92,6 +92,10 @@ export function GameEditForm(props: GameEditFormProps) {
         }
         return;
       }
+
+      toast({
+        title: "Game edited successfully",
+      });
       router.push(ApplicationRoutes.Game(data.id));
       router.refresh();
     } catch (error: any) {

@@ -1,16 +1,15 @@
 "use client";
 import { KeyValue } from "@/components/common/KeyValue";
 import { CustomButton } from "@/components/input/CustomButton";
-import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { EditUserInput, editUserSchema } from "@/lib/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRole } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { UserType } from "./UserTable";
 import { Conditional } from "@/components/common/Conditional";
+import { useToast } from "@/components/shadcn/use-toast";
 
 type EditProps = {
   user: UserType;
@@ -19,6 +18,7 @@ type EditProps = {
 
 export function UserEditForm({ user, onSubmitComplete }: EditProps) {
   const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const methods = useForm<EditUserInput>({
     resolver: zodResolver(editUserSchema),
@@ -48,13 +48,33 @@ export function UserEditForm({ user, onSubmitComplete }: EditProps) {
       });
 
       if (!res.ok) {
-        // TODO some error handling
+        if (res.status === 500) {
+          toast({
+            title: "Failed to edit user - internal failure",
+            type: "background",
+            variant: "destructive",
+          });
+        }
+        if (res.status === 400) {
+          toast({
+            title: "Failed to edit user - validation failed",
+            type: "background",
+            variant: "destructive",
+          });
+        }
         return;
       }
 
+      toast({
+        title: "User edited successfully",
+      });
       onSubmitComplete && onSubmitComplete();
     } catch (error: any) {
-      //   toast.error(error.message);
+      toast({
+        title: "Failed to edit user",
+        type: "background",
+        variant: "destructive",
+      });
     } finally {
       setSubmitting(false);
     }

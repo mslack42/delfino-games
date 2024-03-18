@@ -4,14 +4,47 @@ import { CustomButton } from "@/components/input/CustomButton";
 import { UserModalProps, UserType } from "./UserTable";
 import { useRouter } from "next/navigation";
 import { ApiRoutes } from "@/constants/ApiRoutes";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export function VerifyUserModal({ user, setUser }: UserModalProps) {
   const router = useRouter();
+  const { toast } = useToast();
   const verifyHandler = async (user: UserType) => {
     if (user) {
-      await fetch(ApiRoutes.VerifyUser(user.id), { method: "POST" });
-      setUser(null);
-      router.refresh();
+      try {
+        const res = await fetch(ApiRoutes.VerifyUser(user.id), {
+          method: "POST",
+        });
+
+        if (!res.ok) {
+          if (res.status === 500) {
+            toast({
+              title: "Failed to verify user - internal failure",
+              type: "background",
+              variant: "destructive",
+            });
+          }
+          if (res.status === 400 || res.status === 404) {
+            toast({
+              title: "Failed to verify user - validation failure",
+              type: "background",
+              variant: "destructive",
+            });
+          }
+          return;
+        }
+        setUser(null);
+        toast({
+          title: "User verified",
+        });
+        router.refresh();
+      } catch (e) {
+        toast({
+          title: "Failed to verify user",
+          type: "background",
+          variant: "destructive",
+        });
+      }
     }
   };
 

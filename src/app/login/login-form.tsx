@@ -8,11 +8,13 @@ import { signIn } from "next-auth/react";
 import { LoginUserInput, loginUserSchema } from "@/lib/user-schema";
 import { CustomButton } from "@/components/input/CustomButton";
 import { Conditional } from "@/components/common/Conditional";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export const LoginForm = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams?.get("callbackUrl") || "/";
@@ -42,17 +44,15 @@ export const LoginForm = () => {
       setSubmitting(false);
 
       if (!res?.error) {
-        // toast.success('successfully logged in');
         router.push(callbackUrl);
         router.refresh();
       } else {
         reset({ password: "" });
         const message = "invalid email or password";
-        // toast.error(message);
         setError(message);
       }
     } catch (error: any) {
-      //   toast.error(error.message);
+      toast({ title: "Internal Failure" });
       setError(error.message);
     } finally {
       setSubmitting(false);

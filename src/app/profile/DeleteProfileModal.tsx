@@ -5,6 +5,7 @@ import { CustomButton } from "@/components/input/CustomButton";
 import { CustomModal } from "@/components/common/CustomModal";
 import { useRouter } from "next/navigation";
 import { ApiRoutes } from "@/constants/ApiRoutes";
+import { useToast } from "@/components/shadcn/use-toast";
 
 type DeleteProfileProps = {
   open: boolean;
@@ -13,11 +14,39 @@ type DeleteProfileProps = {
 export function DeleteProfileModal({ open, setOpen }: DeleteProfileProps) {
   const [deleteConfirmed, setDeleteConfirmed] = useState<boolean>(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const deleteHandler = async () => {
-    await fetch(ApiRoutes.DeleteProfile, { method: "DELETE" });
-    router.push(ApplicationRoutes.Home);
-    router.refresh();
+    try {
+      const res = await fetch(ApiRoutes.DeleteProfile, { method: "DELETE" });
+      if (!res.ok) {
+        if (res.status === 500) {
+          toast({
+            title: "Failed to delete profile - internal failure",
+            type: "background",
+            variant: "destructive",
+          });
+        }
+        if (res.status === 400) {
+          toast({
+            title: "Failed to delete profile - validation error",
+            type: "background",
+            variant: "destructive",
+          });
+        }
+        return;
+      }
+
+      toast({ title: "Profile delete successfully" });
+      router.push(ApplicationRoutes.Home);
+      router.refresh();
+    } catch (e) {
+      toast({
+        title: "Failed to delete profile",
+        type: "background",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

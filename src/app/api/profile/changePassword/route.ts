@@ -21,8 +21,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { currentPassword, password, passwordConfirm } =
-      changePasswordSchema.parse(await req.json());
+    const { currentPassword, password } = changePasswordSchema.parse(
+      await req.json()
+    );
 
     const dbUser = await getUser(sessionId);
 

@@ -41,6 +41,9 @@ export function ClearAllRequestsButton(props: ClearAllRequestsButtonProps) {
         }
         return;
       }
+      toast({
+        title: "Game requests cleared",
+      });
     } catch (error: any) {
       toast({
         title: "Failed to clear requests",

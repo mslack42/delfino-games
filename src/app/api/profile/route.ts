@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
       status: "success",
     });
   } catch (error: any) {
+    console.log(error);
     if (error instanceof ZodError) {
       return NextResponse.json(
         {
@@ -55,6 +56,7 @@ export async function DELETE(req: NextRequest) {
     await deleteUser(sessionId!);
     await signOut();
   } catch (error: any) {
+    console.log(error);
     return NextResponse.json(
       {
         status: "error",

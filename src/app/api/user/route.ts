@@ -6,15 +6,23 @@ import { deleteUser } from "@/database/users/deleteUser";
 import { updateUser } from "@/database/users/updateUser";
 
 export async function DELETE(req: NextRequest) {
-  const userId = req.nextUrl.searchParams.get("id");
+  try {
+    const userId = req.nextUrl.searchParams.get("id");
 
-  if (!userId || !userId.length) {
-    return NextResponse.json({ message: "no user specified" }, { status: 400 });
+    if (!userId || !userId.length) {
+      return NextResponse.json(
+        { message: "no user specified" },
+        { status: 400 }
+      );
+    }
+
+    await deleteUser(userId);
+
+    return NextResponse.json({ message: "success" });
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json({ message: "Internal Failure" }, { status: 500 });
   }
-
-  await deleteUser(userId);
-
-  return NextResponse.json({ message: "success" });
 }
 
 export async function POST(req: NextRequest) {

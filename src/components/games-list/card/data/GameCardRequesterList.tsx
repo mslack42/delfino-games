@@ -38,7 +38,6 @@ export function GameCardRequesterList(props: PanelProps) {
         }),
       });
       if (!res.ok) {
-        // TODO some error handling
         toast({
           type: "background",
           variant: "destructive",
@@ -53,7 +52,11 @@ export function GameCardRequesterList(props: PanelProps) {
 
       setAllRequests(() => newRequestList);
     } catch (error: any) {
-      //
+      toast({
+        type: "background",
+        variant: "destructive",
+        title: "Action failed",
+      });
     }
   }
 

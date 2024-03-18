@@ -9,10 +9,12 @@ import { ApiRoutes } from "@/constants/ApiRoutes";
 import { CustomButton } from "@/components/input/CustomButton";
 import { useSearchParams } from "next/navigation";
 import { Conditional } from "@/components/common/Conditional";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export const RegisterForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const query = useSearchParams();
+  const { toast } = useToast();
 
   const suppliedInviteCode: string | null = query.get("invite");
 
@@ -45,9 +47,6 @@ export const RegisterForm = () => {
         const errorData = await res.json();
 
         if (Array.isArray(errorData.errors) && errorData.errors.length > 0) {
-          //   errorData.errors.forEach((error: any) => {
-          //     toast.error(error.message);
-          //   });
           if (errorData.errors[0].invitationCode) {
             setError("invitationCode", errorData.errors[0].invitationCode);
           }
@@ -55,13 +54,12 @@ export const RegisterForm = () => {
           return;
         }
 
-        // toast.error(errorData.message);
         return;
       }
 
       signIn(undefined, { callbackUrl: "/" });
     } catch (error: any) {
-      //   toast.error(error.message);
+      toast({ title: "Internal failure" });
     } finally {
       setSubmitting(false);
     }

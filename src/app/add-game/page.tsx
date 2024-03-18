@@ -6,10 +6,12 @@ import { CustomButton } from "../../components/input/CustomButton";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { LoadingIdler } from "@/components/common/LoadingIdler";
 import { Conditional } from "@/components/common/Conditional";
+import { useToast } from "@/components/shadcn/use-toast";
 
 export default function AddNewGame() {
   const [searchResults, setSearchResults] = useState<BggSummaryData[]>([]);
   const [searching, setSearching] = useState<boolean>(false);
+  const { toast } = useToast();
 
   async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -21,13 +23,33 @@ export default function AddNewGame() {
     }
     setSearching(true);
 
-    const searchResults = await fetch(ApiRoutes.SearchNewGame(searchTerm), {
-      method: "GET",
-    });
-    const searchResultItems: BggSummaryData[] = (await searchResults.json())
-      .results;
-    setSearchResults(() => searchResultItems);
-    setSearching(false);
+    try {
+      const searchResults = await fetch(ApiRoutes.SearchNewGame(searchTerm), {
+        method: "GET",
+      });
+
+      if (!searchResults.ok) {
+        toast({
+          title: "Search failed",
+          type: "background",
+          variant: "destructive",
+        });
+
+        return;
+      }
+
+      const searchResultItems: BggSummaryData[] = (await searchResults.json())
+        .results;
+      setSearchResults(() => searchResultItems);
+    } catch (e) {
+      toast({
+        title: "Search failed",
+        type: "background",
+        variant: "destructive",
+      });
+    } finally {
+      setSearching(false);
+    }
   }
 
   const idler = (
