@@ -1,4 +1,7 @@
-export function createInventoryItemFromPrisma(r: any) {
+import { InventoryItem } from "../types";
+import { BoardGameExpansionBggData, Location, Ownership } from "@prisma/client";
+
+export function createInventoryItemFromPrisma(r: any): InventoryItem {
   return {
     bggData: {
       bggId: r.bggData?.bggId!,
@@ -28,6 +31,11 @@ export function createInventoryItemFromPrisma(r: any) {
       inRotation: r.dsData?.inCurrentRotation!,
       location: r.dsData?.holder.location!,
       ownership: r.dsData?.ownership!,
+      ownedExpansions: (r.dsData?.ownedExpansions ?? []).map(
+        (ex: BoardGameExpansionBggData) => {
+          return ex;
+        }
+      ),
     },
   };
 }

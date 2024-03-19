@@ -5,6 +5,7 @@ import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { BggLink } from "@/components/common/BggLink";
 import { ExpansionSummaryCardImage } from "./ExpansionSummaryCardImage";
 import { ExpansionSummaryActionButton } from "./ExpansionSummaryActionButton";
+import { Conditional } from "../common/Conditional";
 
 type ExpansionSummaryCardProps = {
   data: BggExpansionSummaryData;
@@ -17,7 +18,7 @@ export function ExpansionSummaryCard({
   selected,
 }: ExpansionSummaryCardProps) {
   return (
-    <div className="rounded-xl h-30 w-30 md:h-40 md:w-40 overflow-hidden mx-2 my-2">
+    <div className="rounded-xl h-36 w-36 md:h-40 md:w-40 overflow-hidden mx-2 my-2 relative">
       <div>
         <div
           className={twJoin(
@@ -30,7 +31,7 @@ export function ExpansionSummaryCard({
       </div>
       <div
         className={twJoin(
-          "absolute h-10 w-30 md:w-40 md:h-15 text-white",
+          "absolute h-10 w-36 md:w-40 md:h-15 text-white",
           selected ? "" : "grayscale"
         )}
       >
@@ -40,7 +41,7 @@ export function ExpansionSummaryCard({
           </h1>
         </div>
       </div>
-      <div className="absolute h-30 w-30 md:h-40 md:w-40 text-white filter-none pointer-events-none">
+      <div className="absolute h-36 w-36 md:h-40 md:w-40 text-white filter-none pointer-events-none">
         <div
           className={twJoin(
             "absolute bottom-0 right-0 rounded-lg pr-2 pb-2 text-sm pointer-events-none h-10",
@@ -49,7 +50,7 @@ export function ExpansionSummaryCard({
           )}
         ></div>
       </div>
-      <div className="absolute h-30 w-30 md:h-40 md:w-40 text-white filter-none pointer-events-none">
+      <div className="absolute h-36 w-36 md:h-40 md:w-40 text-white filter-none pointer-events-none">
         <div className="absolute bottom-0 right-0 rounded-lg pr-2 pb-2 text-sm pointer-events-none ">
           <ul className="flex flex-row justify-end space-x-2">
             <li>
@@ -57,16 +58,18 @@ export function ExpansionSummaryCard({
                 <BggLink bggId={data.bggId} />
               </ExpansionSummaryActionButton>
             </li>
-            <li>
-              <ExpansionSummaryActionButton
-                onClick={onToggle}
-                aria-label={
-                  selected ? "deselect expansion" : "select expansion"
-                }
-              >
-                <CustomFontAwesomeIcon icon={selected ? faTimes : faPlus} />
-              </ExpansionSummaryActionButton>
-            </li>
+            <Conditional when={!!onToggle}>
+              <li>
+                <ExpansionSummaryActionButton
+                  onClick={onToggle}
+                  aria-label={
+                    selected ? "deselect expansion" : "select expansion"
+                  }
+                >
+                  <CustomFontAwesomeIcon icon={selected ? faTimes : faPlus} />
+                </ExpansionSummaryActionButton>
+              </li>
+            </Conditional>
           </ul>
         </div>
       </div>

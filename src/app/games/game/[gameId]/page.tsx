@@ -6,6 +6,7 @@ import { DsDataSummary } from "./DsDataSummary";
 import { GameActionButtons } from "./GameActionButtons";
 import { RoleCheck } from "@/components/auth/serverside/RoleCheck";
 import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
+import { ExpansionList } from "./ExpansionList";
 
 type Props = {
   params: {
@@ -28,6 +29,7 @@ export default async function GamePage(props: Props) {
           </div>
         </div>
         <div className="w-full md:w-1/2 ">
+          <ExpansionList data={data}></ExpansionList>
           <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
             <DsDataSummary
               data={data.dsData}

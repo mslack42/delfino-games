@@ -16,6 +16,7 @@ export async function getInventoryItem(gameId: number): Promise<InventoryItem> {
           holder: true,
           owner: true,
           specs: true,
+          ownedExpansions: true,
         },
       },
     },

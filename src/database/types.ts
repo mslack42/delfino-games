@@ -1,4 +1,4 @@
-import { Location, Ownership } from "@prisma/client";
+import { BoardGameExpansionBggData, Location, Ownership } from "@prisma/client";
 
 export type InventoryItem = {
   bggData: {
@@ -29,5 +29,6 @@ export type InventoryItem = {
     inRotation: boolean;
     location: Location;
     ownership: Ownership;
+    ownedExpansions: BoardGameExpansionBggData[];
   };
 };
