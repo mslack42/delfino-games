@@ -11,19 +11,23 @@ import { createBggDataSummaryFromInventoryItem } from "@/util/data-conversion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Location, Ownership } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Conditional } from "@/components/common/Conditional";
 import { useToast } from "@/components/shadcn/use-toast";
+import { BggExpansionSummaryData } from "@/bgg/types";
+import { EditGameContext, EditGameContextType } from "./EditGameContext";
+import { ExpansionsSelector } from "@/components/expansion-card/ExpansionsSelector";
 
 type GameEditFormProps = {
   holders: { id: number; name: string; location: Location }[];
   data: InventoryItem;
   className?: string;
+  expansions: BggExpansionSummaryData[];
 };
 
 export function GameEditForm(props: GameEditFormProps) {
-  const { data } = props;
+  const { data, expansions, holders } = props;
   const [currLocation, setCurrLocation] = useState<Location>(
     data.dsData.location
   );
@@ -39,6 +43,17 @@ export function GameEditForm(props: GameEditFormProps) {
     [props.holders, currLocation]
   );
   const [submitting, setSubmitting] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<number[]>(
+    data.dsData.ownedExpansions.map((ex) => ex.bggId)
+  );
+
+  const context: EditGameContextType = {
+    expansions,
+    holders,
+    selectedExpansionBggIds: selectedIds,
+    setSelectedExpansionBggIds: setSelectedIds,
+  };
+
   const router = useRouter();
   const methods = useForm<EditGameInput>({
     resolver: zodResolver(editGameSchema),
@@ -70,7 +85,12 @@ export function GameEditForm(props: GameEditFormProps) {
       setSubmitting(true);
       const res = await fetch(ApiRoutes.EditGame(data.id.toString()), {
         method: "POST",
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          data: values,
+          selectedExpansions: expansions.filter((ex) =>
+            selectedIds.includes(ex.bggId)
+          ),
+        }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -110,7 +130,7 @@ export function GameEditForm(props: GameEditFormProps) {
   };
 
   return (
-    <>
+    <EditGameContext.Provider value={context}>
       <div className="w-full md:w-1/2 ">
         <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
           <BggDataSummary
@@ -119,6 +139,7 @@ export function GameEditForm(props: GameEditFormProps) {
         </div>
       </div>
       <div className="w-full md:w-1/2 ">
+        <ExpansionsPicker />
         <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
           <div>
             <h1 className="text-xl">
@@ -280,6 +301,34 @@ export function GameEditForm(props: GameEditFormProps) {
           </div>
         </div>
       </div>
-    </>
+    </EditGameContext.Provider>
+  );
+}
+
+function ExpansionsPicker() {
+  const { expansions, selectedExpansionBggIds, setSelectedExpansionBggIds } =
+    useContext(EditGameContext);
+
+  const onToggle = (bggId: number) => {
+    if (selectedExpansionBggIds.includes(bggId)) {
+      setSelectedExpansionBggIds(
+        selectedExpansionBggIds.filter((id) => id != bggId)
+      );
+    } else {
+      setSelectedExpansionBggIds([...selectedExpansionBggIds, bggId]);
+    }
+  };
+
+  return (
+    <Conditional when={expansions.length > 0}>
+      <div className="p-4 pt-2 pb-2 m-4 bg-card rounded-lg">
+        <h1 className="text-2xl font-bold pt-2">Possible Expansions:</h1>
+        <ExpansionsSelector
+          expansions={expansions!}
+          onToggle={onToggle}
+          selectedIds={selectedExpansionBggIds}
+        />
+      </div>
+    </Conditional>
   );
 }

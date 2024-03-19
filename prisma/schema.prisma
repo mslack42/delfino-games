@@ -44,6 +44,8 @@ model BoardGameExpansionBggData {
   lastUpdate              DateTime               @updatedAt
   BoardGameInternalData   BoardGameInternalData? @relation(fields: [boardGameInternalDataId], references: [id], onDelete: Cascade)
   boardGameInternalDataId Int?
+
+  @@unique([boardGameInternalDataId, bggId], name: "singleOccurenceOfEachExpansionPerGameInstance")
 }
 
 model BoardGameDataSpecs {

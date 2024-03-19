@@ -5,6 +5,7 @@ import { tryParseInt } from "@/util/tryParseInt";
 import { Ownership, Location } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { updateGame } from "@/database/games/updateGame";
+import { BggExpansionSummaryData } from "@/bgg/types";
 
 export async function DELETE(req: NextRequest) {
   try {
@@ -38,7 +39,9 @@ export async function POST(req: NextRequest) {
       holderId,
       newHolder,
       isInRotation,
-    } = editGameSchema.parse(formData);
+    } = editGameSchema.parse(formData.data);
+    const selectedExpansions =
+      formData.selectedExpansions as BggExpansionSummaryData[];
 
     const ownerIdInt = tryParseInt(ownerId);
     const holderIdInt = tryParseInt(holderId);
@@ -59,7 +62,11 @@ export async function POST(req: NextRequest) {
       isInRotation: isInRotation,
     };
 
-    const submitSuccess = await updateGame(data, gameId);
+    const submitSuccess = await updateGame(
+      data,
+      gameId,
+      selectedExpansions ?? []
+    );
 
     if (submitSuccess) {
       return NextResponse.json({

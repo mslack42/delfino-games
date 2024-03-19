@@ -1,9 +1,11 @@
+import { BggExpansionSummaryData } from "@/bgg/types";
 import { DsGameData } from "./types";
 import prisma from "@/db";
 
 export async function updateGame(
   gameData: DsGameData,
-  gameId: number
+  gameId: number,
+  expansions: BggExpansionSummaryData[]
 ): Promise<boolean> {
   let ownerId =
     gameData.ownership === "Personal" ? gameData.ownerId : undefined;
@@ -43,6 +45,28 @@ export async function updateGame(
             ownerId: ownerId,
             inCurrentRotation: gameData.isInRotation,
             ownership: gameData.ownership,
+            ownedExpansions: {
+              // It's a bit of a hack, but delete and re-create is the first thing that I've managed to get working...
+              deleteMany: {},
+              upsert: expansions.map((ex) => {
+                return {
+                  where: {
+                    singleOccurenceOfEachExpansionPerGameInstance: {
+                      bggId: ex.bggId,
+                      boardGameInternalDataId: gameId,
+                    },
+                  },
+                  update: {},
+                  create: {
+                    bggId: ex.bggId,
+                    description: ex.description!,
+                    image: ex.image!,
+                    thumb: ex.thumb!,
+                    name: ex.name!,
+                  },
+                };
+              }),
+            },
           },
         },
       },
