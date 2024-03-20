@@ -12,7 +12,7 @@ type Props = {
   selectProps: any & { name: string };
   textProps: any & { name: string; placeholder: string };
   className?: string;
-  value?: string;
+  value: string;
 };
 
 export function SelectOrNew(props: Props) {
@@ -28,16 +28,14 @@ export function SelectOrNew(props: Props) {
     () => selectListValues.filter((v) => v !== undefined).map((v) => v!),
     [selectListValues]
   );
-  const defaultValue = useMemo(
-    () =>
-      realSelectValues.length &&
-      value &&
+  const initialValue = useMemo(() => {
+    return realSelectValues.length &&
+      !!value &&
       realSelectValues.map((rsv) => rsv.value).includes(value!)
-        ? value
-        : "-2",
-    [realSelectValues, value]
-  );
-  const [selectedValue, setSelectedValue] = useState(defaultValue);
+      ? value
+      : "-2";
+  }, [realSelectValues, value]);
+  const [selectedValue, setSelectedValue] = useState(initialValue);
 
   useEffect(() => {
     if (

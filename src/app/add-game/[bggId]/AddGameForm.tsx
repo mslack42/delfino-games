@@ -54,6 +54,7 @@ export function AddGameForm(props: AddGameFormProps) {
     register,
     formState: { errors },
     resetField,
+    getValues,
   } = methods;
 
   const onSubmitHandler: SubmitHandler<AddGameInput> = async (values) => {
@@ -184,6 +185,7 @@ export function AddGameForm(props: AddGameFormProps) {
                   selectProps={{
                     ...register("ownerId"),
                   }}
+                  value={getValues().ownerId}
                   textProps={{
                     ...register("newOwner"),
                     placeholder: "New Games Owner...",
@@ -220,6 +222,7 @@ export function AddGameForm(props: AddGameFormProps) {
                     };
                   }),
                 ]}
+                value={getValues().holderId}
                 newValueString={"Add New..."}
                 selectProps={{
                   ...register("holderId"),

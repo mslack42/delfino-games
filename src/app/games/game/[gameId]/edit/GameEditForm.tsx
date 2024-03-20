@@ -63,11 +63,13 @@ export function GameEditForm(props: GameEditFormProps) {
       ownerId: locationHolders.map((lh) => lh.id).includes(data.dsData.ownerId)
         ? data.dsData.ownerId.toString()
         : "-2",
+      newOwner: "",
       holderId: locationHolders
         .map((lh) => lh.id)
         .includes(data.dsData.holderId)
         ? data.dsData.holderId.toString()
         : "-2",
+      newHolder: "",
       isInRotation: data.dsData.inRotation,
     },
   });
@@ -78,6 +80,7 @@ export function GameEditForm(props: GameEditFormProps) {
     register,
     formState: { errors },
     resetField,
+    getValues,
   } = methods;
 
   const onSubmitHandler: SubmitHandler<EditGameInput> = async (values) => {
@@ -225,6 +228,7 @@ export function GameEditForm(props: GameEditFormProps) {
                             ...register("newOwner"),
                             placeholder: "New Games Owner...",
                           }}
+                          value={getValues().ownerId}
                           className="text-right grow flex-nowrap"
                         ></SelectOrNew>
                         <Conditional when={!!errors["ownerId"]}>
@@ -265,6 +269,7 @@ export function GameEditForm(props: GameEditFormProps) {
                           ...register("newHolder"),
                           placeholder: "New Games Holder...",
                         }}
+                        value={getValues().holderId}
                         className="text-right grow flex-nowrap"
                       ></SelectOrNew>
                       <Conditional when={!!errors["holderId"]}>
