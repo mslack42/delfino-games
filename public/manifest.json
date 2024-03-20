@@ -28,5 +28,17 @@
             "sizes": "512x512",
             "type": "image/png"
         }
+    ],
+    "shortcuts": [
+        {
+            "name": "All Games",
+            "url": "/games",
+            "description": "See all games"
+        },
+        {
+            "name": "Game Requests",
+            "url": "/requests",
+            "description": "See all open game requests"
+        }
     ]
 }
