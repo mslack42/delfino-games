@@ -11,6 +11,8 @@ export function SearchResultImage({
     <div className="h-40 w-40 md:h-60 md:w-60 relative overflow-hidden flex justify-center align-middle">
       <div className="h-40 w-40 md:h-60 md:w-60 relative flex flex-col justify-center align-middle overflow-hidden">
         <Image
+          //Don't optimise for a bit - see what the stats look like in Vercel
+          unoptimized
           fill={true}
           style={{ objectFit: "cover" }}
           sizes="160px"

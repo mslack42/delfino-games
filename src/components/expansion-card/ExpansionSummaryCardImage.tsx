@@ -14,6 +14,8 @@ export function ExpansionSummaryCardImage({
         <div className="h-36 w-36 md:h-40 md:w-40 relative overflow-hidden flex justify-center align-middle">
           <div className="h-36 w-36 md:h-40 md:w-40 relative flex flex-col justify-center align-middle overflow-hidden">
             <Image
+              //Don't optimise for a bit - see what the stats look like in Vercel
+              unoptimized
               fill={true}
               style={{ objectFit: "cover" }}
               sizes="160px"

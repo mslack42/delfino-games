@@ -12,6 +12,8 @@ export function BoardGameImage(props: BoardGameImageProps) {
   const lineHeight = `h-${props.lineHeight} `;
   return props.imageUrl ? (
     <Image
+      //Don't optimise for a bit - see what the stats look like in Vercel
+      unoptimized
       src={props.imageUrl!}
       alt={props.imageName!}
       height={props.size}
