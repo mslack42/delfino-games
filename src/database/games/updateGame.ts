@@ -7,8 +7,7 @@ export async function updateGame(
   gameId: number,
   expansions: BggExpansionSummaryData[]
 ): Promise<boolean> {
-  let ownerId =
-    gameData.ownership === "Personal" ? gameData.ownerId : undefined;
+  let ownerId = gameData.ownership === "Personal" ? gameData.ownerId : null;
   if (ownerId === -1) {
     const newOwner = await prisma.person.create({
       data: {
@@ -21,7 +20,7 @@ export async function updateGame(
 
   let holderId = gameData.holderId;
   if (gameData.holderId === -2 && gameData.ownership === "Personal") {
-    holderId = ownerId;
+    holderId = ownerId!;
   }
   if (gameData.holderId === -1) {
     const newHolder = await prisma.person.create({
