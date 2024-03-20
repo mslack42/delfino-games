@@ -58,8 +58,10 @@ export function BggDataSummary(props: Props) {
           dataValue={
             <ScrollBox>
               <div
-                dangerouslySetInnerHTML={{ __html: data.description! }}
-                className="w-full"
+                dangerouslySetInnerHTML={{
+                  __html: data.description!,
+                }}
+                className="w-full max-w-full break-words overflow-hidden"
               ></div>
             </ScrollBox>
           }

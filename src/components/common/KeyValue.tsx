@@ -6,10 +6,10 @@ type KeyValueProps = {
 export function KeyValue(props: KeyValueProps) {
   return (
     <div className={props.className}>
-      <div>
+      <div className="max-w-full">
         <b>{props.dataKey}:</b>
       </div>
-      <div> {props.dataValue}</div>
+      <div className="max-w-full">{props.dataValue}</div>
     </div>
   );
 }
