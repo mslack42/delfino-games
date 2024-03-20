@@ -7,6 +7,9 @@ const withPWA = withPWAInit({
   cacheStartUrl: true,
   dynamicStartUrl: true,
   reloadOnOnline: true,
+  fallbacks: {
+    document: "/offline",
+  },
 });
 
 /** @type {import('next').NextConfig} */
