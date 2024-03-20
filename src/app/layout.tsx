@@ -7,9 +7,18 @@ import { Toaster } from "@/components/shadcn/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const title = "Delfino Games";
+
 export const metadata: Metadata = {
-  title: "Delfino Games",
+  applicationName: title,
+  title: title,
   description: "Dorset Software Boardgame Inventory Management",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: title,
+  },
 };
 
 export default function RootLayout({
