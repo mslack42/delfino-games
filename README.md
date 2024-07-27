@@ -30,3 +30,13 @@ The technical goals are NOT:
 - Nextjs framework, with typescript and tailwind
 - shadcn used a crib sheet for UI
 - BoardGameGeek API as a source of truth for boardgame data
+
+## Local set-up (example)
+
+- Install postgres and pgAdmin
+- Create a local database server
+- Populate a .env file with correct connection string (see .env.template)
+- npx prisma migrate dev --name init
+- npm run dev
+- Through the website, create a user!
+- Via pgAdmin, make that user an admin, and then log in!

@@ -37,13 +37,8 @@ export function GamesList(props: Props) {
   const [sortingMethod, setSortingMethod] = useState<
     (list: InventoryItem[]) => InventoryItem[]
   >(() => defaultSort);
-  const [filterMethod, setFilterMethod] = useState<
-    (list: InventoryItem[]) => InventoryItem[]
-  >(
-    props.controlsKeys.includes("inrotation")
-      ? () => defaultFilter
-      : () => (x: InventoryItem[]) => x
-  );
+  const [filterMethod, setFilterMethod] =
+    useState<(list: InventoryItem[]) => InventoryItem[]>(defaultFilter);
   const [filtersReady, setFiltersReady] = useState(false);
 
   const gamesListContext: GamesListContextType = {

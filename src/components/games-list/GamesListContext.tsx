@@ -30,7 +30,9 @@ export const defaultSort = (gamelist: InventoryItem[]) => {
   return sorted;
 };
 export const defaultFilter = (gamelist: InventoryItem[]) => {
-  return gamelist.filter((g) => g.dsData.inRotation);
+  // Used to default to just displaying in-rotation games, but maybe that's not best?
+  // return gamelist.filter((g) => g.dsData.inRotation);
+  return gamelist;
 };
 
 export const defaultGamesListContext: GamesListContextType = {

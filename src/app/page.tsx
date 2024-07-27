@@ -11,14 +11,24 @@ export default async function Home() {
           <br></br>
           <UnverifiedUserMessage />
           <p className="text-2xl font-sans text-center">
-            This inventory websites spans the collection of multiple offices,
-            multiple workers in those offices, as well as the company itself.
+            This website provides an inventory of all the games that
+            <i> could</i> be a fixture on a Monday night.
           </p>
           <br></br>
           <p className="text-2xl font-sans text-center">
-            You can use this website to help find a game to play, or request a
-            game to be available to play on a Monday night.
+            You can use this website to help find a game to play, by filtering
+            the collection based on criteria and play count (and of course,
+            whether someone say's they've brought it along this week!).
           </p>
+          <br></br>
+          <p className="text-2xl font-sans text-center">
+            You can also make game requests - a simple expression of 'I would
+            like to play this game'. If you request a game that isn't currently
+            "in rotation", the holder of that game will know to swap it in. And
+            if you request a game that is already available, then that helps all
+            of us pick what games we want to play!
+          </p>
+          <br></br>
         </div>
         <SplashButtons />
       </div>
