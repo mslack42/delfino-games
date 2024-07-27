@@ -182,12 +182,8 @@ export const parseBggSearchResults = (
   let includeGames = true;
   let includeExpansions = false;
   if (!!includes) {
-    if (includes.some((x) => x == "boardgame")) {
-      includeGames = true;
-    }
-    if (includes.some((x) => x == "expansion")) {
-      includeExpansions = false;
-    }
+    includeGames = includes.some((x) => x == "boardgame")
+    includeExpansions = includes.some((x) => x == "expansion")
   }
   for (var item of bggDetailsJson) {
     if (includeExpansions && item?.$?.type === "boardgameexpansion") {
