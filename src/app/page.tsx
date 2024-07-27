@@ -18,15 +18,16 @@ export default async function Home() {
           <p className="text-2xl font-sans text-center">
             You can use this website to help find a game to play, by filtering
             the collection based on criteria and play count (and of course,
-            whether someone say's they've brought it along this week!).
+            whether someone says they&apos;ve brought it along this week!).
           </p>
           <br></br>
           <p className="text-2xl font-sans text-center">
-            You can also make game requests - a simple expression of 'I would
-            like to play this game'. If you request a game that isn't currently
-            "in rotation", the holder of that game will know to swap it in. And
-            if you request a game that is already available, then that helps all
-            of us pick what games we want to play!
+            You can also make game requests - a simple expression of &apos;I
+            would like to play this game&apos;. If you request a game that
+            isn&apos;t currently &quot;in rotation&quot;, the holder of that
+            game will know to swap it in. And if you request a game that is
+            already available, then that helps all of us pick what games we want
+            to play!
           </p>
           <br></br>
         </div>
