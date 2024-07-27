@@ -2,6 +2,8 @@ export const ApiRoutes = {
   AddGame: "/api/add-game",
   SearchNewGame: (searchTerm: string) =>
     `/api/games/searchNew?name=${searchTerm}`,
+  SearchSuggestion: (searchTerm: string) =>
+    `/api/games/searchSuggestion?name=${searchTerm}`,
   EditPerson: "/api/people",
   DeletePerson: (holderId: number) => `/api/people?id=${holderId}`,
   ChangePassword: "/api/profile/changePassword",

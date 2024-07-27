@@ -1,12 +1,21 @@
 import { tryParseFloat } from "../util/tryParseFloat";
 import { tryParseInt } from "../util/tryParseInt";
-import { BggExpansionSummaryData, BggSummaryData } from "./types";
+import {
+  BggExpansionSummaryData,
+  BggSearchResult,
+  BggSummaryData,
+  BoxType,
+} from "./types";
 import * as xml2js from "xml2js";
 
-export const fetchBggDetails = async (
-  idsString: string,
-  includeExpansions?: boolean
-): Promise<BggSummaryData[]> => {
+type BggDetailsQueryParameters = {
+  idsString: string;
+  includeExpansionsNested?: boolean;
+};
+
+export const fetchBggDetailsJson = async (
+  idsString: string
+): Promise<any[]> => {
   const bggSuggestions = await fetch(
     `https://boardgamegeek.com/xmlapi2/thing?id=${idsString}&stats=1`
   );
@@ -19,10 +28,20 @@ export const fetchBggDetails = async (
     bggJson = res;
   });
   const searchResultsData = bggJson?.items?.item;
+  return searchResultsData;
+};
+
+export const fetchBggDetails = async (
+  query: BggDetailsQueryParameters
+): Promise<BggSummaryData[]> => {
+  const searchResultsData = await fetchBggDetailsJson(query.idsString);
   if (!searchResultsData) {
     return [];
   }
-  return await parseBggDetailsIntoList(searchResultsData, !!includeExpansions);
+  return await parseBggDetailsIntoList(
+    searchResultsData,
+    !!query.includeExpansionsNested
+  );
 };
 
 const fetchExpansionDetails = async (
@@ -148,6 +167,80 @@ const parseBggDetailsIntoList = async (
           tags: res.tags,
         },
         expansions: expansions.length > 0 ? expansions : undefined,
+      };
+      output.push(data);
+    }
+  }
+  return output;
+};
+
+export const parseBggSearchResults = (
+  bggDetailsJson: any,
+  includes?: BoxType[]
+): BggSearchResult[] => {
+  let output: BggSearchResult[] = [];
+  let includeGames = true;
+  let includeExpansions = false;
+  if (!!includes) {
+    if (includes.some((x) => x == "boardgame")) {
+      includeGames = true;
+    }
+    if (includes.some((x) => x == "expansion")) {
+      includeExpansions = false;
+    }
+  }
+  for (var item of bggDetailsJson) {
+    if (includeExpansions && item?.$?.type === "boardgameexpansion") {
+      const res = {
+        bggId: item?.$?.id,
+        thumb:
+          item?.thumbnail && item?.thumbnail.length
+            ? item?.thumbnail[0]
+            : undefined,
+        image: item?.image && item?.image.length ? item?.image[0] : undefined,
+        name: item?.name?.filter(
+          (n: { $: { type: string } }) => n.$.type === "primary"
+        )[0].$.value,
+        description:
+          item?.description && item?.description.length
+            ? item?.description[0]
+            : undefined,
+      };
+
+      const data: BggSearchResult = {
+        name: res.name,
+        bggId: tryParseInt(res.bggId)!,
+        thumb: res.thumb,
+        image: res.image,
+        description: res.description,
+        type: "expansion",
+      };
+      output.push(data);
+    }
+    if (includeGames && item?.$?.type === "boardgame") {
+      const res = {
+        bggId: item?.$?.id,
+        thumb:
+          item?.thumbnail && item?.thumbnail.length
+            ? item?.thumbnail[0]
+            : undefined,
+        image: item?.image && item?.image.length ? item?.image[0] : undefined,
+        name: item?.name?.filter(
+          (n: { $: { type: string } }) => n.$.type === "primary"
+        )[0].$.value,
+        description:
+          item?.description && item?.description.length
+            ? item?.description[0]
+            : undefined,
+      };
+
+      const data: BggSearchResult = {
+        name: res.name,
+        bggId: tryParseInt(res.bggId)!,
+        thumb: res.thumb,
+        image: res.image,
+        description: res.description,
+        type: "boardgame",
       };
       output.push(data);
     }

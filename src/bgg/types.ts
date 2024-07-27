@@ -25,3 +25,13 @@ export type BggExpansionSummaryData = {
   image: string | undefined;
   description: string | undefined;
 };
+
+export type BoxType = "boardgame" | "expansion";
+export type BggSearchResult = {
+  name: string;
+  bggId: number;
+  thumb: string | undefined;
+  image: string | undefined;
+  description: string | undefined;
+  type: BoxType;
+};

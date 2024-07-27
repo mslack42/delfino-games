@@ -16,4 +16,7 @@ export const ApplicationRoutes = {
   Users: "/users",
   EditGame: (id: number) => `/games/game/${id}/edit`,
   CompanyGames: "/games/company",
+  SuggestGame: "/suggest-game",
+  Vote: "/vote",
+  SiteAdmin: "/site-admin",
 };

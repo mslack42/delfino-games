@@ -30,4 +30,7 @@ export const routeChecks: RouteCheck[] = [
   { pathMatch: "/games/company", requiredRoles: rolesAndAbove("Verified") },
   { pathMatch: "/profile", requiredRoles: rolesAndAbove("Unverified") },
   { pathMatch: "/api/profile", requiredRoles: rolesAndAbove("Unverified") },
+  { pathMatch: "/suggest-game", requiredRoles: rolesAndAbove("Verified") },
+  { pathMatch: "/vote", requiredRoles: rolesAndAbove("Verified") },
+  { pathMatch: "/site-admin", requiredRoles: rolesAndAbove("Admin") },
 ];

@@ -1,9 +1,31 @@
 import * as xml2js from "xml2js";
-import { BggSummaryData } from "./types";
-import { fetchBggDetails } from "./fetchBggDetails";
+import { BggSearchResult, BggSummaryData } from "./types";
+import {
+  fetchBggDetails,
+  fetchBggDetailsJson,
+  parseBggSearchResults,
+} from "./fetchBggDetails";
 import { levenshtein } from "@/util/levenshtein";
 
-export const searchGames = async (name: string): Promise<BggSummaryData[]> => {
+export const searchGamesAndExpansions = async (
+  name: string
+): Promise<BggSearchResult[]> => {
+  const bggJson = await bggSearch(name);
+  const bggIds = extractBggIds(bggJson, name);
+  const data = await fetchBggDetailsJson(bggIds);
+
+  return parseBggSearchResults(data, ["boardgame", "expansion"]);
+};
+
+export const searchGames = async (name: string): Promise<BggSearchResult[]> => {
+  const bggJson = await bggSearch(name);
+  const bggIds = extractBggIds(bggJson, name);
+  const data = await fetchBggDetailsJson(bggIds);
+
+  return parseBggSearchResults(data, ["boardgame"]);
+};
+
+const bggSearch = async (name: string): Promise<any> => {
   const bggData = await fetch(
     `https://boardgamegeek.com/xmlapi/search?type=boardgame&search=${name}`
   );
@@ -15,15 +37,13 @@ export const searchGames = async (name: string): Promise<BggSummaryData[]> => {
     }
     bggJson = res;
   });
-  const data = await parseBggDataIntoList(bggJson, name);
-
-  return data;
+  return bggJson;
 };
 
-const parseBggDataIntoList = async (bggData: any, searchTerm: string) => {
+const extractBggIds = (bggData: any, searchTerm: string): string => {
   let searchResults: any[] = bggData?.boardgames?.boardgame;
   if (!searchResults) {
-    return [];
+    return "";
   }
   searchResults = searchResults
     .map((d) => [d, levenshtein(searchTerm, d.name[0]["_"])])
@@ -37,6 +57,5 @@ const parseBggDataIntoList = async (bggData: any, searchTerm: string) => {
       bggIds.push(bggId);
     }
   }
-
-  return await fetchBggDetails(bggIds.join(","));
+  return bggIds.join(",");
 };

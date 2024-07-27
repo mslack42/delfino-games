@@ -9,7 +9,10 @@ type Props = {
 };
 
 export default async function AddGamePage(props: Props) {
-  const bggData = await fetchBggDetails(props.params.bggId, true);
+  const bggData = await fetchBggDetails({
+    idsString: props.params.bggId,
+    includeExpansionsNested: true,
+  });
   const holders = await listHolders();
 
   if (bggData.length === 0) {

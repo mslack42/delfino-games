@@ -1,14 +1,14 @@
 "use client";
-import { BggSearchResult } from "@/bgg/types";
+import { BggSearchResult, BggSummaryData } from "@/bgg/types";
 import { FormEvent, Suspense, useState } from "react";
 import { SearchResults } from "../../components/bgg-search/searchResults";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { LoadingIdler } from "@/components/common/LoadingIdler";
 import { Conditional } from "@/components/common/Conditional";
 import { useToast } from "@/components/shadcn/use-toast";
-import { BggSearchBox } from "@/components/bgg-search/BggSearchBox";
+import { BggSearchBox } from "../../components/bgg-search/BggSearchBox";
 
-export default function AddNewGame() {
+export default function SuggestGame() {
   const [searchResults, setSearchResults] = useState<BggSearchResult[]>([]);
   const [searching, setSearching] = useState<boolean>(false);
   const { toast } = useToast();
@@ -24,9 +24,12 @@ export default function AddNewGame() {
     setSearching(true);
 
     try {
-      const searchResults = await fetch(ApiRoutes.SearchNewGame(searchTerm), {
-        method: "GET",
-      });
+      const searchResults = await fetch(
+        ApiRoutes.SearchSuggestion(searchTerm),
+        {
+          method: "GET",
+        }
+      );
 
       if (!searchResults.ok) {
         toast({
@@ -61,13 +64,16 @@ export default function AddNewGame() {
   return (
     <>
       <div className="h-full w-full">
-        <BggSearchBox heading="Search for your new game" search={search} />
+        <BggSearchBox
+          heading="Search for your suggested game"
+          search={search}
+        />
         <br></br>
         <Conditional when={!searching}>
           <Suspense fallback={idler}>
             <SearchResults
               results={searchResults}
-              resultUsage="addGame"
+              resultUsage="suggestGame"
             ></SearchResults>
           </Suspense>
         </Conditional>

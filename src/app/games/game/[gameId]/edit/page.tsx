@@ -12,8 +12,12 @@ type Props = {
 export default async function GamePage(props: Props) {
   const data = await getInventoryItem(Number.parseInt(props.params.gameId));
   const fullExpansionsList =
-    (await fetchBggDetails(data.bggData.bggId.toString(), true))[0]
-      .expansions ?? [];
+    (
+      await fetchBggDetails({
+        idsString: data.bggData.bggId.toString(),
+        includeExpansionsNested: true,
+      })
+    )[0].expansions ?? [];
   const holders = await listHolders();
 
   return (
