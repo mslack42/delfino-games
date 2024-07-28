@@ -11,6 +11,7 @@ import {
   GameSuggestion,
   GameSuggestionsContext,
 } from "@/components/game-suggestions/GameSuggestionContext";
+import { GameSuggestionVotesContext } from "@/components/game-suggestion-votes/GameSuggestionContext";
 
 export function SuggestGame({
   gameSuggestions,
@@ -77,22 +78,26 @@ export function SuggestGame({
       <GameSuggestionsContext.Provider
         value={{ allSuggestions, setAllSuggestions }}
       >
-        <div className="h-full w-full">
-          <BggSearchBox
-            heading="Search for your suggested game"
-            search={search}
-          />
-          <br></br>
-          <Conditional when={!searching}>
-            <Suspense fallback={idler}>
-              <SearchResults
-                results={searchResults}
-                resultUsage="suggestGame"
-              ></SearchResults>
-            </Suspense>
-          </Conditional>
-          <Conditional when={searching}>{idler}</Conditional>
-        </div>
+        <GameSuggestionVotesContext.Provider
+          value={{ allVotes: [], setAllVotes: () => {} }}
+        >
+          <div className="h-full w-full">
+            <BggSearchBox
+              heading="Search for your suggested game"
+              search={search}
+            />
+            <br></br>
+            <Conditional when={!searching}>
+              <Suspense fallback={idler}>
+                <SearchResults
+                  results={searchResults}
+                  resultUsage="suggestGame"
+                ></SearchResults>
+              </Suspense>
+            </Conditional>
+            <Conditional when={searching}>{idler}</Conditional>
+          </div>
+        </GameSuggestionVotesContext.Provider>
       </GameSuggestionsContext.Provider>
     </>
   );

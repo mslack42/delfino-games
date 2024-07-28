@@ -1,7 +1,12 @@
 import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 import { ActionBarButton } from "./ActionBarButton";
 import Link from "next/link";
-import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faMinus,
+  faPlus,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 import { BggLink } from "@/components/common/BggLink";
 import { CustomFontAwesomeIcon } from "@/components/common/CustomFontAwesomeIcon";
 import { Conditional } from "../common/Conditional";
@@ -11,8 +16,9 @@ import { useUserData } from "@/util/auth/client/useUserData";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { BggSearchResult } from "@/bgg/types";
 import { useToast } from "../shadcn/use-toast";
+import { GameSuggestionVotesContext } from "../game-suggestion-votes/GameSuggestionContext";
 
-type ActionSet = "addGame" | "suggestGame";
+type ActionSet = "addGame" | "suggestGame" | "voteForGames";
 
 export function SearchResultActionBar({
   bggSearchResult,
@@ -30,6 +36,9 @@ export function SearchResultActionBar({
           </Conditional>
           <Conditional when={actionSet == "suggestGame"}>
             <SuggestGameButtons bggSearchResult={bggSearchResult} />
+          </Conditional>
+          <Conditional when={actionSet == "voteForGames"}>
+            <VoteForGameButtons bggSearchResult={bggSearchResult} />
           </Conditional>
           <li title="BoardGameGeek link">
             <ActionBarButton>
@@ -155,6 +164,109 @@ function SuggestGameButtons({
           </Conditional>
           <Conditional when={!userSuggested}>
             <CustomFontAwesomeIcon icon={faPlus}></CustomFontAwesomeIcon>
+          </Conditional>
+        </ActionBarButton>
+      </li>
+    </>
+  );
+}
+
+function VoteForGameButtons({
+  bggSearchResult,
+}: {
+  bggSearchResult: BggSearchResult;
+}) {
+  const { allVotes, setAllVotes } = useContext(GameSuggestionVotesContext);
+  const { userData } = useUserData();
+  const { toast } = useToast();
+
+  const userVoted = useMemo(
+    () =>
+      allVotes.some(
+        (s) => s.bggGameId == bggSearchResult.bggId && s.user.id == userData?.id
+      ),
+    [bggSearchResult, userData, allVotes]
+  );
+
+  async function toggleGameVote() {
+    try {
+      const newStatus = !userVoted;
+
+      const res = await fetch(ApiRoutes.ToggleGameVote, {
+        method: "POST",
+        body: JSON.stringify({
+          bggId: bggSearchResult.bggId,
+          userId: userData?.id,
+          newStatus: newStatus,
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.json();
+        if (
+          res.status === 400 &&
+          body["reason"] &&
+          body["reason"] === "TooManyGameSuggestionVotes"
+        ) {
+          toast({
+            type: "background",
+            variant: "destructive",
+            title: "You cannot vote for more than 5 games",
+          });
+        } else if (res.status === 409) {
+          // Do nothing - presumably spammed request
+        } else {
+          toast({
+            type: "background",
+            variant: "destructive",
+            title: "Action failed",
+          });
+        }
+
+        return;
+      }
+
+      let newVotes = [...allVotes];
+      if (newStatus) {
+        newVotes = [
+          ...newVotes,
+          {
+            bggGameId: bggSearchResult.bggId,
+            user: { id: userData?.id!, name: userData?.name! },
+          },
+        ];
+      } else {
+        newVotes = newVotes.filter(
+          (r) =>
+            !(
+              r.bggGameId === bggSearchResult.bggId &&
+              r.user.id === userData?.id
+            )
+        );
+      }
+
+      setAllVotes(() => newVotes);
+      toast({
+        type: "background",
+        title: newStatus ? "Vote received" : "Vote removed",
+      });
+    } catch (error: any) {
+      toast({
+        type: "background",
+        variant: "destructive",
+        title: "Action failed",
+      });
+    }
+  }
+
+  return (
+    <>
+      <li title="Vote for game">
+        <ActionBarButton action={toggleGameVote}>
+          <Conditional when={userVoted}>
+            <CustomFontAwesomeIcon icon={faX}></CustomFontAwesomeIcon>
+          </Conditional>
+          <Conditional when={!userVoted}>
+            <CustomFontAwesomeIcon icon={faCheck}></CustomFontAwesomeIcon>
           </Conditional>
         </ActionBarButton>
       </li>

@@ -10,6 +10,8 @@ import { loggedOutMenuItems } from "./loggedOut/loggedOutMenuItems";
 import { signOut } from "@/auth";
 import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
 import { isRole } from "@/util/auth/server/isRole";
+import { isNotRole } from "@/util/auth/server/isNotRole";
+import { democracyControls } from "./loggedIn/democracyControls";
 
 export const NavigationBar = async () => {
   const logoutAction = async () => {
@@ -18,15 +20,21 @@ export const NavigationBar = async () => {
   };
   const loggedIn = await isLoggedIn();
   const isAdmin = await isRole("Admin");
+  const isVerified = await isNotRole("Unverified");
   let menu: DropDownGroupCollection = {
     game: await gamesCollection(),
     profile: await profileControls(logoutAction),
+    democracy: await democracyControls(),
   };
-  let menuList = [menu["game"], menu["profile"]];
+  let menuList = [menu["game"]];
+  if (isVerified) {
+    menuList = [...menuList, menu["democracy"]];
+  }
   if (loggedIn && isAdmin) {
     menu["admin"] = await adminControls();
-    menuList = [menu["game"], menu["admin"], menu["profile"]];
+    menuList = [...menuList, menu["admin"]];
   }
+  menuList = [...menuList, menu["profile"]];
   return (
     <div className="w-full h-16 bg-teal-700 sticky top-0  z-[500]">
       <div className="bg-teal-700 h-full">

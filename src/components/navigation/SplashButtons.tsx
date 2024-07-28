@@ -15,34 +15,48 @@ export async function SplashButtons() {
       <SplashButton
         href={ApplicationRoutes.Games}
         text="Games"
-        className="bg-green-300 hover:bg-green-200"
+        className="bg-red-300 hover:bg-red-200"
       />
       <Conditional when={loggedIn && isAtLeast(role, "Verified")}>
         <SplashButton
           href={ApplicationRoutes.GameRequests}
           text="Open Game Requests"
-          className="bg-blue-300 hover:bg-blue-200"
+          className="bg-orange-300 hover:bg-orange-200"
         />
       </Conditional>
       <Conditional when={loggedIn}>
         <SplashButton
           href={ApplicationRoutes.Profile}
           text="Your Profile"
-          className="bg-purple-300 hover:bg-purple-200"
+          className="bg-yellow-300 hover:bg-yellow-200"
         />
       </Conditional>
       <Conditional when={loggedIn && isAtLeast(role, "Holder")}>
         <SplashButton
           href={ApplicationRoutes.FindAndAddGame}
           text="Add A New Game"
-          className="hover:bg-yellow-200 bg-yellow-300"
+          className="hover:bg-green-200 bg-green-300"
         />
       </Conditional>
       <Conditional when={loggedIn && isAtLeast(role, "Admin")}>
         <SplashButton
           href={ApplicationRoutes.Users}
           text="Manage Users"
-          className="hover:bg-red-200 bg-red-300"
+          className="hover:bg-blue-200 bg-blue-300"
+        />
+      </Conditional>
+      <Conditional when={loggedIn && isAtLeast(role, "Verified")}>
+        <SplashButton
+          href={ApplicationRoutes.SuggestGame}
+          text="Suggest a game"
+          className="hover:bg-pink-200 bg-pink-300"
+        />
+      </Conditional>
+      <Conditional when={loggedIn && isAtLeast(role, "Verified")}>
+        <SplashButton
+          href={ApplicationRoutes.Vote}
+          text="Vote on new games"
+          className="hover:bg-purple-200 bg-purple-300"
         />
       </Conditional>
     </div>

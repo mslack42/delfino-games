@@ -5,7 +5,7 @@ import { SearchResultDescription } from "./SearchResultDescription";
 import { SearchResultImage } from "./SearchResultImage";
 import { twJoin } from "tailwind-merge";
 
-type ResultUsage = "addGame" | "suggestGame";
+type ResultUsage = "addGame" | "suggestGame" | "voteForGames";
 
 type ResultsProps = {
   results: BggSearchResult[];

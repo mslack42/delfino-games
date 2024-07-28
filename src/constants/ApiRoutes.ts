@@ -21,4 +21,5 @@ export const ApiRoutes = {
   ToggleGameRequest: "/api/request",
   ClearGameRequests: "/api/request/clearAll",
   ToggleGameSuggestion: "/api/suggest",
+  ToggleGameVote: "/api/vote",
 };
