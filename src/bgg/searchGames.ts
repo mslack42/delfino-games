@@ -1,10 +1,6 @@
 import * as xml2js from "xml2js";
-import { BggSearchResult, BggSummaryData } from "./types";
-import {
-  fetchBggDetails,
-  fetchBggDetailsJson,
-  parseBggSearchResults,
-} from "./fetchBggDetails";
+import { BggSearchResult } from "./types";
+import { fetchBggDetailsJson, parseBggSearchResults } from "./fetchBggDetails";
 import { levenshtein } from "@/util/levenshtein";
 
 export const searchGamesAndExpansions = async (

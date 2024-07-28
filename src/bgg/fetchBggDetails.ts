@@ -28,6 +28,15 @@ export const fetchBggDetailsJson = async (
     bggJson = res;
   });
   const searchResultsData = bggJson?.items?.item;
+
+  if (
+    !searchResultsData ||
+    typeof searchResultsData[Symbol.iterator] !== "function"
+  ) {
+    // Need results to be JSON array
+    return [];
+  }
+
   return searchResultsData;
 };
 
@@ -128,11 +137,14 @@ const parseBggDetailsIntoList = async (
         bggRank: item?.statistics[0].ratings[0].ranks[0].rank.filter(
           (r: { $: { name: string } }) => r.$.name === "boardgame"
         )[0].$.value,
-        tags: item?.link
-          .filter((l: { $: { type: string } }) =>
-            ["boardgamecategory", "boardgamemechanic"].includes(l.$.type)
-          )
-          .map((l: { $: { value: any } }) => l.$.value),
+        tags:
+          item?.link !== null
+            ? item.link
+                .filter((l: { $: { type: string } }) =>
+                  ["boardgamecategory", "boardgamemechanic"].includes(l.$.type)
+                )
+                .map((l: { $: { value: any } }) => l.$.value)
+            : [],
       };
 
       let expansions: BggExpansionSummaryData[] = [];
@@ -182,9 +194,15 @@ export const parseBggSearchResults = (
   let includeGames = true;
   let includeExpansions = false;
   if (!!includes) {
-    includeGames = includes.some((x) => x == "boardgame")
-    includeExpansions = includes.some((x) => x == "expansion")
+    includeGames = includes.some((x) => x == "boardgame");
+    includeExpansions = includes.some((x) => x == "expansion");
   }
+
+  if (typeof bggDetailsJson[Symbol.iterator] !== "function") {
+    // JSON not an array
+    return output;
+  }
+
   for (var item of bggDetailsJson) {
     if (includeExpansions && item?.$?.type === "boardgameexpansion") {
       const res = {

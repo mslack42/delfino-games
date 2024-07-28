@@ -109,6 +109,32 @@ model GameRequest {
   @@unique([boardGameId, userId], name: "singleGameRequestsOnly")
 }
 
+model GameSuggestion {
+  id                Int                  @id @default(autoincrement())
+  name              String
+  bggId             Int                  @unique
+  thumb             String
+  image             String
+  description       String
+  boxType           BoxType
+  suggestedBy       User                 @relation(fields: [suggestedByUserId], references: [id], onDelete: Cascade)
+  suggestedByUserId String
+  votes             GameSuggestionVote[]
+}
+
+model GameSuggestionVote {
+  id           Int            @id @default(autoincrement())
+  suggestion   GameSuggestion @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  suggestionId Int
+}
+
+enum BoxType {
+  BoardGame
+  Expansion
+}
+
 enum Ownership {
   Company
   Personal
@@ -130,17 +156,19 @@ enum UserRole {
 // Authentication stuff
 
 model User {
-  id            String        @id @default(uuid())
-  name          String
-  email         String?       @unique
-  password      String?
-  emailVerified DateTime?     @map("email_verified")
-  image         String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  accounts      Account[]
-  sessions      Session[]
-  GameRequest   GameRequest[]
+  id                 String               @id @default(uuid())
+  name               String
+  email              String?              @unique
+  password           String?
+  emailVerified      DateTime?            @map("email_verified")
+  image              String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  accounts           Account[]
+  sessions           Session[]
+  GameRequest        GameRequest[]
+  GameSuggestion     GameSuggestion[]
+  GameSuggestionVote GameSuggestionVote[]
 
   @@map("users")
 }

@@ -20,4 +20,5 @@ export const ApiRoutes = {
   EditGame: (gameId: string) => `/api/game?id=${gameId}`,
   ToggleGameRequest: "/api/request",
   ClearGameRequests: "/api/request/clearAll",
+  ToggleGameSuggestion: "/api/suggest",
 };

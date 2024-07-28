@@ -36,7 +36,6 @@ type ResultProps = {
 export function SearchResult(props: ResultProps) {
   const src = props.result.image;
   const alt = props.result.name;
-  const bggId = props.result.bggId;
 
   return (
     <div
@@ -52,7 +51,10 @@ export function SearchResult(props: ResultProps) {
         <SearchResultTitle name={props.result.name} />
       </div>
       <div className="absolute h-60 w-40 md:w-60 md:h-96 ">
-        <SearchResultActionBar bggId={bggId} actionSet={props.resultUsage} />
+        <SearchResultActionBar
+          bggSearchResult={props.result}
+          actionSet={props.resultUsage}
+        />
       </div>
       <div
         className={twJoin(
