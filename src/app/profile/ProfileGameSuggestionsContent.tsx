@@ -49,7 +49,7 @@ export function ProfileGameSuggestionsContent({
             <div className="w-full">
               <h2 className="w-full text-4xl">Your Votes</h2>
               <SearchResults
-                results={thisUsersGamesSuggestionsVotedFor.map((gs) => gs.game)}
+                results={allSuggestions.map((gs) => gs.game)}
                 resultUsage="voteForGames"
               ></SearchResults>
             </div>
