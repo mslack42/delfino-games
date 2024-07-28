@@ -16,7 +16,7 @@ import { useUserData } from "@/util/auth/client/useUserData";
 import { ApiRoutes } from "@/constants/ApiRoutes";
 import { BggSearchResult } from "@/bgg/types";
 import { useToast } from "../shadcn/use-toast";
-import { GameSuggestionVotesContext } from "../game-suggestion-votes/GameSuggestionContext";
+import { GameSuggestionVotesContext } from "../game-suggestion-votes/GameSuggestionVoteContext";
 
 type ActionSet = "addGame" | "suggestGame" | "voteForGames";
 
@@ -176,7 +176,9 @@ function VoteForGameButtons({
 }: {
   bggSearchResult: BggSearchResult;
 }) {
-  const { allVotes, setAllVotes } = useContext(GameSuggestionVotesContext);
+  const { allVotes, setAllVotes, displayVotes } = useContext(
+    GameSuggestionVotesContext
+  );
   const { userData } = useUserData();
   const { toast } = useToast();
 
@@ -260,6 +262,12 @@ function VoteForGameButtons({
 
   return (
     <>
+      <Conditional when={displayVotes}>
+        <li className="align-middle bg-teal-400 p-1 rounded-lg text-center text-sm md:text-md">
+          {allVotes.filter((v) => v.bggGameId == bggSearchResult.bggId).length}{" "}
+          votes
+        </li>
+      </Conditional>
       <li title="Vote for game">
         <ActionBarButton action={toggleGameVote}>
           <Conditional when={userVoted}>

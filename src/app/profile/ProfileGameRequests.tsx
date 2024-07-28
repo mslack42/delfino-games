@@ -9,6 +9,7 @@ import { ControlsKey } from "@/components/games-list/filter/types";
 import { isRole } from "@/util/auth/server/isRole";
 import { isLoggedIn } from "@/util/auth/server/isLoggedIn";
 import { listInventoryWithOpenRequests } from "@/database/games/listInventory";
+import { Conditional } from "@/components/common/Conditional";
 
 export async function ProfileGameRequests() {
   const user = await getUserData();
@@ -32,17 +33,19 @@ export async function ProfileGameRequests() {
   );
 
   return (
-    <div className="w-full">
-      <h2 className="w-full text-4xl">Your Game Requests</h2>
-      <GamesList
-        inventoryData={thisUsersRequestedGames}
-        controlsKeys={controlKeys}
-        details={details}
-        actions={actions}
-        gameRequestData={gameRequests}
-        noSorting
-        cacheKey={`profile${loggedIn ? "loggedIn" : "notloggedin"}`}
-      ></GamesList>
-    </div>
+    <Conditional when={thisUsersRequestedGames.length > 0}>
+      <div className="w-full">
+        <h2 className="w-full text-4xl">Your Game Requests</h2>
+        <GamesList
+          inventoryData={thisUsersRequestedGames}
+          controlsKeys={controlKeys}
+          details={details}
+          actions={actions}
+          gameRequestData={gameRequests}
+          noSorting
+          cacheKey={`profile${loggedIn ? "loggedIn" : "notloggedin"}`}
+        ></GamesList>
+      </div>
+    </Conditional>
   );
 }

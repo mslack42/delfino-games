@@ -1,4 +1,4 @@
-import { GameSuggestionVote } from "@/components/game-suggestion-votes/GameSuggestionContext";
+import { GameSuggestionVote } from "@/components/game-suggestion-votes/GameSuggestionVoteContext";
 import prisma from "@/db";
 
 export async function getUserGameVotes(userId: string) {

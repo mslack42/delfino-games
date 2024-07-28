@@ -11,10 +11,12 @@ export type GameSuggestionVote = {
 export type GameSuggestionVotesContextType = {
   allVotes: GameSuggestionVote[];
   setAllVotes: Dispatch<SetStateAction<GameSuggestionVote[]>>;
+  displayVotes: boolean;
 };
 
 export const GameSuggestionVotesContext =
   createContext<GameSuggestionVotesContextType>({
     allVotes: [],
     setAllVotes: function (_: SetStateAction<GameSuggestionVote[]>): void {},
+    displayVotes: false,
   });

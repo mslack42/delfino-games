@@ -11,7 +11,9 @@ import {
   GameSuggestion,
   GameSuggestionsContext,
 } from "@/components/game-suggestions/GameSuggestionContext";
-import { GameSuggestionVotesContext } from "@/components/game-suggestion-votes/GameSuggestionContext";
+import { GameSuggestionVotesContext } from "@/components/game-suggestion-votes/GameSuggestionVoteContext";
+import Link from "next/link";
+import { ApplicationRoutes } from "@/constants/ApplicationRoutes";
 
 export function SuggestGame({
   gameSuggestions,
@@ -79,9 +81,19 @@ export function SuggestGame({
         value={{ allSuggestions, setAllSuggestions }}
       >
         <GameSuggestionVotesContext.Provider
-          value={{ allVotes: [], setAllVotes: () => {} }}
+          value={{ allVotes: [], setAllVotes: () => {}, displayVotes: false }}
         >
           <div className="h-full w-full">
+            <p className="text-center px-5 pt-3">
+              You can use this page to suggest new games that we don&apos;t have
+              yet.
+            </p>
+            <p className="text-center px-5 pt-3">
+              You can see all current suggestions (and vote on your favourites!){" "}
+              <Link href={ApplicationRoutes.Vote} className="text-teal-800">
+                here.
+              </Link>
+            </p>
             <BggSearchBox
               heading="Search for your suggested game"
               search={search}

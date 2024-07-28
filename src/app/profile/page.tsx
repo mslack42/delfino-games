@@ -6,6 +6,7 @@ import { ProfileActions } from "./ProfileActions";
 import { ProfileGameRequests } from "./ProfileGameRequests";
 import { isNotRole } from "@/util/auth/server/isNotRole";
 import { Conditional } from "@/components/common/Conditional";
+import { ProfileGameSuggestionsAndVotes } from "./ProfileGameSuggestions";
 
 export default async function Profile() {
   const session = await auth();
@@ -21,15 +22,16 @@ export default async function Profile() {
     redirect("/");
   }
 
-  const canRequestGames = await isNotRole("Unverified");
+  const isVerified = await isNotRole("Unverified");
 
   return (
     <>
       <div className="w-full max-w-lg">
         <ProfileView user={user} />
         <ProfileActions />
-        <Conditional when={canRequestGames}>
+        <Conditional when={isVerified}>
           <ProfileGameRequests />
+          <ProfileGameSuggestionsAndVotes />
         </Conditional>
       </div>
     </>

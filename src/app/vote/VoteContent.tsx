@@ -1,9 +1,10 @@
 "use client";
 import { SearchResults } from "@/components/bgg-search/searchResults";
+import { Conditional } from "@/components/common/Conditional";
 import {
   GameSuggestionVote,
   GameSuggestionVotesContext,
-} from "@/components/game-suggestion-votes/GameSuggestionContext";
+} from "@/components/game-suggestion-votes/GameSuggestionVoteContext";
 import {
   GameSuggestion,
   GameSuggestionsContext,
@@ -28,11 +29,18 @@ export function VoteContent({
       <GameSuggestionsContext.Provider
         value={{ allSuggestions, setAllSuggestions }}
       >
-        <GameSuggestionVotesContext.Provider value={{ allVotes, setAllVotes }}>
-          <SearchResults
-            results={gameSuggestions.map((gs) => gs.game)}
-            resultUsage="voteForGames"
-          ></SearchResults>
+        <GameSuggestionVotesContext.Provider
+          value={{ allVotes, setAllVotes, displayVotes: true }}
+        >
+          <Conditional when={allSuggestions.length > 0}>
+            <SearchResults
+              results={allSuggestions.map((gs) => gs.game)}
+              resultUsage="voteForGames"
+            ></SearchResults>
+          </Conditional>
+          <Conditional when={allSuggestions.length == 0}>
+            <p>Looks like there&apos;s nothing to vote on yet...</p>
+          </Conditional>
         </GameSuggestionVotesContext.Provider>
       </GameSuggestionsContext.Provider>
     </>
