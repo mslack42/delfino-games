@@ -15,9 +15,11 @@ import { useState } from "react";
 export function VoteContent({
   gameSuggestions,
   votes,
+  displayVotes,
 }: {
   gameSuggestions: GameSuggestion[];
   votes: GameSuggestionVote[];
+  displayVotes: boolean;
 }) {
   const [allSuggestions, setAllSuggestions] =
     useState<GameSuggestion[]>(gameSuggestions);
@@ -30,7 +32,7 @@ export function VoteContent({
         value={{ allSuggestions, setAllSuggestions }}
       >
         <GameSuggestionVotesContext.Provider
-          value={{ allVotes, setAllVotes, displayVotes: true }}
+          value={{ allVotes, setAllVotes, displayVotes }}
         >
           <Conditional when={allSuggestions.length > 0}>
             <SearchResults
