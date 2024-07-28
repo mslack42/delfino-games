@@ -20,16 +20,17 @@ export const NavigationBar = async () => {
   };
   const loggedIn = await isLoggedIn();
   const isAdmin = await isRole("Admin");
-  const isVerified = await isNotRole("Unverified");
   let menu: DropDownGroupCollection = {
     game: await gamesCollection(),
     profile: await profileControls(logoutAction),
     democracy: await democracyControls(),
   };
   let menuList = [menu["game"]];
-  if (isVerified) {
-    menuList = [...menuList, menu["democracy"]];
-  }
+  // Uncomment when feature releases
+  // const isVerified = await isNotRole("Unverified");
+  // if (isVerified) {
+  //   menuList = [...menuList, menu["democracy"]];
+  // }
   if (loggedIn && isAdmin) {
     menu["admin"] = await adminControls();
     menuList = [...menuList, menu["admin"]];

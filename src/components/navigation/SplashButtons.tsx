@@ -45,6 +45,7 @@ export async function SplashButtons() {
           className="hover:bg-blue-200 bg-blue-300"
         />
       </Conditional>
+      {/* Uncomment when feature releases
       <Conditional when={loggedIn && isAtLeast(role, "Verified")}>
         <SplashButton
           href={ApplicationRoutes.SuggestGame}
@@ -58,7 +59,7 @@ export async function SplashButtons() {
           text="Vote on new games"
           className="hover:bg-purple-200 bg-purple-300"
         />
-      </Conditional>
+      </Conditional> */}
     </div>
   );
 }
