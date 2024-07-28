@@ -12,15 +12,19 @@ import {
 import { useState } from "react";
 
 export function ProfileGameSuggestionsContent({
-  thisUsersGamesSuggestions,
+  gameSuggestions,
   votes,
+  userId,
 }: {
-  thisUsersGamesSuggestions: GameSuggestion[];
+  gameSuggestions: GameSuggestion[];
   votes: GameSuggestionVote[];
+  userId: string;
 }) {
-  const [allSuggestions, setAllSuggestions] = useState<GameSuggestion[]>(
-    thisUsersGamesSuggestions
+  const thisUsersGamesSuggestions = gameSuggestions.filter(
+    (gs) => gs.user.id == userId
   );
+  const [allSuggestions, setAllSuggestions] =
+    useState<GameSuggestion[]>(gameSuggestions);
   const [allVotes, setAllVotes] = useState<GameSuggestionVote[]>(votes);
 
   const thisUsersVotes = votes.map((v) => v.bggGameId);
@@ -40,7 +44,7 @@ export function ProfileGameSuggestionsContent({
             <div className="w-full">
               <h2 className="w-full text-4xl">Your Game Suggestions</h2>
               <SearchResults
-                results={allSuggestions.map((gs) => gs.game)}
+                results={thisUsersGamesSuggestions.map((gs) => gs.game)}
                 resultUsage="suggestGame"
               ></SearchResults>
             </div>
@@ -49,7 +53,7 @@ export function ProfileGameSuggestionsContent({
             <div className="w-full">
               <h2 className="w-full text-4xl">Your Votes</h2>
               <SearchResults
-                results={allSuggestions.map((gs) => gs.game)}
+                results={thisUsersGamesSuggestionsVotedFor.map((gs) => gs.game)}
                 resultUsage="voteForGames"
               ></SearchResults>
             </div>

@@ -8,13 +8,10 @@ export async function ProfileGameSuggestionsAndVotes() {
   const suggestions = await getGamesSuggestions();
   const votes = await getUserGameVotes(user.id);
 
-  const thisUsersGamesSuggestions = suggestions.filter(
-    (gs) => gs.user.id == user.id
-  );
-
   return (
     <ProfileGameSuggestionsContent
-      thisUsersGamesSuggestions={thisUsersGamesSuggestions}
+      gameSuggestions={suggestions}
+      userId={user.id}
       votes={votes}
     />
   );
