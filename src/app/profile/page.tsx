@@ -26,7 +26,7 @@ export default async function Profile() {
 
   return (
     <>
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-xl">
         <ProfileView user={user} />
         <ProfileActions />
         <Conditional when={isVerified}>
