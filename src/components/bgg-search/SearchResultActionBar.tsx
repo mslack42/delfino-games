@@ -157,7 +157,7 @@ function SuggestGameButtons({
 
   return (
     <>
-      <li title="Suggest game">
+      <li title={userSuggested ? "Remove suggestion" : "Suggest game"}>
         <ActionBarButton action={toggleGameSuggestion}>
           <Conditional when={userSuggested}>
             <CustomFontAwesomeIcon icon={faMinus}></CustomFontAwesomeIcon>
@@ -260,15 +260,23 @@ function VoteForGameButtons({
     }
   }
 
+  const votesString = (numberOfVotes: number) => {
+    if (numberOfVotes === 1) {
+      return "1 vote";
+    }
+    return `${numberOfVotes} votes`;
+  };
+
   return (
     <>
       <Conditional when={displayVotes}>
         <li className="align-middle bg-teal-400 p-1 rounded-lg text-center text-sm md:text-md">
-          {allVotes.filter((v) => v.bggGameId == bggSearchResult.bggId).length}{" "}
-          votes
+          {votesString(
+            allVotes.filter((v) => v.bggGameId == bggSearchResult.bggId).length
+          )}
         </li>
       </Conditional>
-      <li title="Vote for game">
+      <li title={userVoted ? "Remove vote" : "Vote for game"}>
         <ActionBarButton action={toggleGameVote}>
           <Conditional when={userVoted}>
             <CustomFontAwesomeIcon icon={faX}></CustomFontAwesomeIcon>
