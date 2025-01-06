@@ -67,15 +67,17 @@ export function BggDataSummary(props: Props) {
           }
           isMultiline
         ></DataSummaryKeyValuePair>
-        <DataSummaryKeyValuePair
-          dataKey={"Tags"}
-          dataValue={
-            <ScrollBox>
-              <TagBucket tags={data.boardGameBggDataStats.tags}></TagBucket>
-            </ScrollBox>
-          }
-          isMultiline
-        ></DataSummaryKeyValuePair>
+        {data.boardGameBggDataStats.tags.length > 0 && (
+          <DataSummaryKeyValuePair
+            dataKey={"Tags"}
+            dataValue={
+              <ScrollBox>
+                <TagBucket tags={data.boardGameBggDataStats.tags}></TagBucket>
+              </ScrollBox>
+            }
+            isMultiline
+          ></DataSummaryKeyValuePair>
+        )}
       </div>
     </div>
   );

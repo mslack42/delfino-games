@@ -26,40 +26,40 @@ export const filterData = (
           : g
       )
       .filter((g) =>
-        controlsKeys.includes("tags")
+        (controlsKeys.includes("tags") && filterState?.bubbleTypeFilters["tags"].filterOn)
           ? g.bggData.specs.tags.some((t) =>
-              applyBubbleTypeFilter(filterState, "tags", t)
-            )
+            applyBubbleTypeFilter(filterState, "tags", t)
+          )
           : g
       )
       .filter((g) =>
         controlsKeys.includes("playercount") &&
-        filterState.sliderTypeFilters["playercount"].filterOn
+          filterState.sliderTypeFilters["playercount"].filterOn
           ? (!g.bggData.specs.maxPlayerCount ||
-              g.bggData.specs.maxPlayerCount >=
-                filterState.sliderTypeFilters["playercount"].lower) &&
-            (!g.bggData.specs.minPlayerCount ||
-              g.bggData.specs.minPlayerCount <=
-                filterState.sliderTypeFilters["playercount"].upper)
+            g.bggData.specs.maxPlayerCount >=
+            filterState.sliderTypeFilters["playercount"].lower) &&
+          (!g.bggData.specs.minPlayerCount ||
+            g.bggData.specs.minPlayerCount <=
+            filterState.sliderTypeFilters["playercount"].upper)
           : g
       )
       .filter((g) =>
         controlsKeys.includes("duration") &&
-        filterState.sliderTypeFilters["duration"].filterOn
+          filterState.sliderTypeFilters["duration"].filterOn
           ? (!g.bggData.specs.maxPlayTime ||
-              g.bggData.specs.maxPlayTime >=
-                filterState.sliderTypeFilters["duration"].lower) &&
-            (!g.bggData.specs.minPlayTime ||
-              g.bggData.specs.minPlayTime <=
-                filterState.sliderTypeFilters["duration"].upper)
+            g.bggData.specs.maxPlayTime >=
+            filterState.sliderTypeFilters["duration"].lower) &&
+          (!g.bggData.specs.minPlayTime ||
+            g.bggData.specs.minPlayTime <=
+            filterState.sliderTypeFilters["duration"].upper)
           : g
       )
       .filter((g) =>
         controlsKeys.includes("name") &&
-        filterState.textTypeFilters["name"].filterOn
+          filterState.textTypeFilters["name"].filterOn
           ? g.name
-              .toLowerCase()
-              .includes(filterState.textTypeFilters["name"].text.toLowerCase())
+            .toLowerCase()
+            .includes(filterState.textTypeFilters["name"].text.toLowerCase())
           : g
       )
       .filter(
