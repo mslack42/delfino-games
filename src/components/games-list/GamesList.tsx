@@ -89,6 +89,12 @@ export function GamesList(props: Props) {
               </div>
             </Conditional>
           </div>
+          <div className="w-full flex flex-row justify-center text-center py-1 text-coolGray-600">
+            <p>
+              Showing {displayedInventory.length} of{" "}
+              {props.inventoryData.length} games
+            </p>
+          </div>
           <div className="flex max-w-full flex-row flex-wrap justify-center">
             <Suspense fallback={<LoadingIdler />}>
               <Conditional
