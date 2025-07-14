@@ -26,11 +26,10 @@ export const NavigationBar = async () => {
     democracy: await democracyControls(),
   };
   let menuList = [menu["game"]];
-  // Uncomment when feature releases
-  // const isVerified = await isNotRole("Unverified");
-  // if (isVerified) {
-  //   menuList = [...menuList, menu["democracy"]];
-  // }
+  const isVerified = await isNotRole("Unverified");
+  if (isVerified) {
+    menuList = [...menuList, menu["democracy"]];
+  }
   if (loggedIn && isAdmin) {
     menu["admin"] = await adminControls();
     menuList = [...menuList, menu["admin"]];
